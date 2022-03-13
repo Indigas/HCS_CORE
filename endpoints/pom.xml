@@ -53,16 +53,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>sk.durovic</groupId>
             <artifactId>logic</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>sk.durovic</groupId>
-            <artifactId>database</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
+
 
     </dependencies>
 
