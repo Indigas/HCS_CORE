@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
-@SpringBootApplication
+
+@SpringBootApplication(scanBasePackages = "sk.durovic")
 public class CoreApplication {
 
 	@Autowired
