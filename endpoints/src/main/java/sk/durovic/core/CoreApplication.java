@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 
 
-@SpringBootApplication(scanBasePackages = "sk.durovic")
+@SpringBootApplication//(scanBasePackages = "sk.durovic")
 public class CoreApplication {
 
 	@Autowired

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 //@PropertySource("classpath:application-dev.properties")
 //@Profile("dev")
 public class conf {
