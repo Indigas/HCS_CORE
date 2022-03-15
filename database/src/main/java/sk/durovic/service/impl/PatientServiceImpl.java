@@ -7,24 +7,10 @@ import sk.durovic.repository.PatientRepository;
 import sk.durovic.service.PatientService;
 
 @Service
-public class PatientServiceImpl implements PatientService {
+public class PatientServiceImpl extends PatientService {
 
-    @Autowired
-    private PatientRepository repo;
-
-    @Override
-    public Patient save(Patient object) {
-        return null;
-    }
-
-    @Override
-    public void delete(Patient object) {
-
-    }
-
-    @Override
-    public void deleteById(String s) {
-
+    public PatientServiceImpl(PatientRepository repository) {
+        super.repo = repository;
     }
 }
 

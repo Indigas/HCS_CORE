@@ -1,8 +1,21 @@
 package sk.durovic.service;
 
-public interface Service<T, ID> {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 
-    T save(T object);
-    void delete(T object);
-    void deleteById(ID id);
+public abstract class Service<T, ID, R extends CrudRepository<T, ID>> {
+
+    protected R repo;
+
+    public T save(T object){
+        return repo.save(object);
+    }
+
+    public void delete(T object){
+        repo.delete(object);
+    }
+
+    public void deleteById(ID id){
+        repo.deleteById(id);
+    }
 }

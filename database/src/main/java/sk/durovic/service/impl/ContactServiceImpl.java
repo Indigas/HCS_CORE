@@ -7,23 +7,11 @@ import sk.durovic.repository.ContactRepository;
 import sk.durovic.service.ContactService;
 
 @Service
-public class ContactServiceImpl implements ContactService {
+public class ContactServiceImpl extends ContactService {
 
-    @Autowired
-    private ContactRepository repo;
-
-    @Override
-    public Contact save(Contact object) {
-        return null;
+    public ContactServiceImpl(ContactRepository repository) {
+        this.repo = repository;
     }
 
-    @Override
-    public void delete(Contact object) {
 
-    }
-
-    @Override
-    public void deleteById(Long aLong) {
-
-    }
 }
