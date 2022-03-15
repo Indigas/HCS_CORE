@@ -1,6 +1,5 @@
 package sk.durovic.service;
 
-import org.springframework.data.repository.CrudRepository;
 import sk.durovic.model.Patient;
 import sk.durovic.repository.PatientRepository;
 

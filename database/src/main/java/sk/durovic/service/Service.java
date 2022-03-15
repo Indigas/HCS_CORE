@@ -1,6 +1,5 @@
 package sk.durovic.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 
 public abstract class Service<T, ID, R extends CrudRepository<T, ID>> {

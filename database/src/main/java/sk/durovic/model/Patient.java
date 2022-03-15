@@ -30,4 +30,7 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     private BloodGroup bloodGroup;
 
+    @OneToMany
+    private List<Disease> diseases;
+
 }
