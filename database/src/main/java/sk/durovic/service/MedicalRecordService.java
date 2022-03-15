@@ -1,4 +1,7 @@
 package sk.durovic.service;
 
-public class MedicalRecordService {
+import sk.durovic.model.MedicalRecord;
+import sk.durovic.repository.MedicalRecordRepository;
+
+public abstract class MedicalRecordService extends Service<MedicalRecord, Long, MedicalRecordRepository>{
 }
