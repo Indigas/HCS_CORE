@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import sk.durovic.model.Contact;
 
-@Repository
+
 public interface ContactRepository extends CrudRepository<Contact, Long> {
 }

@@ -73,7 +73,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>sk.durovic.core.CoreApplication</mainClass>
+                    <mainClass>sk.durovic.CoreApplication</mainClass>
 
                     <excludes>
                         <exclude>
