@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class MedicalRecord {
 
     @Id
+    @GeneratedValue
     private Long id;
 
     @Column
