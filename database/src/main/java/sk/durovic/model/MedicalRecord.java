@@ -20,6 +20,7 @@ public class MedicalRecord {
     private String date;
 
     @ManyToOne
+    @JoinColumn(name = "diagnose_id")
     private Diagnose diagnose;
 
     @Column

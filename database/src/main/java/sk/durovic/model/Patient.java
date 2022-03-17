@@ -24,13 +24,13 @@ public class Patient {
     @Column
     private String email;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "patient")
     private List<Contact> contacts;
 
     @Enumerated(EnumType.STRING)
     private BloodGroup bloodGroup;
 
-    @OneToMany
+    @OneToMany(mappedBy = "patient")
     private List<Disease> diseases;
 
 }
