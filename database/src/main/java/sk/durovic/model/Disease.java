@@ -3,6 +3,7 @@ package sk.durovic.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -13,13 +14,14 @@ import javax.persistence.*;
 public class Disease {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
     private String name;
 
     @Column
+    @Type(type = "org.hibernate.type.TextType")
     private String description;
 
     @ManyToOne

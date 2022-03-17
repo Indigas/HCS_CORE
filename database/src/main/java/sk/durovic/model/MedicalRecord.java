@@ -3,6 +3,7 @@ package sk.durovic.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
 public class MedicalRecord {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -24,5 +25,6 @@ public class MedicalRecord {
     private Diagnose diagnose;
 
     @Column
+    @Type(type = "org.hibernate.type.TextType")
     private String text;
 }

@@ -1,6 +1,7 @@
 package sk.durovic.model;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.List;
 public class Patient {
 
     @Id
+    @GeneratedValue(generator = "generator")
+    @GenericGenerator(name = "generator",
+        strategy = "sk.durovic.generators.PatientIdGenerator")
     private String id;
 
     @Column
