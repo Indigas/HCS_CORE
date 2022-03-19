@@ -47,6 +47,7 @@
                     <user>springTest</user>
                     <password>test</password>
                     <driver>com.mysql.cj.jdbc.Driver</driver>
+                    <createSchemas>true</createSchemas>
                     <schemas>
                         <defaultSchema>testdb</defaultSchema>
                     </schemas>
@@ -54,4 +55,6 @@
             </plugin>
         </plugins>
     </build>
+
+
 </project>

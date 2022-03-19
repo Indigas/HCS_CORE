@@ -20,7 +20,6 @@ public class PatientHQLTest {
 
     @Test
     public void createPatient(){
-        //session.beginTransaction();
 
         Patient patient = new Patient();
         patient.setId("SLIBIV25");
