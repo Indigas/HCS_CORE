@@ -14,7 +14,7 @@ public class PatientHQLTest {
 
     @BeforeEach
     public void setUp(){
-        sf= new Configuration().configure().buildSessionFactory();
+        sf= new Configuration().configure("test-hibernate.cfg.xml").buildSessionFactory();
         session = sf.openSession();
     }
 

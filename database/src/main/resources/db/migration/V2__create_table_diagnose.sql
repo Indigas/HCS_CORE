@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS `Diagnose` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `tag` VARCHAR(45) NULL,
+  `description` TEXT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
