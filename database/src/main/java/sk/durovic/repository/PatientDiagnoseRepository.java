@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PatientDiagnoseRepository<T, ID> extends PatientDiagnoseReadOnlyRepository<T, ID> {
-    Optional<List<T>> findByPatientId(ID patientId);
+public interface PatientDiagnoseRepository extends PatientDiagnoseReadOnlyRepository {
+    Optional<List<Patient_Diagnose>> findByPatientId(String patientId);
 }
