@@ -17,10 +17,10 @@ public class Patient_Diagnose {
     private String id;
 
     @Column(name = "patient_id", insertable = false, updatable = false)
-    private String patient_id;
+    private String patientId;
 
     @Column(name = "diagnose_id", insertable = false, updatable = false)
-    private Long diagnose_id;
+    private Long diagnoseId;
 
     @Column(insertable = false, updatable = false)
     private String tag;
