@@ -1,5 +1,6 @@
 package sk.durovic.model;
 
+import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
@@ -11,7 +12,8 @@ import javax.persistence.*;
 @Immutable
 @Table(name = "patient_diagnose")
 @Subselect("SELECT uuid() as id, p.* FROM patient_diagnose p")
-public class Patient_Diagnose {
+@Getter
+public class Patient_Diagnose implements BaseEntityInterface<String>{
 
     @Id
     private String id;

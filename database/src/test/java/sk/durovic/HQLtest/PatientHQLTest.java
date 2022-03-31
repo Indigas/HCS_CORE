@@ -5,7 +5,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sk.durovic.model.BaseEntityInterface;
 import sk.durovic.model.Patient;
+import sk.durovic.model.Patient_Diagnose;
+
+import javax.persistence.EntityManager;
+import java.io.Serializable;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PatientHQLTest {
 
@@ -29,6 +36,16 @@ public class PatientHQLTest {
         session.save(patient);
 
         session.beginTransaction().commit();
+
+        assertTrue(checkEntityPersistence(patient));
+
+        session.delete(patient);
+        session.beginTransaction().commit();
+
         session.close();
+    }
+
+    private <T extends Serializable> boolean checkEntityPersistence(BaseEntityInterface<T> o){
+        return session.get(Patient.class, o.getId()) != null;
     }
 }

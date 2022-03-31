@@ -13,12 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Patient")
-public class Patient {
+public class Patient implements BaseEntityInterface<String>{
 
     @Id
-    @GeneratedValue(generator = "generator")
-    @GenericGenerator(name = "generator",
-        strategy = "sk.durovic.generators.PatientIdGenerator")
     private String id;
 
     @Column
@@ -36,5 +33,4 @@ public class Patient {
 
     @OneToMany(mappedBy = "patient")
     private List<Disease> diseases;
-
 }

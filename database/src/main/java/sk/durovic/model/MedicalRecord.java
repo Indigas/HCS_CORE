@@ -11,11 +11,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @NoArgsConstructor
-public class MedicalRecord {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class MedicalRecord extends BaseEntity{
 
     @Column
     private String date;

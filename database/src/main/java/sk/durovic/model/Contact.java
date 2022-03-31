@@ -11,11 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Contact{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Contact extends BaseEntity{
 
     @Column
     private String fullName;
@@ -29,4 +25,6 @@ public class Contact{
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
+
+
 }
