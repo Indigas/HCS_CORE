@@ -26,5 +26,4 @@ public class Contact extends BaseEntity{
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-
 }

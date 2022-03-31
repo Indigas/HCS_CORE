@@ -2,6 +2,8 @@ package sk.durovic.service;
 
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public abstract class Service<T, ID, R extends CrudRepository<T, ID>> {
 
     protected R repo;
@@ -17,4 +19,5 @@ public abstract class Service<T, ID, R extends CrudRepository<T, ID>> {
     public void deleteById(ID id){
         repo.deleteById(id);
     }
+
 }

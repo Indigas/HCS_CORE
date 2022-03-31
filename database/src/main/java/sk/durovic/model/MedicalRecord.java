@@ -23,4 +23,8 @@ public class MedicalRecord extends BaseEntity{
     @Column
     @Type(type = "org.hibernate.type.TextType")
     private String text;
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 }

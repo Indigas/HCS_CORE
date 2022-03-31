@@ -36,4 +36,7 @@ public class Patient implements BaseEntityInterface<String>{
 
     @OneToMany(mappedBy = "patient")
     private List<Disease> diseases;
+
+    @OneToMany(mappedBy = "patient")
+    private List<MedicalRecord> medicalRecords;
 }
