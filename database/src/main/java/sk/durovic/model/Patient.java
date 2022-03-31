@@ -16,6 +16,9 @@ import java.util.List;
 public class Patient implements BaseEntityInterface<String>{
 
     @Id
+    @GeneratedValue(generator = "generator")
+    @GenericGenerator(name = "generator",
+        strategy = "sk.durovic.generators.PatientIdGenerator")
     private String id;
 
     @Column

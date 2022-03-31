@@ -29,7 +29,6 @@ public class PatientHQLTest {
     public void createPatient(){
 
         Patient patient = new Patient();
-        patient.setId("SLIBIV25");
         patient.setFirstName("marek");
         patient.setLastName("durovic");
 
