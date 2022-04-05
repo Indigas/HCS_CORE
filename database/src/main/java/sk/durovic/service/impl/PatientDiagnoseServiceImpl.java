@@ -1,5 +1,6 @@
 package sk.durovic.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.durovic.model.Patient;
 import sk.durovic.model.Patient_Diagnose;
@@ -15,6 +16,10 @@ import java.util.Optional;
 public class PatientDiagnoseServiceImpl
         extends PatientDiagnoseService<PatientDiagnoseRepository> {
 
+    @Autowired
+    public PatientDiagnoseServiceImpl(PatientDiagnoseRepository repo) {
+        this.repo = repo;
+    }
 
     @Override
     public List<Patient_Diagnose> getDiagnosesByPatientId(String id) {

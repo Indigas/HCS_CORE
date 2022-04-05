@@ -7,7 +7,7 @@ public abstract class BaseEntity implements BaseEntityInterface<Long>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Override
     public Long getId() {

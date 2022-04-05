@@ -7,9 +7,9 @@ import java.util.List;
 
 public abstract class PatientDiagnoseService<R extends PatientDiagnoseReadOnlyRepository> {
 
-    @Autowired
     protected R repo;
 
     abstract public List<Patient_Diagnose> getDiagnosesByPatientId(String id);
+
 
 }

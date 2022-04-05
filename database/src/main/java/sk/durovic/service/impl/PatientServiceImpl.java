@@ -10,7 +10,7 @@ public class PatientServiceImpl extends PatientService {
 
     @Autowired
     public PatientServiceImpl(PatientRepository repository) {
-        super.repo = repository;
+        this.repo = repository;
     }
 }
 

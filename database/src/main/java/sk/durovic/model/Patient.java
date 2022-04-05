@@ -19,6 +19,7 @@ public class Patient implements BaseEntityInterface<String>{
     @GeneratedValue(generator = "generator")
     @GenericGenerator(name = "generator",
         strategy = "sk.durovic.generators.PatientIdGenerator")
+    @Setter(AccessLevel.NONE)
     private String id;
 
     @Column
@@ -39,4 +40,5 @@ public class Patient implements BaseEntityInterface<String>{
 
     @OneToMany(mappedBy = "patient")
     private List<MedicalRecord> medicalRecords;
+
 }
