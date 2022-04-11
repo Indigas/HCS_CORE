@@ -9,13 +9,34 @@ import org.hibernate.service.spi.Configurable;
 import org.hibernate.type.Type;
 
 import java.io.Serializable;
+import java.nio.charset.Charset;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 public class PatientIdGenerator implements IdentifierGenerator, Configurable {
+
+    private String regex = "[^A-Za-z0-9]";
+
     @Override
     public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException {
-        return "ab";
+        byte[] array = new byte[256];
+        new Random().nextBytes(array);
+
+        String arrayOfString = new String(array, Charset.forName("UTF-8"));
+
+        StringBuilder sb = new StringBuilder();
+
+        String alphaNumeric = arrayOfString.replaceAll(regex, "");
+
+        String id;
+        if(alphaNumeric.length() < 10)
+            id = (String) generate(sharedSessionContractImplementor, o);
+        else
+            id = alphaNumeric.substring(0,10).toUpperCase().toString();
+
+        return id;
     }
 
     @Override

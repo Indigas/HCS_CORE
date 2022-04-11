@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Patient")
-public class Patient implements BaseEntityInterface<String>{
+public class Patient implements BaseEntityInterface<String> {
 
     @Id
     @GeneratedValue(generator = "generator")

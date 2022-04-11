@@ -1,8 +1,11 @@
 package sk.durovic.HQLtest;
 
+import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sk.durovic.model.BaseEntityInterface;
@@ -18,17 +21,25 @@ public class PatientHQLTest {
 
     private SessionFactory sf;
     private Session session;
+    private Patient patient;
 
     @BeforeEach
     public void setUp(){
         sf= new Configuration().configure("test-hibernate.cfg.xml").buildSessionFactory();
         session = sf.openSession();
+        patient = new Patient();
+    }
+
+    @AfterEach
+    public void closeIt(){
+        session.delete(patient);
+        session.beginTransaction().commit();
+
+        session.close();
     }
 
     @Test
     public void createPatient(){
-
-        Patient patient = new Patient();
         patient.setFirstName("marek");
         patient.setLastName("durovic");
 
@@ -38,10 +49,22 @@ public class PatientHQLTest {
 
         assertTrue(checkEntityPersistence(patient));
 
-        session.delete(patient);
+    }
+
+    @Test
+    public void createTwoPatientWithGeneratedId(){
+        Patient secondPatient = new Patient();
+        secondPatient.setLastName("Uhrin");
+        patient.setLastName("kukucka");
+
+        session.save(patient);
+        session.save(secondPatient);
+
         session.beginTransaction().commit();
 
-        session.close();
+        assertTrue(checkEntityPersistence(secondPatient));
+
+        session.delete(secondPatient);
     }
 
     private <T extends Serializable> boolean checkEntityPersistence(BaseEntityInterface<T> o){
