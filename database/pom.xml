@@ -32,7 +32,12 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>8.0.5</version>
+            <version>8.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>sk.durovic</groupId>
+            <artifactId>annotation-processor</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -41,7 +46,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>8.0.5</version>
+                <version>8.5.4</version>
                 <configuration>
                     <url>jdbc:mysql://localhost:3306/testdb?serverTimezone=UTC</url>
                     <user>springTest</user>

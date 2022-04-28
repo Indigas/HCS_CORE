@@ -6,7 +6,8 @@
         <module>database</module>
 		<module>endpoints</module>
 		<module>logic</module>
-	</modules>
+        <module>annotation-processor</module>
+    </modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
