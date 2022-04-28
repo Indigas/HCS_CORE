@@ -2,6 +2,7 @@ package sk.durovic.model;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import sk.durovic.annotations.Connector;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Connector
 @Table(name = "Patient")
 public class Patient implements BaseEntityInterface<String> {
 
