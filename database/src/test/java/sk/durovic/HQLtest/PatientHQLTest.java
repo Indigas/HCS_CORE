@@ -10,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import sk.durovic.model.BaseEntityInterface;
+import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.model.Patient;
 import sk.durovic.repository.PatientRepository;
 import sk.durovic.service.impl.PatientServiceImpl;
@@ -92,7 +92,7 @@ public class PatientHQLTest {
         return object;
     }
 
-    private <T extends Serializable> boolean checkEntityPersistence(BaseEntityInterface<T> o){
+    private <T extends Serializable> boolean checkEntityPersistence(BaseEntityAbstractClass<T> o){
         return session.get(Patient.class, o.getId()) != null;
     }
 }

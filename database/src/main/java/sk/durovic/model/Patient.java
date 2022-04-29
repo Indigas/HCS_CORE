@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Connector
 @Table(name = "Patient")
-public class Patient implements BaseEntityInterface<String> {
+public class Patient extends BaseEntityAbstractClass<String>  {
 
     @Id
     @GeneratedValue(generator = "generator")

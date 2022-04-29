@@ -5,19 +5,18 @@ import com.google.auto.service.AutoService;
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
-import javax.lang.model.type.ExecutableType;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @SupportedSourceVersion(SourceVersion.RELEASE_11)
 @SupportedAnnotationTypes("sk.durovic.annotations.Connector")
 @AutoService(Processor.class)
-public class ConnectorProcessor extends AbstractProcessor {
+public class EntityProcessor extends AbstractProcessor {
+
+    final String CONNECT = "connect";
+    final String DISCONNECT = "disconnect";
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnvironment) {
@@ -108,48 +107,61 @@ public class ConnectorProcessor extends AbstractProcessor {
             out.println();
 
             Iterator<Map.Entry<String, String>> entries = fields.entrySet().iterator();
-            out.println(writeConnectorMethod(entries));
+
+            while(entries.hasNext()) {
+                Map.Entry<String, String> field = entries.next();
+
+                out.println(writeConnectorsMethod(field));
+            }
 
             out.print("}");
         }
 
     }
 
-    private String writeConnectorMethod(Iterator<Map.Entry<String, String>> fields){
+    private String writeConnectorsMethod(Map.Entry<String, String> field){
         StringBuilder sb = new StringBuilder();
 
-        while(fields.hasNext()){
-            Map.Entry<String, String> field = fields.next();
-
-            if(field.getValue().contains("List"))
-                oneToManyEntity(field, sb);
-            else
-                manyToOneEntity(field, sb);
-        }
+        writeMethodForDiffRelations(field, sb, CONNECT);
+        writeMethodForDiffRelations(field, sb, DISCONNECT);
 
         return sb.toString();
     }
 
-    private void oneToManyEntity(Map.Entry<String, String> field, StringBuilder sb){
+    private void writeMethodForDiffRelations(Map.Entry<String, String> field, StringBuilder sb, String methodPrefix){
+
+        if(field.getValue().contains("List"))
+            oneToManyEntity(field, sb, methodPrefix);
+        else
+            manyToOneEntity(field, sb, methodPrefix);
+
+    }
+
+    private void oneToManyEntity(Map.Entry<String, String> field, StringBuilder sb, String methodPrefix){
+        String addOrRemove = methodPrefix.equals(CONNECT) ? "add" : "remove";
+
         String name = getBeautyName(getMethodName(field.getValue()));
         String argumentType = getArgumentType(field.getValue());
         String parameterName = getParamaterName(name.toLowerCase());
-        String methodName = "get" + getBeautyName(field.getKey()) + "().add";
+        String methodName = "get" + getBeautyName(field.getKey()) + "()." + addOrRemove;
 
-        methodBody(sb, name, argumentType, parameterName, methodName);
+        methodBody(sb, name, argumentType, parameterName, methodName, parameterName, methodPrefix);
     }
 
-    private void manyToOneEntity(Map.Entry<String, String> field, StringBuilder sb) {
+    private void manyToOneEntity(Map.Entry<String, String> field, StringBuilder sb, String methodPrefix) {
         String name = getBeautyName(field.getKey());
         String argumentType = field.getValue();
         String parameterName = getParamaterName(name.toLowerCase());
         String methodName = "set" + name;
+        String parameter = methodPrefix.equals(CONNECT) ? parameterName : "null";
 
-        methodBody(sb, name, argumentType, parameterName, methodName);
+        methodBody(sb, name, argumentType, parameterName, methodName, parameter, methodPrefix);
     }
 
-    private void methodBody(StringBuilder sb, String name, String argumentType, String parameterName, String methodName) {
-        sb.append("     public void connect");
+    private void methodBody(StringBuilder sb, String name, String argumentType, String parameterName,
+                            String methodName, String parameter, String methodPrefix) {
+        sb.append("     public void ");
+        sb.append(methodPrefix);
         sb.append(name);
         sb.append("(");
         sb.append(argumentType);
@@ -160,7 +172,7 @@ public class ConnectorProcessor extends AbstractProcessor {
         sb.append("          ");
         sb.append(methodName);
         sb.append("(");
-        sb.append(parameterName);
+        sb.append(parameter);
         sb.append(");");
         sb.append("\n");
         sb.append("     }");
