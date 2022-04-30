@@ -10,9 +10,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sk.durovic.helper.Helper;
 import sk.durovic.model.Patient;
+import sk.durovic.model.access.PatientEntity;
 import sk.durovic.repository.PatientRepository;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.MatcherAssert.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,7 +29,7 @@ class PatientServiceImplTest {
 
     @BeforeEach
     void setUp() throws NoSuchFieldException, IllegalAccessException {
-        patient = new Patient();
+        patient = new PatientEntity();
         id = "tester";
         Helper.setIdOfInstance(patient, "id", id);
     }

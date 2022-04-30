@@ -11,21 +11,27 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sk.durovic.model.BaseEntityAbstractClass;
+import sk.durovic.model.Contact;
+import sk.durovic.model.access.PatientEntity;
 import sk.durovic.model.Patient;
 import sk.durovic.repository.PatientRepository;
 import sk.durovic.service.impl.PatientServiceImpl;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 public class PatientHQLTest {
 
     private SessionFactory sf;
     private Session session;
-    private Patient patient;
+    private PatientEntity patient;
 
     @Mock
     private PatientRepository repo;
@@ -35,25 +41,38 @@ public class PatientHQLTest {
 
     @BeforeEach
     public void setUp(){
-        sf= new Configuration().configure("test-hibernate.cfg.xml").buildSessionFactory();
+        sf= new Configuration().configure("test-hibernate.cfg.xml")
+                .addAnnotatedClass(Patient.class)
+                .addAnnotatedClass(Contact.class).buildSessionFactory();
         session = sf.openSession();
-        patient = new Patient();
+        patient = new PatientEntity();
+
     }
 
     @AfterEach
     public void closeIt(){
-        session.delete(patient);
-        session.beginTransaction().commit();
+        //session.delete(patient);
+        //session.beginTransaction().commit();
 
         session.close();
     }
 
     @Test
     public void createPatient(){
+        Contact ct = new Contact();
+        ct.setPatient(patient);
+        patient.connectContact(ct);
         patient.setFirstName("marek");
         patient.setLastName("durovic");
+        Patient pt = patient;
 
-        session.save(patient);
+        EntityManager em = sf.createEntityManager();
+        em.getTransaction().begin();
+        //em.persist(patient);
+        //em.persist(ct);
+        session.save(pt);
+        em.getTransaction().commit();
+        em.close();
 
         session.beginTransaction().commit();
 
@@ -64,13 +83,13 @@ public class PatientHQLTest {
     @Test
     @Disabled
     public void createTwoPatientWithGeneratedId(){
-        Mockito.when(repo.save(patient)).thenReturn((Patient) save(patient));
+        Mockito.when(repo.save(patient)).thenReturn((PatientEntity) save(patient));
 
-        Patient secondPatient = new Patient();
+        PatientEntity secondPatient = new PatientEntity();
         secondPatient.setLastName("Uhrin");
         patient.setLastName("kukucka");
 
-        Mockito.when(repo.save(secondPatient)).thenReturn((Patient) save(secondPatient));
+        Mockito.when(repo.save(secondPatient)).thenReturn((PatientEntity) save(secondPatient));
 
         service.save(patient);
         service.save(secondPatient);

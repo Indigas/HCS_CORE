@@ -2,19 +2,19 @@ package sk.durovic.model;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import sk.durovic.annotations.Connector;
+import sk.durovic.annotations.EntityProcessor;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-@Entity
 @Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Connector
+@Setter(AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityProcessor
+@Entity
+@Inheritance
 @Table(name = "Patient")
 public class Patient extends BaseEntityAbstractClass<String>  {
 
@@ -32,16 +32,19 @@ public class Patient extends BaseEntityAbstractClass<String>  {
     @Column
     private String email;
 
-    @OneToMany(mappedBy = "patient")
-    private List<Contact> contacts;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @Setter(AccessLevel.NONE)
+    private final List<Contact> contacts = new LinkedList<>();
 
     @Enumerated(EnumType.STRING)
     private BloodGroup bloodGroup;
 
     @OneToMany(mappedBy = "patient")
-    private List<Disease> diseases;
+    @Setter(AccessLevel.NONE)
+    private final List<Disease> diseases = new LinkedList<>();
 
     @OneToMany(mappedBy = "patient")
-    private List<MedicalRecord> medicalRecords;
+    @Setter(AccessLevel.NONE)
+    private final List<MedicalRecord> medicalRecords = new LinkedList<>();
 
 }

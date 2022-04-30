@@ -8,7 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import sk.durovic.helper.Helper;
 import sk.durovic.model.Contact;
+import sk.durovic.model.access.PatientEntity;
 import sk.durovic.model.Patient;
 import sk.durovic.repository.ContactRepository;
 
@@ -27,8 +29,9 @@ class ContactServiceImplTest {
     private Contact contact;
 
     @BeforeEach
-    void setUp() {
-        patient = Patient.builder().id("marek").build();
+    void setUp() throws NoSuchFieldException, IllegalAccessException {
+        patient = new PatientEntity();
+        Helper.setIdOfInstance(patient, "id", "test");
         contact = new Contact();
         contact.setPatient(patient);
         contact.setFullName("marek_contact");

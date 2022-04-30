@@ -11,12 +11,13 @@ import java.io.PrintWriter;
 import java.util.*;
 
 @SupportedSourceVersion(SourceVersion.RELEASE_11)
-@SupportedAnnotationTypes("sk.durovic.annotations.Connector")
+@SupportedAnnotationTypes("sk.durovic.annotations.EntityProcessor")
 @AutoService(Processor.class)
 public class EntityProcessor extends AbstractProcessor {
 
     final String CONNECT = "connect";
     final String DISCONNECT = "disconnect";
+    final String SETTER = "set";
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnvironment) {
@@ -25,7 +26,9 @@ public class EntityProcessor extends AbstractProcessor {
             Set<? extends Element> annotatedElements = roundEnvironment.getElementsAnnotatedWith(annotation);
 
             annotatedElements.stream().forEach(element -> {
-                    Map<String, String> fieldsMap = processFields( ((TypeElement) element).getEnclosedElements());
+
+                Map<String, Map<String, String>>  fieldsMap = processFields( ((TypeElement) element).getEnclosedElements());
+
                 try {
                     writeModelClass(fieldsMap);
                 } catch (IOException e) {
@@ -39,31 +42,46 @@ public class EntityProcessor extends AbstractProcessor {
         return true;
     }
 
-    private Map<String, String> processFields(List<? extends Element> fields){
+    private Map<String, Map<String, String>> processFields(List<? extends Element> fields){
+        Map<String, Map<String, String>> fieldsMap = new HashMap<>();
         Map<String, String> connectors = new HashMap<>();
+        Map<String, String> setters = new HashMap<>();
+        Map<String, String> classAttr = new HashMap<>();
+        fieldsMap.put("connectors", connectors);
+        fieldsMap.put("setters", setters);
+        fieldsMap.put("classAttr", classAttr);
+
 
         for (Element field :
                 fields) {
+            if(field.getKind().toString().equals("CONSTRUCTOR"))
+                continue;
+
+            if(!classAttr.containsKey("pkgName"))
+                classAttr.put("pkgName", field.getEnclosingElement().getEnclosingElement().toString());
+
+
+            if(!classAttr.containsKey("fullQuallifiedName"))
+                classAttr.put("fullQuallifiedName", field.getEnclosingElement().toString());
+
+            if(!classAttr.containsKey("className"))
+                classAttr.put("className", field.getEnclosingElement().getSimpleName().toString() + "Entity");
+
             if(hasRelationAnnotation(field.getAnnotationMirrors())) {
-
-                if(!connectors.containsKey("pkgName"))
-                    connectors.put("pkgName", field.getEnclosingElement().getEnclosingElement().toString());
-
-
-                if(!connectors.containsKey("fullQuallifiedName"))
-                    connectors.put("fullQuallifiedName", field.getEnclosingElement().toString());
-
-                if(!connectors.containsKey("className"))
-                    connectors.put("className", field.getEnclosingElement().getSimpleName().toString());
-
                 String nameVar = field.getSimpleName().toString();
                 String classVar = field.asType().toString();
                 connectors.put(nameVar,classVar);
 
+            } else {
+                String nameVar = field.getSimpleName().toString();
+                String classVar = field.asType().toString();
+
+                if(!nameVar.equals("id"))
+                    setters.put(nameVar, classVar);
             }
 
         }
-        return connectors;
+        return fieldsMap;
     }
 
     private boolean hasRelationAnnotation(List<? extends AnnotationMirror> annotations){
@@ -78,12 +96,13 @@ public class EntityProcessor extends AbstractProcessor {
         return false;
     }
 
-    private void writeModelClass(Map<String, String> fields) throws IOException {
+    private void writeModelClass(Map<String, Map<String, String>> fields) throws IOException {
+        Map<String, String> classAttr = fields.get("classAttr");
 
-        String simpleClassName = fields.get("className");
-        String pkgName = fields.get("pkgName") + ".access";
+        String simpleClassName = classAttr.get("className");
+        String pkgName = classAttr.get("pkgName") + ".access";
         String className = pkgName + "." + simpleClassName;
-        String extendingClass = fields.get("fullQuallifiedName");
+        String extendingClass = classAttr.get("fullQuallifiedName");
 
         fields.remove("className");
         fields.remove("pkgName");
@@ -98,6 +117,12 @@ public class EntityProcessor extends AbstractProcessor {
             out.println(";");
             out.println();
 
+            out.println("import javax.persistence.*;");
+            out.println();
+
+
+            out.println("@Entity");
+
             //write class
             out.print("public class ");
             out.print(simpleClassName);
@@ -106,21 +131,44 @@ public class EntityProcessor extends AbstractProcessor {
             out.println(" {");
             out.println();
 
-            Iterator<Map.Entry<String, String>> entries = fields.entrySet().iterator();
-
-            while(entries.hasNext()) {
-                Map.Entry<String, String> field = entries.next();
-
-                out.println(writeConnectorsMethod(field));
-            }
+            writeToPrintWriter(out, fields, "setters");
+            writeToPrintWriter(out, fields, "connectors");
 
             out.print("}");
         }
 
     }
 
-    private String writeConnectorsMethod(Map.Entry<String, String> field){
+    private void writeToPrintWriter(PrintWriter out, Map<String, Map<String, String>> fieldsMap, String nameOfMapping){
+        for (Map.Entry<String, String> field : fieldsMap.get(nameOfMapping).entrySet()) {
+            out.println(writeMethod(field, nameOfMapping));
+        }
+    }
+
+    private String writeMethod(Map.Entry<String, String> field, String nameOfMapping){
         StringBuilder sb = new StringBuilder();
+
+        switch (nameOfMapping){
+            case "connectors": writeConnectorsMethod(field,sb);
+            break;
+            case "setters": writeSettersMethod(field, sb);
+            break;
+            default: break;
+        }
+
+        return sb.toString();
+    }
+
+    private void writeSettersMethod(Map.Entry<String, String> field, StringBuilder sb) {
+        String name = getBeautyName(field.getKey());
+        String argumentType = field.getValue();
+        String parameterName = getParamaterName(name.toLowerCase());
+        String methodName = "super.set" + name;
+
+        methodBody(sb, name, argumentType, parameterName, methodName, parameterName, SETTER);
+    }
+
+    private String writeConnectorsMethod(Map.Entry<String, String> field, StringBuilder sb){
 
         writeMethodForDiffRelations(field, sb, CONNECT);
         writeMethodForDiffRelations(field, sb, DISCONNECT);

@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>8.5.4</version>
+            <version>8.0.5</version>
         </dependency>
         <dependency>
             <groupId>sk.durovic</groupId>
@@ -46,7 +46,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>8.5.4</version>
+                <version>8.0.5</version>
                 <configuration>
                     <url>jdbc:mysql://localhost:3306/testdb?serverTimezone=UTC</url>
                     <user>springTest</user>
@@ -56,6 +56,23 @@
                     <schemas>
                         <defaultSchema>testdb</defaultSchema>
                     </schemas>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>11</source> <!-- depending on your project -->
+                    <target>11</target> <!-- depending on your project -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>sk.durovic</groupId>
+                            <artifactId>annotation-processor</artifactId>
+                            <version>0.0.1-SNAPSHOT</version>
+                        </path>
+                        <!-- other annotation processors -->
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 

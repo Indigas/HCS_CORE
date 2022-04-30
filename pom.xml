@@ -22,8 +22,8 @@
 	<description>Core modul of Health Care System</description>
 	<properties>
 		<java.version>11</java.version>
-
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -36,6 +36,12 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+
+		</plugins>
+	</build>
 
 
 	<profiles>
