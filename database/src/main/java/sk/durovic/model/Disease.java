@@ -1,16 +1,19 @@
 package sk.durovic.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
+import sk.durovic.annotations.EntityProcessor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@Setter(AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityProcessor
 public class Disease extends BaseEntity{
 
     @Column

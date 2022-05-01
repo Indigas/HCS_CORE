@@ -121,7 +121,7 @@ public class EntityProcessor extends AbstractProcessor {
             out.println();
 
 
-            out.println("@Entity");
+           // out.println("@Entity");
 
             //write class
             out.print("public class ");

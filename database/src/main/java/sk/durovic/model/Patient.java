@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
 @Entity
-@Inheritance
+//@Inheritance
 @Table(name = "Patient")
 public class Patient extends BaseEntityAbstractClass<String>  {
 

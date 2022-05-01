@@ -1,24 +1,32 @@
 package sk.durovic.manager;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import sk.durovic.model.Patient;
-import sk.durovic.service.PatientService;
+import sk.durovic.model.BaseEntityAbstractClass;
+import sk.durovic.service.Service;
+
+import java.lang.reflect.Constructor;
 
 @Component
 public class EntityManager {
 
-    private final PatientService patientService;
+    private final EntityContainer entityContainer;
+    private final ServiceContainer serviceContainer;
 
-    public EntityManager(PatientService patientService) {
-        this.patientService = patientService;
+    public EntityManager() {
+        this.entityContainer = new EntityContainer();
+        this.serviceContainer = new ServiceContainer();
     }
 
-    public <T> T save(T object){
-        return null;
+
+    <T extends BaseEntityAbstractClass<?>> T save(T object){
+        Service<T,?,?> service = serviceContainer.getService(object.getClass());
+        return service.save(object);
     }
 
-    public void saveTest(Patient o){
-        Patient a = patientService.save(o);
+    <T> T createEntity(Class<T> clazz) throws Exception {
+        Constructor<T> constructor = clazz.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        return constructor.newInstance();
     }
+
 }

@@ -18,9 +18,9 @@ public class Diagnose extends BaseEntity{
     @Column
     private String tag;
 
-    @Column(length = 65535, columnDefinition = "TEXT")
+    @Column//(length = 65535, columnDefinition = "TEXT")
     @Type(type = "org.hibernate.type.TextType")
-    @Nationalized
+    //@Nationalized
     private String description;
 
     @OneToMany(mappedBy = "diagnose", fetch = FetchType.LAZY)

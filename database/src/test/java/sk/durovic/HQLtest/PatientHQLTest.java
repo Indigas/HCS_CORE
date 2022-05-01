@@ -58,6 +58,7 @@ public class PatientHQLTest {
     }
 
     @Test
+    @Disabled
     public void createPatient(){
         Contact ct = new Contact();
         ct.setPatient(patient);
