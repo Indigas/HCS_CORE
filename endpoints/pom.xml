@@ -55,6 +55,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-55</artifactId>
+            <version>2.16.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>sk.durovic</groupId>
             <artifactId>logic</artifactId>
             <version>0.0.1-SNAPSHOT</version>

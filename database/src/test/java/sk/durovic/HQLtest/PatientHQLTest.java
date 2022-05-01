@@ -42,8 +42,8 @@ public class PatientHQLTest {
     @BeforeEach
     public void setUp(){
         sf= new Configuration().configure("test-hibernate.cfg.xml")
-                .addAnnotatedClass(Patient.class)
-                .addAnnotatedClass(Contact.class).buildSessionFactory();
+
+                .buildSessionFactory();
         session = sf.openSession();
         patient = new PatientEntity();
 

@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sk.durovic.helper.Helper;
+import sk.durovic.model.BaseEntity;
 import sk.durovic.model.Contact;
 import sk.durovic.model.access.PatientEntity;
 import sk.durovic.model.Patient;
@@ -31,10 +32,11 @@ class ContactServiceImplTest {
     @BeforeEach
     void setUp() throws NoSuchFieldException, IllegalAccessException {
         patient = new PatientEntity();
-        Helper.setIdOfInstance(patient, "id", "test");
+        Helper.setIdOfInstance(Patient.class, patient, "id", "test");
         contact = new Contact();
         contact.setPatient(patient);
         contact.setFullName("marek_contact");
+        Helper.setIdOfInstance(BaseEntity.class, contact, "id", 22L);
     }
 
     @Test
@@ -45,7 +47,7 @@ class ContactServiceImplTest {
 
         Mockito.verify(repo, Mockito.atMostOnce()).save(contact);
         assertThat(saved, Matchers.notNullValue());
-        assertThat(saved, Matchers.is(saved));
+        assertThat(saved, Matchers.is(contact));
     }
 
     @Test

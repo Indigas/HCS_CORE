@@ -31,7 +31,7 @@ class PatientServiceImplTest {
     void setUp() throws NoSuchFieldException, IllegalAccessException {
         patient = new PatientEntity();
         id = "tester";
-        Helper.setIdOfInstance(patient, "id", id);
+        Helper.setIdOfInstance(Patient.class, patient, "id", id);
     }
 
     @Test
