@@ -44,16 +44,20 @@ class EntityManagerTest {
         entityManager = new EntityManager();
         setContext();
 
-        Contact ct = new Contact();
+        PatientEntity pe = new PatientEntity();
+        pe.setFirstName("abc");
+        Patient pt = EntityMapper.mapEntityToPersist(pe);
+        PatientEntity pe2 = EntityMapper.mapEntity(pt);
+        pe2.getId();
 
-        Contact saved = entityManager.save(ct);
+        /*Contact saved = entityManager.save(ct);
         saved.getId();
 
         Patient patient = entityManager.createEntity(Patient.class);
         Patient savedPatient = entityManager.save(patient);
-        savedPatient.getId();
+        savedPatient.getId();*/
 
-        PatientEntity pp = new PatientEntity();
+        /*PatientEntity pp = new PatientEntity();
         pp.setFirstName("adb");
         Patient novy = EntityMapper.mapEntity(pp);
         novy.getId();
@@ -62,7 +66,7 @@ class EntityManagerTest {
         de.setName("proces");
         Helper.setIdOfInstance(de, 39L);
         Disease di = EntityMapper.mapEntity(de);
-        di.getDescription();
+        di.getDescription();*/
 
         //patientRepository.save(patient);
         //Optional<Patient> saved = patientRepository.findById(patient.getId());

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
+import sk.durovic.annotations.EntityProcessor;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @NoArgsConstructor
+@EntityProcessor
 public class MedicalRecord extends BaseEntity{
 
     @Column
