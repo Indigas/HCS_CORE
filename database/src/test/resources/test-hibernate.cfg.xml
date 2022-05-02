@@ -22,7 +22,6 @@
         <mapping class="sk.durovic.model.Disease"/>
         <mapping class="sk.durovic.model.Diagnose"/>
         <mapping class="sk.durovic.model.Contact"/>
-        <mapping class="sk.durovic.model.access.PatientEntity"/>
 
     </session-factory>
 </hibernate-configuration>

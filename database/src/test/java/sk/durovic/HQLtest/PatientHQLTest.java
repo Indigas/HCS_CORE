@@ -51,8 +51,6 @@ public class PatientHQLTest {
 
     @AfterEach
     public void closeIt(){
-        //session.delete(patient);
-        //session.beginTransaction().commit();
 
         session.close();
     }
@@ -60,24 +58,6 @@ public class PatientHQLTest {
     @Test
     @Disabled
     public void createPatient(){
-        Contact ct = new Contact();
-        ct.setPatient(patient);
-        patient.connectContact(ct);
-        patient.setFirstName("marek");
-        patient.setLastName("durovic");
-        Patient pt = patient;
-
-        EntityManager em = sf.createEntityManager();
-        em.getTransaction().begin();
-        //em.persist(patient);
-        //em.persist(ct);
-        session.save(pt);
-        em.getTransaction().commit();
-        em.close();
-
-        session.beginTransaction().commit();
-
-        assertTrue(checkEntityPersistence(patient));
 
     }
 
