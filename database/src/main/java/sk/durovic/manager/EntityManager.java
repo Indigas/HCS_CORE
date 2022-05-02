@@ -23,7 +23,7 @@ public class EntityManager {
         return service.save(object);
     }
 
-    <T> T createEntity(Class<T> clazz) throws Exception {
+    private <T> T createEntity(Class<T> clazz) throws Exception {
         Constructor<T> constructor = clazz.getDeclaredConstructor();
         constructor.setAccessible(true);
         return constructor.newInstance();

@@ -4,6 +4,7 @@ package sk.durovic.manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import sk.durovic.model.*;
+import sk.durovic.repository.PatientDiagnoseRepository;
 import sk.durovic.service.*;
 
 import java.util.HashMap;
@@ -25,12 +26,17 @@ public class ServiceContainer {
         return (R) context.getBean(servicesMap.get(clazz));
     }
 
+    Object getObjectService(Class<?> clazz){
+        return servicesMap.get(clazz);
+    }
+
     private void setServices(){
         servicesMap.put(Patient.class, PatientService.class);
         servicesMap.put(MedicalRecord.class, MedicalRecordService.class);
         servicesMap.put(Disease.class, DiagnoseService.class);
         servicesMap.put(Diagnose.class, DiagnoseService.class);
         servicesMap.put(Contact.class, ContactService.class);
+        servicesMap.put(Patient_Diagnose.class, PatientDiagnoseService.class);
     }
 
 }

@@ -44,34 +44,6 @@ class EntityManagerTest {
         entityManager = new EntityManager();
         setContext();
 
-        PatientEntity pe = new PatientEntity();
-        pe.setFirstName("abc");
-        Patient pt = EntityMapper.mapEntityToPersist(pe);
-        PatientEntity pe2 = EntityMapper.mapEntity(pt);
-        pe2.getId();
-
-        /*Contact saved = entityManager.save(ct);
-        saved.getId();
-
-        Patient patient = entityManager.createEntity(Patient.class);
-        Patient savedPatient = entityManager.save(patient);
-        savedPatient.getId();*/
-
-        /*PatientEntity pp = new PatientEntity();
-        pp.setFirstName("adb");
-        Patient novy = EntityMapper.mapEntity(pp);
-        novy.getId();
-
-        DiseaseEntity de = new DiseaseEntity();
-        de.setName("proces");
-        Helper.setIdOfInstance(de, 39L);
-        Disease di = EntityMapper.mapEntity(de);
-        di.getDescription();*/
-
-        //patientRepository.save(patient);
-        //Optional<Patient> saved = patientRepository.findById(patient.getId());
-
-        //assertThat(saved.get(), Matchers.notNullValue());
     }
 
     private void setContext() throws Exception {
