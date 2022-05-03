@@ -6,13 +6,15 @@ import java.lang.reflect.Field;
 
 public class Helper {
 
-    /*public static void setIdOfInstance(Class clazz, Object instance, String fieldName, Object value) throws NoSuchFieldException, IllegalAccessException{
-        Field field = clazz.getDeclaredField(fieldName);
-        field.setAccessible(true);
-        field.set(instance, value);
-    }*/
-
     public static void setIdOfInstance(Object instance, Object value) throws IllegalAccessException{
+        setField(instance, "id", value);
+    }
+
+    public static void setVersionOfInstance(Object instance, Long value) throws IllegalAccessException {
+        setField(instance, "version", value);
+    }
+
+    private static void setField(Object instance, String name, Object value) throws IllegalAccessException{
         Class<?> clazz = instance.getClass();
 
         while(clazz != Object.class) {

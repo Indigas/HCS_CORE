@@ -14,9 +14,6 @@ import java.lang.reflect.Field;
 @Component
 public class EntityManager {
 
-    @PersistenceContext
-    private javax.persistence.EntityManager jpaManager;
-
     private final EntityContainer entityContainer;
     private final ServiceContainer serviceContainer;
 
@@ -37,6 +34,18 @@ public class EntityManager {
         return constructor.newInstance();
     }
 
+    public <T extends BaseEntityAbstractClass<ID>, ID> T getReference(Class<T> clazz, ID id) throws ObjectIsNotEntityException {
+        try {
+            T object = createEntity(clazz);
+            setIdOfReferenceEntity(object, id);
+            return object;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        throw new ObjectIsNotEntityException("Class is not a Entity class. Cannot create reference for class :: " + clazz);
+    }
+
     @SuppressWarnings("unchecked")
     private <T, R extends BaseEntityAbstractClass<?>> Class<R> getEntityClass(T object)
             throws ObjectIsNotEntityException {
@@ -53,17 +62,6 @@ public class EntityManager {
         throw new ObjectIsNotEntityException(object + " is not a Entity class");
     }
 
-    public <T extends BaseEntityAbstractClass<ID>, ID> T getReference(Class<T> clazz, ID id) throws ObjectIsNotEntityException {
-        try {
-            T object = createEntity(clazz);
-            setIdOfReferenceEntity(object, id);
-            return object;
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        throw new ObjectIsNotEntityException("Class is not a Entity class. Cannot create reference for class :: " + clazz);
-    }
 
     private <T extends BaseEntityAbstractClass<ID>, ID> void setIdOfReferenceEntity(T object, ID id){
         Class<?> clazz = object.getClass();

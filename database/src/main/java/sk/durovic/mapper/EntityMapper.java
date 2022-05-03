@@ -23,7 +23,8 @@ public class EntityMapper {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T, R extends BaseEntityAbstractClass<?>> R mapEntityToPersist(T object) throws Exception{
+    public static <T, R extends BaseEntityAbstractClass<?>> R mapEntityToPersist(T object)
+            throws Exception {
         Class<?> clazz = object.getClass().getSuperclass();
         Constructor<R> constructor = (Constructor<R>) clazz.getDeclaredConstructor();
 
@@ -38,7 +39,8 @@ public class EntityMapper {
         return convertEntity(object, clazz, constructor);
     }
 
-    private static <T, R extends BaseEntityAbstractClass<?>> R convertEntity(T object, Class<?> clazz, Constructor<R> constructor) throws InstantiationException, IllegalAccessException, InvocationTargetException {
+    private static <T, R extends BaseEntityAbstractClass<?>> R convertEntity(T object, Class<?> clazz, Constructor<R> constructor)
+            throws InstantiationException, IllegalAccessException, InvocationTargetException {
         constructor.setAccessible(true);
         R entity = constructor.newInstance();
 

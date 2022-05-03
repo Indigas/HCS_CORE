@@ -32,11 +32,11 @@ class ContactServiceImplTest {
     @BeforeEach
     void setUp() throws NoSuchFieldException, IllegalAccessException {
         patient = new PatientEntity();
-        Helper.setIdOfInstance(Patient.class, patient, "id", "test");
+        Helper.setIdOfInstance(patient, "test");
         contact = new Contact();
         contact.setPatient(patient);
         contact.setFullName("marek_contact");
-        Helper.setIdOfInstance(BaseEntity.class, contact, "id", 22L);
+        Helper.setIdOfInstance(contact, 22L);
     }
 
     @Test

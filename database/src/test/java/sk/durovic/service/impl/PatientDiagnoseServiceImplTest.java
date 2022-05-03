@@ -38,7 +38,7 @@ class PatientDiagnoseServiceImplTest {
     private void setUp() throws NoSuchFieldException, IllegalAccessException {
         idPatient_diagnose = "123456test";
         patient_diagnose = new Patient_Diagnose();
-        Helper.setIdOfInstance(patient_diagnose.getClass(), patient_diagnose, "id", idPatient_diagnose);
+        Helper.setIdOfInstance(patient_diagnose, idPatient_diagnose);
     }
 
     @Test

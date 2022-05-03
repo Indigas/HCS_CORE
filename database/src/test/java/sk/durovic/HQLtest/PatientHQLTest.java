@@ -1,8 +1,10 @@
 package sk.durovic.HQLtest;
 
+import org.hamcrest.Matchers;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import sk.durovic.helper.Helper;
+import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.model.Contact;
 import sk.durovic.model.access.PatientEntity;
@@ -18,20 +22,17 @@ import sk.durovic.repository.PatientRepository;
 import sk.durovic.service.impl.PatientServiceImpl;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.MatcherAssert.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PatientHQLTest {
 
     private SessionFactory sf;
     private Session session;
-    private PatientEntity patient;
+    private EntityManager entityManager;
 
     @Mock
     private PatientRepository repo;
@@ -42,52 +43,67 @@ public class PatientHQLTest {
     @BeforeEach
     public void setUp(){
         sf= new Configuration().configure("test-hibernate.cfg.xml")
-
                 .buildSessionFactory();
         session = sf.openSession();
-        patient = new PatientEntity();
-
+        entityManager = session.getEntityManagerFactory().createEntityManager();
     }
 
     @AfterEach
     public void closeIt(){
-
+        entityManager.close();
         session.close();
     }
 
     @Test
-    @Disabled
-    public void createPatient(){
+    public void createPatient() throws Exception {
+        PatientEntity pe = new PatientEntity();
+        pe.setFirstName("Marek");
 
+        Patient pt = EntityMapper.mapEntityToPersist(pe);
+
+        session.save(pt);
+        session.beginTransaction().commit();
+        Patient saved = entityManager.find(Patient.class, pt.getId());
+
+        assertThat(pt, Matchers.equalTo(saved));
+
+        session.delete(pt);
+        session.beginTransaction().commit();
     }
 
     @Test
-    @Disabled
-    public void createTwoPatientWithGeneratedId(){
-        Mockito.when(repo.save(patient)).thenReturn((PatientEntity) save(patient));
+    public void createTwoPatientWithGeneratedId() throws Exception {
+        PatientEntity pe = new PatientEntity();
+        pe.setFirstName("Marek");
+        pe.setLastName("kukucka");
+
+        Patient patient = EntityMapper.mapEntityToPersist(pe);
+
+        Transaction tr = session.beginTransaction();
+        session.save(patient);
 
         PatientEntity secondPatient = new PatientEntity();
         secondPatient.setLastName("Uhrin");
-        patient.setLastName("kukucka");
+        Patient second = EntityMapper.mapEntityToPersist(secondPatient);
+        Helper.setIdOfInstance(second, patient.getId());
 
-        Mockito.when(repo.save(secondPatient)).thenReturn((PatientEntity) save(secondPatient));
+        save(second);
+        tr.commit();
 
-        service.save(patient);
-        service.save(secondPatient);
+        assertTrue(checkEntityPersistence(second));
 
-        session.beginTransaction().commit();
-
-        assertTrue(checkEntityPersistence(secondPatient));
-
-        session.delete(secondPatient);
+        tr.begin();
+        session.delete(patient);
+        session.delete(second);
+        tr.commit();
     }
 
     private Object save(Object object){
         try {
-            session.save(object);
+            session.saveOrUpdate(object);
         } catch (NonUniqueObjectException e){
             System.out.println("NonUnique Exception");
-            save(object);
+            session.save(object);
         }
         return object;
     }

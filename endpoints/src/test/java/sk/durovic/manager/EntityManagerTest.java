@@ -43,6 +43,18 @@ class EntityManagerTest {
     void saveTest() throws Exception {
         entityManager = new EntityManager();
         setContext();
+        PatientEntity pa = new PatientEntity();
+        pa.setFirstName("majky");
+        Patient pt = EntityMapper.mapEntityToPersist(pa);
+        entityManager.save(pt);
+
+        Patient saved = testEntityManager.find(Patient.class, pt.getId());
+
+        assertEquals(pt.getId(), saved.getId());
+    }
+
+    @Test
+    void versioningEntityTest(){
 
     }
 
