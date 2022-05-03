@@ -28,11 +28,6 @@ public class EntityManager {
         return service.save(object);
     }
 
-    private <T> T createEntity(Class<T> clazz) throws Exception {
-        Constructor<T> constructor = clazz.getDeclaredConstructor();
-        constructor.setAccessible(true);
-        return constructor.newInstance();
-    }
 
     public <T extends BaseEntityAbstractClass<ID>, ID> T getReference(Class<T> clazz, ID id) throws ObjectIsNotEntityException {
         try {
@@ -44,6 +39,12 @@ public class EntityManager {
         }
 
         throw new ObjectIsNotEntityException("Class is not a Entity class. Cannot create reference for class :: " + clazz);
+    }
+
+    private <T> T createEntity(Class<T> clazz) throws Exception {
+        Constructor<T> constructor = clazz.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        return constructor.newInstance();
     }
 
     @SuppressWarnings("unchecked")

@@ -6,8 +6,6 @@ public abstract class BaseEntityAbstractClass<ID> {
 
     abstract public ID getId();
 
-    @Version
-    private Integer version;
 
     @Override
     public boolean equals(Object obj) {
@@ -19,11 +17,4 @@ public abstract class BaseEntityAbstractClass<ID> {
         throw new IllegalArgumentException("Object is not instance of BaseEntityAbstractClass");
     }
 
-    Integer getVersion(){
-        return version;
-    }
-
-    void incrementVersion(){
-       this.version++;
-    }
 }
