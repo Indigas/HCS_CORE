@@ -31,7 +31,7 @@ public class Patient extends BaseEntityAbstractClass<String>  {
     @Column
     private String email;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
     private final List<Contact> contacts = new LinkedList<>();
 

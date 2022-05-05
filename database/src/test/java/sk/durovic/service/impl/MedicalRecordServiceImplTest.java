@@ -8,7 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.MedicalRecord;
+import sk.durovic.model.access.MedicalRecordEntity;
 import sk.durovic.repository.MedicalRecordRepository;
 
 import static org.hamcrest.MatcherAssert.*;
@@ -23,12 +25,14 @@ class MedicalRecordServiceImplTest {
     @InjectMocks
     private MedicalRecordServiceImpl service;
 
+    private MedicalRecordEntity medicalRecordE;
     private MedicalRecord medicalRecord;
 
     @BeforeEach
-    void setUp() {
-        medicalRecord = new MedicalRecord();
-        medicalRecord.setText("test");
+    void setUp() throws Exception {
+        medicalRecordE = new MedicalRecordEntity();
+        medicalRecordE.setText("test");
+        medicalRecord = EntityMapper.mapEntityToPersist(medicalRecordE);
     }
 
     @Test

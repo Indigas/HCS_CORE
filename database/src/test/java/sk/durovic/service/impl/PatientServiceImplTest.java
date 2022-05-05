@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sk.durovic.helper.Helper;
+import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.Patient;
 import sk.durovic.model.access.PatientEntity;
 import sk.durovic.repository.PatientRepository;
@@ -24,14 +25,16 @@ class PatientServiceImplTest {
     @InjectMocks
     private PatientServiceImpl service;
 
+    private PatientEntity patientE;
     private Patient patient;
     private String id;
 
     @BeforeEach
-    void setUp() throws NoSuchFieldException, IllegalAccessException {
-        patient = new PatientEntity();
+    void setUp() throws Exception {
+        patientE = new PatientEntity();
         id = "tester";
-        Helper.setIdOfInstance(patient, id);
+        Helper.setIdOfInstance(patientE, id);
+        patient = EntityMapper.mapEntityToPersist(patientE);
     }
 
     @Test

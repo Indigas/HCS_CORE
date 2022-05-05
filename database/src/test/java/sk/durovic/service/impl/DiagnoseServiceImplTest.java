@@ -7,7 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.Diagnose;
+import sk.durovic.model.access.DiagnoseEntity;
 import sk.durovic.repository.DiagnoseRepository;
 
 
@@ -24,12 +26,14 @@ class DiagnoseServiceImplTest {
     @InjectMocks
     private DiagnoseServiceImpl service;
 
+    private DiagnoseEntity diagnoseE;
     private Diagnose diagnose;
 
     @BeforeEach
-    private void setUp(){
-        diagnose = new Diagnose();
-        diagnose.setTag("diag");
+    private void setUp() throws Exception {
+        diagnoseE = new DiagnoseEntity();
+        diagnoseE.setTag("diag");
+        diagnose = EntityMapper.mapEntityToPersist(diagnoseE);
     }
 
     @Test

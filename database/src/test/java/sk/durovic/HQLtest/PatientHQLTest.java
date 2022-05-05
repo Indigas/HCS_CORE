@@ -8,22 +8,20 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sk.durovic.helper.Helper;
 import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.model.Contact;
+import sk.durovic.model.access.ContactEntity;
 import sk.durovic.model.access.PatientEntity;
 import sk.durovic.model.Patient;
-import sk.durovic.repository.PatientRepository;
-import sk.durovic.service.impl.PatientServiceImpl;
 
 import javax.persistence.EntityManager;
+import javax.validation.ConstraintViolationException;
 import java.io.Serializable;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.hamcrest.MatcherAssert.*;
 
@@ -34,18 +32,24 @@ public class PatientHQLTest {
     private Session session;
     private EntityManager entityManager;
 
-    @Mock
-    private PatientRepository repo;
-
-    @InjectMocks
-    private PatientServiceImpl service;
+    private Patient patient;
+    private Contact contact;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws Exception {
         sf= new Configuration().configure("test-hibernate.cfg.xml")
                 .buildSessionFactory();
         session = sf.openSession();
         entityManager = session.getEntityManagerFactory().createEntityManager();
+
+        PatientEntity pe = new PatientEntity();
+        pe.setFirstName("Marek");
+
+        patient = EntityMapper.mapEntityToPersist(pe);
+
+        ContactEntity ce = new ContactEntity();
+        ce.setFullName("abc");
+        contact = EntityMapper.mapEntityToPersist(ce);
     }
 
     @AfterEach
@@ -55,37 +59,33 @@ public class PatientHQLTest {
     }
 
     @Test
-    public void createPatient() throws Exception {
-        PatientEntity pe = new PatientEntity();
-        pe.setFirstName("Marek");
+    public void createPatient() {
 
-        Patient pt = EntityMapper.mapEntityToPersist(pe);
-
-        session.save(pt);
+        session.save(patient);
         session.beginTransaction().commit();
-        Patient saved = entityManager.find(Patient.class, pt.getId());
+        Patient saved = entityManager.find(Patient.class, patient.getId());
 
-        assertThat(pt, Matchers.equalTo(saved));
+        assertThat(patient, Matchers.equalTo(saved));
 
-        session.delete(pt);
+        session.delete(patient);
         session.beginTransaction().commit();
     }
 
     @Test
+    public void saveChildWithoutParent() throws Exception {
+        assertThrows(ConstraintViolationException.class, () -> session.save(contact));
+    }
+
+    @Test
     public void createTwoPatientWithGeneratedId() throws Exception {
-        PatientEntity pe = new PatientEntity();
-        pe.setFirstName("Marek");
-        pe.setLastName("kukucka");
-
-        Patient patient = EntityMapper.mapEntityToPersist(pe);
-
-        Transaction tr = session.beginTransaction();
-        session.save(patient);
-
         PatientEntity secondPatient = new PatientEntity();
         secondPatient.setLastName("Uhrin");
         Patient second = EntityMapper.mapEntityToPersist(secondPatient);
+
         Helper.setIdOfInstance(second, patient.getId());
+
+        Transaction tr = session.beginTransaction();
+        session.save(patient);
 
         save(second);
         tr.commit();
@@ -96,6 +96,17 @@ public class PatientHQLTest {
         session.delete(patient);
         session.delete(second);
         tr.commit();
+    }
+
+    @Test
+    public void saveChildWithNonExistingParent() throws Exception {
+        Helper.setIdOfInstance(patient, "testing");
+        ContactEntity ce = EntityMapper.mapEntity(contact);
+        ce.connectPatient(patient);
+
+        contact = EntityMapper.mapEntityToPersist(ce);
+
+        assertThrows(org.hibernate.exception.ConstraintViolationException.class, () -> session.save(contact));
     }
 
     private Object save(Object object){

@@ -24,6 +24,7 @@ public class EntityManager {
 
 
     <T extends BaseEntityAbstractClass<?>> T save(T object){
+
         Service<T,?,?> service = serviceContainer.getService(object.getClass());
         return service.save(object);
     }

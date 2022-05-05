@@ -5,10 +5,8 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import sk.durovic.model.MedicalRecord;
 import sk.durovic.repository.*;
-import sk.durovic.service.ContactService;
-import sk.durovic.service.PatientService;
-import sk.durovic.service.impl.ContactServiceImpl;
-import sk.durovic.service.impl.PatientServiceImpl;
+import sk.durovic.service.*;
+import sk.durovic.service.impl.*;
 
 @TestConfiguration
 public class EntityManagerConfiguration {
@@ -36,6 +34,21 @@ public class EntityManagerConfiguration {
     @Bean
     public PatientService getPatientService(){
         return new PatientServiceImpl(patientRepository);
+    }
+
+    @Bean
+    public MedicalRecordService getMedicalRecordService(){
+        return new MedicalRecordServiceImpl(medicalRecordRepository);
+    }
+
+    @Bean
+    public DiseaseService getDiseaseService(){
+        return new DiseaseServiceImpl(diseaseRepository);
+    }
+
+    @Bean
+    public DiagnoseService getDiagnoseService(){
+        return new DiagnoseServiceImpl(diagnoseRepository);
     }
 
 }

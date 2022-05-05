@@ -1,5 +1,6 @@
 package sk.durovic.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,8 +13,8 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@Setter(AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
 public class Diagnose extends BaseEntity{
 

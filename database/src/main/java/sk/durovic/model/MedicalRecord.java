@@ -1,5 +1,6 @@
 package sk.durovic.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,9 +10,9 @@ import sk.durovic.annotations.EntityProcessor;
 import javax.persistence.*;
 
 @Entity
-@Setter
+@Setter(AccessLevel.PROTECTED)
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
 public class MedicalRecord extends BaseEntity{
 

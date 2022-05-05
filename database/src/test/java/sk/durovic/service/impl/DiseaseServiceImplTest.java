@@ -8,7 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.Disease;
+import sk.durovic.model.access.DiseaseEntity;
 import sk.durovic.repository.DiseaseRepository;
 
 import static org.hamcrest.MatcherAssert.*;
@@ -16,19 +18,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class DiseaseServiceImplTest {
-/*
+
     @Mock
     private DiseaseRepository repo;
 
     @InjectMocks
     private DiseaseServiceImpl service;
 
+    private DiseaseEntity diseaseE;
     private Disease disease;
 
     @BeforeEach
-    void setUp() {
-        disease = new Disease();
-        disease.setName("heart-attack");
+    void setUp() throws Exception {
+        diseaseE = new DiseaseEntity();
+        diseaseE.setName("heart-attack");
+        disease = EntityMapper.mapEntityToPersist(diseaseE);
     }
 
     @Test
@@ -59,5 +63,5 @@ class DiseaseServiceImplTest {
         service.deleteById(1L);
 
         Mockito.verify(repo, Mockito.atMostOnce()).deleteById(1L);
-    }*/
+    }
 }
