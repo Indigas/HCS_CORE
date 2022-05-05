@@ -1,14 +1,25 @@
 package sk.durovic.manager;
 
-public enum Version {
+public class Version {
 
-    OPTIMISTIC_LOCK,
-    LOCK,
-    TO_SAVE,
-    TO_REMOVE;
+    public enum Status {
+        // Entity can be fetched from container.
+        // Entity will be tracked with version.
+        OPTIMISTIC_LOCK,
+
+        // Entity cannot be fetched from container.
+        LOCK,
+
+        // Entity waiting for persist/commit
+        TO_SAVE,
+
+        // Entity to remove from DB
+        TO_REMOVE;
+    }
 
     private int version = 0;
     private int versionOld = 0;
+    private Status status;
 
     Version(){
     }
@@ -27,6 +38,17 @@ public enum Version {
 
     void onPersist(){
         version = 0;
+    }
+
+    void changeStatus(Status status){
+        this.status = status;
+    }
+
+    boolean isReadyForChange(){
+        if(status == Status.LOCK)
+            return false;
+
+        return ++this.version == this.versionOld || this.version == 0;
     }
 
 }

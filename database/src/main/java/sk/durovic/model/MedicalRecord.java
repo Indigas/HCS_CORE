@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 import sk.durovic.annotations.EntityProcessor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Setter(AccessLevel.PROTECTED)
@@ -21,6 +22,7 @@ public class MedicalRecord extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "diagnose_id")
+    @NotNull
     private Diagnose diagnose;
 
     @Column
@@ -29,5 +31,6 @@ public class MedicalRecord extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
+    @NotNull
     private Patient patient;
 }
