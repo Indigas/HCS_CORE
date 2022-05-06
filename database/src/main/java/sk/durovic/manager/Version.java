@@ -19,25 +19,33 @@ public class Version {
 
     private int version = 0;
     private int versionOld = 0;
-    private Status status;
+    private Status status = Status.OPTIMISTIC_LOCK;
 
-    Version(){
+    public Version(){
     }
 
     void setVersion(int version){
         this.version = version;
     }
 
+    int getVersion(){ return this.version; }
+
     boolean isChanged(){
         return this.version > versionOld;
     }
 
-    void incrementVersion(){
+    public void incrementVersion(){
         this.version++;
     }
 
     void onPersist(){
         version = 0;
+        versionOld = 0;
+        toSave();
+    }
+
+    void onSave(){
+        incrementVersion();
     }
 
     void changeStatus(Status status){
@@ -45,10 +53,31 @@ public class Version {
     }
 
     boolean isReadyForChange(){
-        if(status == Status.LOCK)
+        if(status == Status.LOCK || status == Status.TO_REMOVE)
             return false;
 
-        return ++this.version == this.versionOld || this.version == 0;
+        return true;
+    }
+
+    Status getStatus(){
+        return this.status;
+    }
+
+    void release(){
+        this.status = Status.OPTIMISTIC_LOCK;
+        this.versionOld = this.version;
+    }
+
+    void lock(){
+        this.status = Status.LOCK;
+    }
+
+    void toRemove(){
+        this.status = Status.TO_REMOVE;
+    }
+
+    void toSave(){
+        this.status = Status.TO_SAVE;
     }
 
 }

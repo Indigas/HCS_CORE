@@ -32,7 +32,7 @@ public class EntityManager {
     public <T extends BaseEntityAbstractClass<ID>, ID> T getReference(Class<T> clazz, ID id) throws ObjectIsNotEntityException {
         try {
             T object = createEntity(clazz);
-            setIdOfReferenceEntity(object, id);
+            EntityManipulator.setIdOfReferenceEntity(object, id);
             return object;
         } catch (Exception e){
             e.printStackTrace();
@@ -47,38 +47,6 @@ public class EntityManager {
         return constructor.newInstance();
     }
 
-    @SuppressWarnings("unchecked")
-    private <T, R extends BaseEntityAbstractClass<?>> Class<R> getEntityClass(T object)
-            throws ObjectIsNotEntityException {
 
-        Class<?> clazz = object.getClass();
-
-        while(clazz != BaseEntityAbstractClass.class){
-            if (clazz.isAnnotationPresent(Entity.class))
-                return (Class<R>) clazz;
-
-            clazz = clazz.getSuperclass();
-        }
-
-        throw new ObjectIsNotEntityException(object + " is not a Entity class");
-    }
-
-
-    private <T extends BaseEntityAbstractClass<ID>, ID> void setIdOfReferenceEntity(T object, ID id){
-        Class<?> clazz = object.getClass();
-
-        while(clazz != Object.class){
-            try {
-                Field field = clazz.getDeclaredField("id");
-                field.setAccessible(true);
-                field.set(object, id);
-                clazz = clazz.getSuperclass();
-            } catch (NoSuchFieldException e) {
-                clazz = clazz.getSuperclass();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 }
