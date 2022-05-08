@@ -4,7 +4,10 @@ import org.springframework.stereotype.Component;
 import sk.durovic.exception.EntityChangeVersion;
 import sk.durovic.exception.ObjectIsNotEntityException;
 import sk.durovic.model.BaseEntityAbstractClass;
+import sk.durovic.service.Service;
+
 import java.lang.reflect.Constructor;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -63,8 +66,17 @@ public class EntityManager {
         entityContainer.onRemove(entity);
     }
 
-    public void flush(){
+    // prerobit tak ako commit - cize sa zavola iny thread aby persistol entity
+    public <T extends BaseEntityAbstractClass<?>> void flush(){
         // persist entities without clearing containers
+        List<? extends BaseEntityAbstractClass<?>> toSave = entityContainer.onFlush();
+        toSave.forEach(this::onFlush);
+    }
+
+    // suvisi s predoslou metodou
+    @SuppressWarnings("unchecked")
+    private <T> void onFlush(T object){
+        ((Service<T, ?, ?>) serviceContainer.getService(object.getClass())).save(object);
     }
 
     public void commit(){
@@ -98,6 +110,7 @@ public class EntityManager {
         constructor.setAccessible(true);
         return constructor.newInstance();
     }
+
 
 
 

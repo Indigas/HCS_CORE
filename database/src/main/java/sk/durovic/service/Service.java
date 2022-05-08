@@ -1,6 +1,7 @@
 package sk.durovic.service;
 
 import org.springframework.data.repository.CrudRepository;
+import sk.durovic.model.BaseEntityAbstractClass;
 
 import java.util.List;
 import java.util.Optional;

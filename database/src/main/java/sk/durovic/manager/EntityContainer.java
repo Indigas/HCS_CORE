@@ -4,6 +4,7 @@ package sk.durovic.manager;
 import sk.durovic.exception.EntityChangeVersion;
 import sk.durovic.model.BaseEntityAbstractClass;
 
+import java.util.List;
 import java.util.Optional;
 
 public class EntityContainer {
@@ -44,5 +45,10 @@ public class EntityContainer {
     public <T extends BaseEntityAbstractClass<?>> void onRelease(T entity) {
         entity.getVersion().release();
         container.onChangeStatus(entity);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<? extends BaseEntityAbstractClass<?>> onFlush() {
+        return (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus(Version.Status.TO_SAVE);
     }
 }
