@@ -1,10 +1,17 @@
 package sk.durovic.model;
 
-import org.springframework.data.annotation.Version;
+
+import sk.durovic.manager.Version;
 
 public abstract class BaseEntityAbstractClass<ID> {
 
+    private Version version = new Version();
+
     abstract public ID getId();
+
+    public Version getVersion(){
+        return this.version;
+    }
 
 
     @Override

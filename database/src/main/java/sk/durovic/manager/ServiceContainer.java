@@ -22,7 +22,7 @@ public class ServiceContainer {
     }
 
     @SuppressWarnings("unchecked")
-    <T, R extends Service<?,?,?>> R getService(Class<T> clazz){
+    <T, R extends Service<?,ID,?>, ID> R getService(Class<T> clazz){
         return (R) context.getBean(servicesMap.get(clazz));
     }
 

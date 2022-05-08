@@ -5,7 +5,6 @@ import sk.durovic.collection.Entry;
 import sk.durovic.collection.MultiEntry;
 import sk.durovic.exception.EntityChangeVersion;
 import sk.durovic.model.*;
-import sk.durovic.model.access.PatientEntity;
 
 import java.util.*;
 
@@ -21,62 +20,76 @@ class Container {
                         };
 
     private final Map<Entry<Version.Status, Class<?>>
-            , List<Entry<? extends BaseEntityAbstractClass<?>, Version>>> entityTable;
+            , List<? extends BaseEntityAbstractClass<?>>> entityTable;
 
 
     Container(){
         entityTable = new HashMap<>();
     }
 
-    <T extends BaseEntityAbstractClass<?>> void save(Entry<T, Version> entity) throws EntityChangeVersion {
-        List<Entry<? extends BaseEntityAbstractClass<?>, Version>> entitiesToAdd = new LinkedList<>();
+    <T extends BaseEntityAbstractClass<?>> void save(T entity) throws EntityChangeVersion {
 
-        for (Map.Entry<Entry<Version.Status, Class<?>>, List<Entry<? extends BaseEntityAbstractClass<?>, Version>>> entry :
+        for (Map.Entry<Entry<Version.Status, Class<?>>, List<? extends BaseEntityAbstractClass<?>>> entry :
                 entityTable.entrySet()) {
 
             if(entry.getKey().getValue() == entity.getClass()){
 
-                Iterator<Entry<? extends BaseEntityAbstractClass<?>, Version>> it = entry.getValue().listIterator();
+                Iterator<? extends BaseEntityAbstractClass<?>> it = entry.getValue().listIterator();
                 while(it.hasNext()){
-                    Entry<? extends BaseEntityAbstractClass<?>, Version> ent = it.next();
-                    Version version = ent.getValue();
+                    BaseEntityAbstractClass<?> ent = it.next();
+                    Version version = ent.getVersion();
 
-                    if (ent.getKey().equals(entity.getKey())) {
-                        int versionNo = version.getVersion();
+                    if (ent.equals(entity)) {
 
-                        if (versionNo == entity.getValue().getVersion())
+                        if (version.getVersion() == entity.getVersion().getVersion())
                             throw new EntityChangeVersion("Entity has same version as actually saved");
-                        else if (versionNo > entity.getValue().getVersion())
+                        else if (version.getVersion() > entity.getVersion().getVersion())
                             throw new EntityChangeVersion("Entity has lower version as actually saved");
 
                         it.remove();
-                    }
 
-                    entitiesToAdd.add(entity);
+                    }
+                    ent.getVersion().onSave();
+                    getListOfEntities(ent.getVersion().getStatus(), ent.getClass()).add(ent);
 
                 }
             }
 
         }
 
-        entitiesToAdd.stream().forEach(entry -> getListOfEntities(entry.getValue().getStatus(), entry.getKey().getClass()).add(entry));
-
     }
 
-    /*List<Entry<BaseEntityAbstractClass<?>, Version>> getListOfEntities(Entry<Version.Status, Class<?>> entry){
-        return entityTable.get(entry);
-    }*/
+    @SuppressWarnings("unchecked")
+    <T extends BaseEntityAbstractClass<?>, ID> Optional<T> load(T entity){
 
-    List<Entry<? extends BaseEntityAbstractClass<?>, Version>> getListOfEntities(Version.Status status, Class<?> clazz){
+        return (Optional<T>) getByClass(entity.getClass()).stream().filter(ent -> ent.equals(entity)).findFirst();
+    }
+
+    <T extends BaseEntityAbstractClass<?>> void addToContainer(T entity){
+        getListOfEntities(Version.Status.OPTIMISTIC_LOCK, entity.getClass()).add(entity);
+    }
+
+    <T extends BaseEntityAbstractClass<?>> boolean removeFromContainer(T entity){
+        return getByClass(entity.getClass()).remove(entity);
+    }
+
+    <T extends BaseEntityAbstractClass<?>, ID> void onChangeStatus(T entity){
+        getListOfEntities(entity.getVersion().getStatusOld(), entity.getClass()).remove(entity);
+        getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
+    }
+
+
+    @SuppressWarnings("unchecked")
+    List<? super BaseEntityAbstractClass<?>> getListOfEntities(Version.Status status, Class<?> clazz){
         Entry<Version.Status, Class<?>> entry = new MultiEntry<>();
         entry.put(status, clazz);
-        return entityTable.get(entry);
+        return (List<? super BaseEntityAbstractClass<?>>) entityTable.get(entry);
     }
 
-    List<Entry<? extends BaseEntityAbstractClass<?>, Version>> getByStatus(Version.Status status){
-        List<Entry<? extends BaseEntityAbstractClass<?>, Version>> allWithStatus = new LinkedList<>();
+    List<? super BaseEntityAbstractClass<?>> getByStatus(Version.Status status){
+        List<? super BaseEntityAbstractClass<?>> allWithStatus = new LinkedList<>();
 
-        for (Map.Entry<Entry<Version.Status, Class<?>>, List<Entry<? extends BaseEntityAbstractClass<?>, Version>>> entry :
+        for (Map.Entry<Entry<Version.Status, Class<?>>, List<? extends BaseEntityAbstractClass<?>>> entry :
                 entityTable.entrySet()) {
 
             if (entry.getKey().getKey() == status)
@@ -86,14 +99,15 @@ class Container {
         return allWithStatus;
     }
 
-    List<Entry<? extends BaseEntityAbstractClass<?>, Version>> getByClass(Class<?> clazz){
-        List<Entry<? extends BaseEntityAbstractClass<?>, Version>> allWithClass = new LinkedList<>();
+    @SuppressWarnings("unchecked")
+    <T extends BaseEntityAbstractClass<?>> List<T> getByClass(Class<T> clazz){
+        List<T> allWithClass = new LinkedList<>();
 
-        for (Map.Entry<Entry<Version.Status, Class<?>>, List<Entry<? extends BaseEntityAbstractClass<?>, Version>>> entry :
+        for (Map.Entry<Entry<Version.Status, Class<?>>, List<? extends BaseEntityAbstractClass<?>>> entry :
                 entityTable.entrySet()) {
 
             if (entry.getKey().getValue() == clazz)
-                allWithClass.addAll(entry.getValue());
+                allWithClass.addAll((Collection<? extends T>) entry.getValue());
         }
 
         return allWithClass;
