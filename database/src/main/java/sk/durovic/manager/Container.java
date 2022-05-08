@@ -28,6 +28,7 @@ class Container {
     }
 
     <T extends BaseEntityAbstractClass<?>> void save(T entity) throws EntityChangeVersion {
+        entity.getVersion().onSave();
 
         for (Map.Entry<Entry<Version.Status, Class<?>>, List<? extends BaseEntityAbstractClass<?>>> entry :
                 entityTable.entrySet()) {
@@ -49,8 +50,8 @@ class Container {
                         it.remove();
 
                     }
-                    ent.getVersion().onSave();
-                    getListOfEntities(ent.getVersion().getStatus(), ent.getClass()).add(ent);
+
+                    getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
 
                 }
             }

@@ -10,8 +10,8 @@ import java.util.Optional;
 @Component
 public class EntityManager {
 
-    private final EntityContainer entityContainer;
-    private final ServiceContainer serviceContainer;
+    private EntityContainer entityContainer;
+    private ServiceContainer serviceContainer;
 
     public EntityManager() {
         this.entityContainer = new EntityContainer();
@@ -40,10 +40,6 @@ public class EntityManager {
         return load(entity.getClass(), entity.getId()).isPresent();
     }
 
-    public void flush(){
-        commit();
-    }
-
     public <T extends BaseEntityAbstractClass<?>> void lock(T entity){
         entityContainer.onLock(entity);
 
@@ -67,12 +63,21 @@ public class EntityManager {
         entityContainer.onRemove(entity);
     }
 
+    public void flush(){
+        // persist entities without clearing containers
+    }
+
     public void commit(){
         // call other thread to persist entities with status TO_SAVE, TO_REMOVE - clear containers
     }
 
     public void close(){
-        // clear entitycontainer
+        clear();
+        serviceContainer = null;
+    }
+
+    public void clear(){
+        entityContainer = new EntityContainer();
     }
 
 
