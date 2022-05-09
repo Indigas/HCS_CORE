@@ -4,7 +4,9 @@ package sk.durovic.manager;
 import sk.durovic.exception.EntityChangeVersion;
 import sk.durovic.model.BaseEntityAbstractClass;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class EntityContainer {
@@ -48,7 +50,11 @@ public class EntityContainer {
     }
 
     @SuppressWarnings("unchecked")
-    public List<? extends BaseEntityAbstractClass<?>> onFlush() {
-        return (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus(Version.Status.TO_SAVE);
+    public Map<Version.Status, List<? extends BaseEntityAbstractClass<?>>> onFlush() {
+        Map<Version.Status, List<? extends BaseEntityAbstractClass<?>>> map = new HashMap<>();
+        map.put(Version.Status.TO_SAVE, (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus(Version.Status.TO_SAVE));
+        map.put(Version.Status.TO_REMOVE, (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus(Version.Status.TO_REMOVE));
+
+        return map;
     }
 }

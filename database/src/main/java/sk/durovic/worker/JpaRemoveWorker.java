@@ -6,12 +6,12 @@ import java.util.List;
 
 public class JpaRemoveWorker extends JpaPersistWorker{
 
-    public JpaRemoveWorker(List<? extends BaseEntityAbstractClass<?>> listOfEntities) {
+    JpaRemoveWorker(List<? extends BaseEntityAbstractClass<?>> listOfEntities) {
         super(listOfEntities, true);
     }
 
     @Override
     <T extends BaseEntityAbstractClass<?>> void execute(T entity) {
-        serviceContainer.getService(entity.getClass()).deleteById(entity.getId());
+        getServiceContainer().getService(entity.getClass()).deleteById(entity.getId());
     }
 }

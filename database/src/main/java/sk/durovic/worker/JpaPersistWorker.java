@@ -15,16 +15,23 @@ import java.util.List;
 @Slf4j
 public class JpaPersistWorker implements Runnable{
 
-    final ServiceContainer serviceContainer;
-    final List<? extends BaseEntityAbstractClass<?>> listOfEntities;
+    private final ServiceContainer serviceContainer;
+    private final List<? extends BaseEntityAbstractClass<?>> listOfEntities;
     private final boolean clearSaveContainer;
 
-    public JpaPersistWorker(List<? extends BaseEntityAbstractClass<?>> listOfEntities, boolean clearSaveContainer) {
+    JpaPersistWorker(List<? extends BaseEntityAbstractClass<?>> listOfEntities, boolean clearSaveContainer) {
         this.serviceContainer = new ServiceContainer();
         this.listOfEntities = listOfEntities;
         this.clearSaveContainer = clearSaveContainer;
     }
 
+    ServiceContainer getServiceContainer() {
+        return serviceContainer;
+    }
+
+    List<? extends BaseEntityAbstractClass<?>> getListOfEntities() {
+        return listOfEntities;
+    }
 
     @Override
     public void run() {
