@@ -4,7 +4,6 @@ package sk.durovic.manager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import sk.durovic.model.*;
-import sk.durovic.repository.PatientDiagnoseRepository;
 import sk.durovic.service.*;
 
 import java.util.HashMap;
@@ -22,7 +21,7 @@ public class ServiceContainer {
     }
 
     @SuppressWarnings("unchecked")
-    <T, R extends Service<?,ID,?>, ID> R getService(Class<T> clazz){
+    public <T, R extends Service<?,ID,?>, ID> R getService(Class<T> clazz){
         return (R) context.getBean(servicesMap.get(clazz));
     }
 

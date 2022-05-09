@@ -5,20 +5,25 @@ import sk.durovic.exception.EntityChangeVersion;
 import sk.durovic.exception.ObjectIsNotEntityException;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.service.Service;
+import sk.durovic.worker.JpaPersistWorker;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Component
 public class EntityManager {
 
     private EntityContainer entityContainer;
     private ServiceContainer serviceContainer;
+    private ExecutorService executorService;
 
     public EntityManager() {
         this.entityContainer = new EntityContainer();
         this.serviceContainer = new ServiceContainer();
+        this.executorService = Executors.newSingleThreadExecutor();
     }
 
 
@@ -76,11 +81,12 @@ public class EntityManager {
     // suvisi s predoslou metodou
     @SuppressWarnings("unchecked")
     private <T> void onFlush(T object){
-        ((Service<T, ?, ?>) serviceContainer.getService(object.getClass())).save(object);
+        executorService.execute(new JpaPersistWorker(entityContainer.onFlush(), false));
     }
 
     public void commit(){
         // call other thread to persist entities with status TO_SAVE, TO_REMOVE - clear containers
+        executorService.execute(new JpaPersistWorker(entityContainer.onFlush(),true));
     }
 
     public void close(){
