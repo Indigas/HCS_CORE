@@ -78,12 +78,13 @@ public class EntityManager implements Closeable {
 
     @Override
     public void close(){
-        clear();
         jpaWorkers.close();
+        clear();
     }
 
     public void clear(){
         entityContainer.clear();
+        serviceContainer.clear();
     }
 
 

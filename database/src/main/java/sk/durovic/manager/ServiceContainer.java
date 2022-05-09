@@ -29,6 +29,10 @@ public class ServiceContainer {
         return servicesMap.get(clazz);
     }
 
+    void clear(){
+        servicesMap.clear();
+    }
+
     private void setServices(){
         servicesMap.put(Patient.class, PatientService.class);
         servicesMap.put(MedicalRecord.class, MedicalRecordService.class);
