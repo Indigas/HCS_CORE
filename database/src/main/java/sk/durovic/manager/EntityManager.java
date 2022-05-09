@@ -13,9 +13,9 @@ import java.util.Optional;
 @Component
 public class EntityManager implements Closeable {
 
-    private EntityContainer entityContainer;
-    private ServiceContainer serviceContainer;
-    private JpaWorkers jpaWorkers;
+    private final EntityContainer entityContainer;
+    private final ServiceContainer serviceContainer;
+    private final JpaWorkers jpaWorkers;
 
     public EntityManager() {
         this.entityContainer = new EntityContainer();
@@ -83,7 +83,7 @@ public class EntityManager implements Closeable {
     }
 
     public void clear(){
-        entityContainer = new EntityContainer();
+        entityContainer.clear();
     }
 
 

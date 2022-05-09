@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class EntityContainer {
 
-    private Container container;
+    private final Container container;
 
     public EntityContainer() {
         this.container = new Container();
@@ -56,5 +56,9 @@ public class EntityContainer {
         map.put(Version.Status.TO_REMOVE, (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus(Version.Status.TO_REMOVE));
 
         return map;
+    }
+
+    public void clear(){
+        container.clear();
     }
 }

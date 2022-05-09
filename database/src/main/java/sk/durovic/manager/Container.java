@@ -133,4 +133,7 @@ class Container {
         return keys;
     }
 
+    void clear(){
+        entityTable.clear();
+    }
 }
