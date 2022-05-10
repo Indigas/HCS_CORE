@@ -1,7 +1,5 @@
 package sk.durovic.manager;
 
-
-import sk.durovic.exception.EntityChangeVersion;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import java.util.HashMap;
@@ -17,11 +15,11 @@ public class EntityContainer {
         this.container = new Container();
     }
 
-    <T extends BaseEntityAbstractClass<?>, ID> Optional<T> onLoad(T entity){
+    <T extends BaseEntityAbstractClass<ID>, ID> Optional<T> onLoad(T entity){
         return container.load(entity);
     }
 
-    <T extends BaseEntityAbstractClass<?>> void onSave(T entity) throws EntityChangeVersion {
+    <T extends BaseEntityAbstractClass<?>> void onSave(T entity) {
         container.save(entity);
     }
 

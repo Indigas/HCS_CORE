@@ -11,6 +11,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 public class JpaPersistWorker implements Runnable{
@@ -65,7 +66,7 @@ public class JpaPersistWorker implements Runnable{
 
     }
 
-    private <T extends BaseEntityAbstractClass<?>> void apply(T entity) throws EntityIntegrationException {
+    private <T extends BaseEntityAbstractClass<ID>, ID> void apply(T entity) throws EntityIntegrationException {
         try {
             execute(entity);
         } catch (ConstraintViolationException constraintViolationException){
@@ -78,8 +79,8 @@ public class JpaPersistWorker implements Runnable{
         }
     }
 
-    @SuppressWarnings("unchecked")
-    <T extends BaseEntityAbstractClass<?>> void execute(T entity) {
-        ((Service<T, ?, ?>) serviceContainer.getService(entity.getClass())).save(entity);
+    <T extends BaseEntityAbstractClass<ID>, ID> void execute(T entity) {
+        Optional<Service<T,ID,?>> service = serviceContainer.getService(entity.getClass());
+        service.ifPresent(serv -> serv.save(entity));
     }
 }

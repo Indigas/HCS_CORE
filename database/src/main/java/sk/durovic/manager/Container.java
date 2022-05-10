@@ -27,8 +27,7 @@ class Container {
         entityTable = new HashMap<>();
     }
 
-    <T extends BaseEntityAbstractClass<?>> void save(T entity) throws EntityChangeVersion {
-        entity.getVersion().onSave();
+    <T extends BaseEntityAbstractClass<?>> void save(T entity) {
 
         for (Map.Entry<Entry<Version.Status, Class<?>>, List<? extends BaseEntityAbstractClass<?>>> entry :
                 entityTable.entrySet()) {
@@ -51,6 +50,7 @@ class Container {
 
                     }
 
+                    entity.getVersion().onSave();
                     getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
 
                 }
@@ -61,7 +61,7 @@ class Container {
     }
 
     @SuppressWarnings("unchecked")
-    <T extends BaseEntityAbstractClass<?>, ID> Optional<T> load(T entity){
+    <T extends BaseEntityAbstractClass<ID>, ID> Optional<T> load(T entity){
 
         return (Optional<T>) getByClass(entity.getClass()).stream().filter(ent -> ent.equals(entity)).findFirst();
     }

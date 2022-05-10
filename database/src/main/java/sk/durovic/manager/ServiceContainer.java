@@ -8,6 +8,7 @@ import sk.durovic.service.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ServiceContainer {
 
@@ -21,8 +22,8 @@ public class ServiceContainer {
     }
 
     @SuppressWarnings("unchecked")
-    public <T, R extends Service<?,ID,?>, ID> R getService(Class<T> clazz){
-        return (R) context.getBean(servicesMap.get(clazz));
+    public <T extends BaseEntityAbstractClass<?>, R> Optional<R> getService(Class<T> clazz){
+        return Optional.of((R)context.getBean(servicesMap.get(clazz)));
     }
 
     Object getObjectService(Class<?> clazz){

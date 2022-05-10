@@ -1,9 +1,9 @@
 package sk.durovic.manager;
 
 import org.springframework.stereotype.Component;
-import sk.durovic.exception.EntityChangeVersion;
 import sk.durovic.exception.ObjectIsNotEntityException;
 import sk.durovic.model.BaseEntityAbstractClass;
+import sk.durovic.service.Service;
 import sk.durovic.worker.JpaWorkers;
 
 import java.io.Closeable;
@@ -24,17 +24,18 @@ public class EntityManager implements Closeable {
     }
 
 
-    public <T extends BaseEntityAbstractClass<?>, ID> void save(T object) throws EntityChangeVersion {
+    public <T extends BaseEntityAbstractClass<?>, ID> void save(T object) {
         entityContainer.onSave(object);
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends BaseEntityAbstractClass<ID>, ID> Optional<T> load(Class<T> clazz, ID id) throws ObjectIsNotEntityException {
+    public <T extends BaseEntityAbstractClass<ID>, ID> Optional<T> load(Class<T> clazz, ID id) {
 
-        Optional<T> entity = (Optional<T>) entityContainer.onLoad(getReference(clazz, id));
+        Optional<T> entity = entityContainer.onLoad(getReference(clazz, id));
 
         if(entity.isEmpty()) {
-            entity = (Optional<T>) serviceContainer.getService(clazz).load(id);
+            Optional<Service<T, ID, ?>> service = serviceContainer.getService(clazz);
+            entity = service.isPresent() ? service.get().load(id) : Optional.empty();
             entity.ifPresent(entityContainer::addToContainer);
         }
 
@@ -42,7 +43,7 @@ public class EntityManager implements Closeable {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends BaseEntityAbstractClass<?>> boolean contains(T entity) throws ObjectIsNotEntityException {
+    public <T extends BaseEntityAbstractClass<?>> boolean contains(T entity) {
         return load(entity.getClass(), entity.getId()).isPresent();
     }
 
@@ -56,7 +57,7 @@ public class EntityManager implements Closeable {
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends BaseEntityAbstractClass<?>> void refresh(T entity) throws ObjectIsNotEntityException {
+    public <T extends BaseEntityAbstractClass<?>> void refresh(T entity) {
         if(!entityContainer.onRefresh(entity))
             throw new IllegalArgumentException("Entity is not managed by manager. Save it first.");
 
@@ -88,7 +89,7 @@ public class EntityManager implements Closeable {
     }
 
 
-    public <T extends BaseEntityAbstractClass<ID>, ID> T getReference(Class<T> clazz, ID id) throws ObjectIsNotEntityException {
+    public <T extends BaseEntityAbstractClass<ID>, ID> T getReference(Class<T> clazz, ID id){
         try {
             T object = createEntity(clazz);
             EntityManipulator.setIdOfReferenceEntity(object, id);

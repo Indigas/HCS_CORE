@@ -9,8 +9,7 @@ import java.lang.reflect.Field;
 public class EntityManipulator {
 
     @SuppressWarnings("unchecked")
-    public static <T, R extends BaseEntityAbstractClass<?>> Class<R> getEntityClass(T object)
-            throws ObjectIsNotEntityException {
+    public static <T, R extends BaseEntityAbstractClass<?>> Class<R> getEntityClass(T object) {
 
         Class<?> clazz = object.getClass();
 
