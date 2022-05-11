@@ -27,17 +27,11 @@ public class Version {
         TO_REMOVE{
             @Override
             public void initialize(List<? extends BaseEntityAbstractClass<?>> list, boolean clearContainer){
-                setList(list);
                 setWorker(new JpaRemoveWorker(list));
             }
         };
 
         private JpaProcessWorker worker;
-        private List<? extends BaseEntityAbstractClass<?>> list;
-
-        void setList(List<? extends BaseEntityAbstractClass<?>> list){
-            this.list = list;
-        }
 
         void setWorker(JpaProcessWorker worker){
             this.worker = worker;
@@ -45,7 +39,6 @@ public class Version {
 
         @Override
         public void initialize(List<? extends BaseEntityAbstractClass<?>> list, boolean clearContainer){
-            setList(list);
             setWorker(new JpaPersistWorker(list, clearContainer));
         }
 
