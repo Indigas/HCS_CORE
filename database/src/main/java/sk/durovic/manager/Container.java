@@ -82,7 +82,7 @@ class Container {
         return getByClass(entity.getClass()).remove(entity);
     }
 
-    <T extends BaseEntityAbstractClass<?>, ID> void onChangeStatus(T entity){
+    <T extends BaseEntityAbstractClass<?>> void onChangeStatus(T entity){
         getListOfEntities(entity.getVersion().getStatusOld(), entity.getClass()).remove(entity);
         getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
     }
@@ -92,7 +92,7 @@ class Container {
     List<? super BaseEntityAbstractClass<?>> getListOfEntities(Version.Status status, Class<?> clazz){
         Entry<Version.Status, Class<?>> entry = new MultiEntry<>();
         entry.put(status, clazz);
-        return (List<? super BaseEntityAbstractClass<?>>) entityTable.get(entry);
+        return  (List<? super BaseEntityAbstractClass<?>>)entityTable.get(entry);
     }
 
     List<? super BaseEntityAbstractClass<?>> getByStatus(Version.Status status){
@@ -109,7 +109,7 @@ class Container {
     }
 
     @SuppressWarnings("unchecked")
-    <T extends BaseEntityAbstractClass<?>> List<T> getByClass(Class<T> clazz){
+    <T extends BaseEntityAbstractClass<ID>, ID> List<T> getByClass(Class<T> clazz){
         List<T> allWithClass = new LinkedList<>();
 
         for (Map.Entry<Entry<Version.Status, Class<?>>, List<? extends BaseEntityAbstractClass<?>>> entry :
