@@ -39,19 +39,28 @@ class Container {
                     BaseEntityAbstractClass<?> ent = it.next();
                     Version version = ent.getVersion();
 
-                    if (ent.equals(entity)) {
+                    if(entity.getId() == null){
+                        entity.getVersion().onSave();
+                        getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
+                        return;
+                    }
 
-                        if (version.getVersion() == entity.getVersion().getVersion())
+                    if (ent.equals(entity)) {
+                        if(!ent.getVersion().isReadyForChange())
+                            throw new EntityChangeVersion("Entity is locked or marked to remove");
+
+                        int entityVersion = entity.getVersion().getVersion()+1;
+
+                        if (version.getVersion() == entityVersion)
                             throw new EntityChangeVersion("Entity has same version as actually saved");
-                        else if (version.getVersion() > entity.getVersion().getVersion())
+                        else if (version.getVersion() > entityVersion)
                             throw new EntityChangeVersion("Entity has lower version as actually saved");
 
                         it.remove();
-
+                        entity.getVersion().onSave();
+                        getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
+                        return;
                     }
-
-                    entity.getVersion().onSave();
-                    getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
 
                 }
             }
@@ -62,7 +71,6 @@ class Container {
 
     @SuppressWarnings("unchecked")
     <T extends BaseEntityAbstractClass<ID>, ID> Optional<T> load(T entity){
-
         return (Optional<T>) getByClass(entity.getClass()).stream().filter(ent -> ent.equals(entity)).findFirst();
     }
 

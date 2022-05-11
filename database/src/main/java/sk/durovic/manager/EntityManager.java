@@ -6,6 +6,7 @@ import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.service.Service;
 import sk.durovic.worker.JpaWorkers;
 
+import javax.validation.constraints.NotNull;
 import java.io.Closeable;
 import java.lang.reflect.Constructor;
 import java.util.Optional;
@@ -70,11 +71,11 @@ public class EntityManager implements Closeable {
     }
 
     public <T extends BaseEntityAbstractClass<?>> void flush(){
-        jpaWorkers.execute(entityContainer.onFlush(), false);
+        jpaWorkers.execute(entityContainer.onFlush(false));
     }
 
     public void commit(){
-        jpaWorkers.execute(entityContainer.onFlush(), true);
+        jpaWorkers.execute(entityContainer.onFlush(true));
     }
 
     @Override
@@ -90,6 +91,9 @@ public class EntityManager implements Closeable {
 
 
     public <T extends BaseEntityAbstractClass<ID>, ID> T getReference(Class<T> clazz, ID id){
+        if (id == null)
+            throw new NullPointerException("ID is null");
+
         try {
             T object = createEntity(clazz);
             EntityManipulator.setIdOfReferenceEntity(object, id);

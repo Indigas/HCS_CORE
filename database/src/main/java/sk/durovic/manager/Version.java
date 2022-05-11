@@ -1,8 +1,18 @@
 package sk.durovic.manager;
 
+import sk.durovic.model.BaseEntityAbstractClass;
+import sk.durovic.worker.JpaPersistWorker;
+import sk.durovic.worker.JpaProcessWorker;
+import sk.durovic.worker.JpaProcessor;
+import sk.durovic.worker.JpaRemoveWorker;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Version {
 
-    public enum Status {
+    public enum Status implements JpaProcessor {
         // Entity can be fetched from container.
         // Entity will be tracked with version.
         OPTIMISTIC_LOCK,
@@ -14,8 +24,37 @@ public class Version {
         TO_SAVE,
 
         // Entity to remove from DB
-        TO_REMOVE;
+        TO_REMOVE{
+            @Override
+            public void initialize(List<? extends BaseEntityAbstractClass<?>> list, boolean clearContainer){
+                setList(list);
+                setWorker(new JpaRemoveWorker(list));
+            }
+        };
+
+        private JpaProcessWorker worker;
+        private List<? extends BaseEntityAbstractClass<?>> list;
+
+        void setList(List<? extends BaseEntityAbstractClass<?>> list){
+            this.list = list;
+        }
+
+        void setWorker(JpaProcessWorker worker){
+            this.worker = worker;
+        }
+
+        @Override
+        public void initialize(List<? extends BaseEntityAbstractClass<?>> list, boolean clearContainer){
+            setList(list);
+            setWorker(new JpaPersistWorker(list, clearContainer));
+        }
+
+        @Override
+        public JpaProcessWorker getWorker() {
+            return this.worker;
+        }
     }
+
 
     private int version = 0;
     private int versionOld = 0;
@@ -59,7 +98,7 @@ public class Version {
         if(status == Status.LOCK || status == Status.TO_REMOVE)
             return false;
 
-        return this.version == versionOld;
+        return true;
     }
 
     Status getStatus(){

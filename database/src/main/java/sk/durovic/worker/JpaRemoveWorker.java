@@ -6,14 +6,14 @@ import sk.durovic.service.Service;
 import java.util.List;
 import java.util.Optional;
 
-public class JpaRemoveWorker extends JpaPersistWorker{
+public class JpaRemoveWorker extends JpaProcessWorker{
 
-    JpaRemoveWorker(List<? extends BaseEntityAbstractClass<?>> listOfEntities) {
+    public JpaRemoveWorker(List<? extends BaseEntityAbstractClass<?>> listOfEntities) {
         super(listOfEntities, true);
     }
 
     @Override
-    <T extends BaseEntityAbstractClass<ID>, ID> void execute(T entity) {
+    public <T extends BaseEntityAbstractClass<ID>, ID> void execute(T entity) {
         Optional<Service<T,ID,?>> service = getServiceContainer().getService(entity.getClass());
         service.ifPresent(serv -> serv.deleteById(entity.getId()));
     }

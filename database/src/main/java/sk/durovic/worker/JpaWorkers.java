@@ -10,18 +10,27 @@ import java.util.concurrent.Executors;
 
 public class JpaWorkers {
 
-    private ExecutorService executorService;
+    private final ExecutorService executorService;
 
     public JpaWorkers() {
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
-    public void execute(Map<Version.Status, List<? extends BaseEntityAbstractClass<?>>> mapOfEntities, boolean clearContainers){
-        JpaPersistWorker jpaPersistWorker = new JpaPersistWorker(mapOfEntities.get(Version.Status.TO_SAVE), clearContainers);
+    /*public void execute(Map<Version.Status, List<? extends BaseEntityAbstractClass<?>>> mapOfEntities, boolean clearContainers){
+        JpaPersistWorker persistToSave = new JpaPersistWorker(mapOfEntities.get(Version.Status.TO_SAVE), clearContainers);
+        JpaPersistWorker persistOptimisticLock = new JpaPersistWorker(mapOfEntities.get(Version.Status.OPTIMISTIC_LOCK), clearContainers);
+        JpaPersistWorker persistLock = new JpaPersistWorker(mapOfEntities.get(Version.Status.LOCK), clearContainers);
         JpaRemoveWorker jpaRemoveWorker = new JpaRemoveWorker(mapOfEntities.get(Version.Status.TO_REMOVE));
 
-        executorService.execute(jpaPersistWorker);
+        executorService.execute(persistToSave);
+        executorService.execute(persistLock);
+        executorService.execute(persistOptimisticLock);
         executorService.execute(jpaRemoveWorker);
+    }*/
+
+    public void execute(JpaProcessor... processors){
+        for(JpaProcessor processor : processors)
+            executorService.execute(processor.getWorker());
     }
 
     public void close(){
