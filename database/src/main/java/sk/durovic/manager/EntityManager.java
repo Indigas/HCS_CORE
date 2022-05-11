@@ -25,11 +25,10 @@ public class EntityManager implements Closeable {
     }
 
 
-    public <T extends BaseEntityAbstractClass<?>, ID> void save(T object) {
+    public <T extends BaseEntityAbstractClass<?>> void save(T object) {
         entityContainer.onSave(object);
     }
 
-    @SuppressWarnings("unchecked")
     public <T extends BaseEntityAbstractClass<ID>, ID> Optional<T> load(Class<T> clazz, ID id) {
 
         Optional<T> entity = entityContainer.onLoad(getReference(clazz, id));

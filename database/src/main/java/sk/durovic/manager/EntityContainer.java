@@ -44,18 +44,7 @@ public class EntityContainer {
         entity.getVersion().release();
         container.onChangeStatus(entity);
     }
-/*
-    @SuppressWarnings("unchecked")
-    public Map<Version.Status, List<? extends BaseEntityAbstractClass<?>>> onFlush() {
-        Map<Version.Status, List<? extends BaseEntityAbstractClass<?>>> map = new HashMap<>();
-        map.put(Version.Status.TO_SAVE, (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus(Version.Status.TO_SAVE));
-        map.put(Version.Status.TO_REMOVE, (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus(Version.Status.TO_REMOVE));
-        map.put(Version.Status.LOCK, (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus(Version.Status.LOCK));
-        map.put(Version.Status.OPTIMISTIC_LOCK, (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus(Version.Status.OPTIMISTIC_LOCK));
 
-        return map;
-    }
-*/
     @SuppressWarnings("unchecked")
     public JpaProcessor[] onFlush(boolean clearContainer){
         JpaProcessor[] processors = new JpaProcessor[]{
