@@ -8,6 +8,9 @@ import sk.durovic.model.*;
 
 import java.util.*;
 
+/**
+ * Hold entities in predefined map
+ */
 class Container {
 
     private final Class<?>[] clazzes =
@@ -27,6 +30,11 @@ class Container {
         entityTable = new HashMap<>();
     }
 
+    /**
+     * Save entity to container
+     * @param entity
+     * @param <T>
+     */
     <T extends BaseEntityAbstractClass<?>> void save(T entity) {
 
         for (Map.Entry<Entry<Version.Status, Class<?>>, List<? extends BaseEntityAbstractClass<?>>> entry :
@@ -82,12 +90,22 @@ class Container {
         return getByClass(entity.getClass()).remove(entity);
     }
 
+    /**
+     * Called if entity status is changed
+     * @param entity
+     * @param <T>
+     */
     <T extends BaseEntityAbstractClass<?>> void onChangeStatus(T entity){
         getListOfEntities(entity.getVersion().getStatusOld(), entity.getClass()).remove(entity);
         getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
     }
 
-
+    /**
+     * get list of entities based on status and class
+     * @param status searching status
+     * @param clazz desired class
+     * @return
+     */
     @SuppressWarnings("unchecked")
     List<? super BaseEntityAbstractClass<?>> getListOfEntities(Version.Status status, Class<?> clazz){
         Entry<Version.Status, Class<?>> entry = new MultiEntry<>();
@@ -95,6 +113,11 @@ class Container {
         return  (List<? super BaseEntityAbstractClass<?>>)entityTable.get(entry);
     }
 
+    /**
+     * get list of entities based on status
+     * @param status
+     * @return
+     */
     List<? super BaseEntityAbstractClass<?>> getByStatus(Version.Status status){
         List<? super BaseEntityAbstractClass<?>> allWithStatus = new LinkedList<>();
 
@@ -108,6 +131,13 @@ class Container {
         return allWithStatus;
     }
 
+    /**
+     * get list of entities based on class
+     * @param clazz
+     * @param <T>
+     * @param <ID>
+     * @return
+     */
     @SuppressWarnings("unchecked")
     <T extends BaseEntityAbstractClass<ID>, ID> List<T> getByClass(Class<T> clazz){
         List<T> allWithClass = new LinkedList<>();

@@ -10,6 +10,9 @@ import java.io.Closeable;
 import java.lang.reflect.Constructor;
 import java.util.Optional;
 
+/**
+ * Class provide methods to use CRUD operations on entity and manage them.
+ */
 @Component
 public class EntityManager implements Closeable {
 
@@ -23,11 +26,23 @@ public class EntityManager implements Closeable {
         this.jpaWorkers = new JpaWorkers();
     }
 
-
+    /**
+     * Entity is being managed by manager
+     * @param object
+     * @param <T>
+     */
     public <T extends BaseEntityAbstractClass<?>> void save(T object) {
         entityContainer.onSave(object);
     }
 
+    /**
+     * load entity from DB, if not in container, or load from container
+     * @param clazz class of entity
+     * @param id ID of entity
+     * @param <T>
+     * @param <ID>
+     * @return
+     */
     public <T extends BaseEntityAbstractClass<ID>, ID> Optional<T> load(Class<T> clazz, ID id) {
 
         Optional<T> entity = entityContainer.onLoad(getReference(clazz, id));
@@ -55,6 +70,11 @@ public class EntityManager implements Closeable {
         entityContainer.onRelease(entity);
     }
 
+    /**
+     * Reload entity from DB to container. Can't be used to load it from DB, when entity is not present in container
+     * @param entity
+     * @param <T>
+     */
     @SuppressWarnings("unchecked")
     public <T extends BaseEntityAbstractClass<?>> void refresh(T entity) {
         if(!entityContainer.onRefresh(entity))
@@ -68,10 +88,17 @@ public class EntityManager implements Closeable {
         entityContainer.onRemove(entity);
     }
 
+    /**
+     * Perform task on saved entities without clearing container
+     * @param <T>
+     */
     public <T extends BaseEntityAbstractClass<?>> void flush(){
         jpaWorkers.execute(entityContainer.onFlush(false));
     }
 
+    /**
+     * Perform task on saved entities and clear container
+     */
     public void commit(){
         jpaWorkers.execute(entityContainer.onFlush(true));
     }
@@ -88,6 +115,15 @@ public class EntityManager implements Closeable {
     }
 
 
+    /**
+     * Get reference of parent entity for child entity. Parent is not loaded from DB.
+     * Only reference is created in order to save child entity.
+     * @param clazz
+     * @param id
+     * @param <T>
+     * @param <ID>
+     * @return
+     */
     public <T extends BaseEntityAbstractClass<ID>, ID> T getReference(Class<T> clazz, ID id){
         if (id == null)
             throw new NullPointerException("ID is null");

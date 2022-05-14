@@ -5,6 +5,9 @@ import sk.durovic.worker.JpaProcessor;
 
 import java.util.*;
 
+/**
+ * Class for calling methods on container based on events
+ */
 public class EntityContainer {
 
     private final Container container;
@@ -34,7 +37,6 @@ public class EntityContainer {
         container.onChangeStatus(entity);
     }
 
-
     public <T extends BaseEntityAbstractClass<?>> void onLock(T entity) {
         entity.getVersion().lock();
         container.onChangeStatus(entity);
@@ -45,6 +47,11 @@ public class EntityContainer {
         container.onChangeStatus(entity);
     }
 
+    /**
+     * called to perform worker tasks on entities, ec CRUD operations
+     * @param clearContainer
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public JpaProcessor[] onFlush(boolean clearContainer){
         JpaProcessor[] processors = new JpaProcessor[]{
