@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
 
+/**
+ * Annotation processor for creating setters and connectors for Entity.
+ */
 @SupportedSourceVersion(SourceVersion.RELEASE_11)
 @SupportedAnnotationTypes("sk.durovic.annotations.EntityProcessor")
 @AutoService(Processor.class)
@@ -42,6 +45,11 @@ public class EntityProcessor extends AbstractProcessor {
         return true;
     }
 
+    /**
+     * Process every field in class and find annotation on them to decide, which methods have to be written.
+     * @param fields
+     * @return
+     */
     private Map<String, Map<String, String>> processFields(List<? extends Element> fields){
         Map<String, Map<String, String>> fieldsMap = new HashMap<>();
         Map<String, String> connectors = new HashMap<>();
@@ -84,6 +92,11 @@ public class EntityProcessor extends AbstractProcessor {
         return fieldsMap;
     }
 
+    /**
+     * Find if field has annotation to be processed.
+     * @param annotations
+     * @return
+     */
     private boolean hasRelationAnnotation(List<? extends AnnotationMirror> annotations){
         for (AnnotationMirror onField :
                 annotations) {
@@ -96,6 +109,11 @@ public class EntityProcessor extends AbstractProcessor {
         return false;
     }
 
+    /**
+     * Create skeleton of class and custom methods, fields
+     * @param fields
+     * @throws IOException
+     */
     private void writeModelClass(Map<String, Map<String, String>> fields) throws IOException {
         Map<String, String> classAttr = fields.get("classAttr");
 
@@ -120,9 +138,6 @@ public class EntityProcessor extends AbstractProcessor {
             out.println("import javax.persistence.*;");
             out.println();
 
-
-           // out.println("@Entity");
-
             //write class
             out.print("public class ");
             out.print(simpleClassName);
@@ -139,12 +154,24 @@ public class EntityProcessor extends AbstractProcessor {
 
     }
 
+    /**
+     * Iteration through fieldsMap to write methods
+     * @param out where is method written
+     * @param fieldsMap map of fields
+     * @param nameOfMapping which map to write, setters or connectors
+     */
     private void writeToPrintWriter(PrintWriter out, Map<String, Map<String, String>> fieldsMap, String nameOfMapping){
         for (Map.Entry<String, String> field : fieldsMap.get(nameOfMapping).entrySet()) {
             out.println(writeMethod(field, nameOfMapping));
         }
     }
 
+    /**
+     * Decide which methods to create
+     * @param field
+     * @param nameOfMapping which methods to create, ec connectors, setters
+     * @return
+     */
     private String writeMethod(Map.Entry<String, String> field, String nameOfMapping){
         StringBuilder sb = new StringBuilder();
 
@@ -159,6 +186,11 @@ public class EntityProcessor extends AbstractProcessor {
         return sb.toString();
     }
 
+    /**
+     * Write setter methods.
+     * @param field map of fields to create setter methods for
+     * @param sb
+     */
     private void writeSettersMethod(Map.Entry<String, String> field, StringBuilder sb) {
         String name = getBeautyName(field.getKey());
         String argumentType = field.getValue();
@@ -168,6 +200,12 @@ public class EntityProcessor extends AbstractProcessor {
         methodBody(sb, name, argumentType, parameterName, methodName, parameterName, SETTER);
     }
 
+    /**
+     * Method to pass different method prefixes to create methods
+     * @param field
+     * @param sb
+     * @return
+     */
     private String writeConnectorsMethod(Map.Entry<String, String> field, StringBuilder sb){
 
         writeMethodForDiffRelations(field, sb, CONNECT);
@@ -176,6 +214,13 @@ public class EntityProcessor extends AbstractProcessor {
         return sb.toString();
     }
 
+    /**
+     * Method to decide which relationship method has to be created.
+     * Actuall supported relationships: oneToMany, manyToOne
+     * @param field
+     * @param sb
+     * @param methodPrefix
+     */
     private void writeMethodForDiffRelations(Map.Entry<String, String> field, StringBuilder sb, String methodPrefix){
 
         if(field.getValue().contains("List"))
@@ -185,6 +230,12 @@ public class EntityProcessor extends AbstractProcessor {
 
     }
 
+    /**
+     * Create methods which are related to manyToOne relationship in entity
+     * @param field
+     * @param sb
+     * @param methodPrefix
+     */
     private void oneToManyEntity(Map.Entry<String, String> field, StringBuilder sb, String methodPrefix){
         String addOrRemove = methodPrefix.equals(CONNECT) ? "add" : "remove";
 
@@ -196,6 +247,12 @@ public class EntityProcessor extends AbstractProcessor {
         methodBody(sb, name, argumentType, parameterName, methodName, parameterName, methodPrefix);
     }
 
+    /**
+     * Create methods which are related to manyToOne relationship in entity
+     * @param field
+     * @param sb
+     * @param methodPrefix
+     */
     private void manyToOneEntity(Map.Entry<String, String> field, StringBuilder sb, String methodPrefix) {
         String name = getBeautyName(field.getKey());
         String argumentType = field.getValue();
@@ -206,6 +263,16 @@ public class EntityProcessor extends AbstractProcessor {
         methodBody(sb, name, argumentType, parameterName, methodName, parameter, methodPrefix);
     }
 
+    /**
+     * create body of method
+     * @param sb where to write method
+     * @param name name of method
+     * @param argumentType argument type used in method
+     * @param parameterName name of parameter
+     * @param methodName method from parent entity to be called
+     * @param parameter same as parameter name
+     * @param methodPrefix used to determine usage of method as set, connect, get
+     */
     private void methodBody(StringBuilder sb, String name, String argumentType, String parameterName,
                             String methodName, String parameter, String methodPrefix) {
         sb.append("     public void ");
@@ -227,11 +294,21 @@ public class EntityProcessor extends AbstractProcessor {
         sb.append("\n\n");
     }
 
+    /**
+     * Helper method to get argument type for method
+     * @param name
+     * @return
+     */
     private String getArgumentType(String name){
         name = name.substring(name.lastIndexOf("<")+1);
         return name.replace(">", "");
     }
 
+    /**
+     * Get method name
+     * @param name
+     * @return
+     */
     private String getMethodName(String name){
         name = getParamaterName(name);
         name = name.replaceAll("[^a-zA-z0-9]","");
@@ -239,11 +316,21 @@ public class EntityProcessor extends AbstractProcessor {
         return name;
     }
 
+    /**
+     * Get name for part of method name
+     * @param name
+     * @return
+     */
     private String getBeautyName(String name){
         String firstLetter = name.substring(0,1).toUpperCase();
         return firstLetter + name.substring(1);
     }
 
+    /**
+     * Get name for parameter
+     * @param name
+     * @return
+     */
     private String getParamaterName(String name){
         return name.substring(name.lastIndexOf(".")+1);
     }
