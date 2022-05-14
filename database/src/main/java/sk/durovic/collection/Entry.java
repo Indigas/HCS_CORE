@@ -5,6 +5,11 @@ import sk.durovic.manager.Version;
 import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.BaseEntityAbstractClass;
 
+/**
+ * used for entity container
+ * @param <K>
+ * @param <V>
+ */
 public class Entry <K, V>{
 
     K key;

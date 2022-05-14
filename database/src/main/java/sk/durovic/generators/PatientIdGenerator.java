@@ -15,10 +15,20 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
+/**
+ * Class for ID generation
+ */
 public class PatientIdGenerator implements IdentifierGenerator, Configurable {
 
     private String regex = "[^A-Za-z0-9]";
 
+    /**
+     * Generate ID
+     * @param sharedSessionContractImplementor
+     * @param o
+     * @return
+     * @throws HibernateException
+     */
     @Override
     public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException {
         byte[] array = new byte[256];

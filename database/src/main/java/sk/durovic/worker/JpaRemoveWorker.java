@@ -6,6 +6,9 @@ import sk.durovic.service.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Worker to remove entities from DB
+ */
 public class JpaRemoveWorker extends JpaProcessWorker{
 
     public JpaRemoveWorker(List<? extends BaseEntityAbstractClass<?>> listOfEntities) {

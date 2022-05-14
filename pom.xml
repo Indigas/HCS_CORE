@@ -37,11 +37,6 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-
-		</plugins>
-	</build>
 
 
 	<profiles>

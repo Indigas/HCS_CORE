@@ -10,6 +10,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Mapper class. Used to map entities from mutable to immutable form and vice versa.
+ */
 public class EntityMapper {
 
     private static Map<Class<?>, Class<?>> entityMap = new HashMap<>();
@@ -23,6 +26,14 @@ public class EntityMapper {
 
     }
 
+    /**
+     * Change entity from mutable to immutable form, which can be persisted.
+     * @param object
+     * @param <T>
+     * @param <R>
+     * @return
+     * @throws Exception
+     */
     @SuppressWarnings("unchecked")
     public static <T, R extends BaseEntityAbstractClass<?>> R mapEntityToPersist(T object)
             throws Exception {
@@ -33,6 +44,14 @@ public class EntityMapper {
         return convertEntity(object, clazz, constructor);
     }
 
+    /**
+     * Convert entity to it's mutable form
+     * @param object
+     * @param <T>
+     * @param <R>
+     * @return
+     * @throws Exception
+     */
     @SuppressWarnings("unchecked")
     public static <T, R extends BaseEntityAbstractClass<?>> R mapEntity(T object) throws Exception{
         Class<?> clazz = object.getClass();
@@ -41,17 +60,31 @@ public class EntityMapper {
         return convertEntity(object, clazz, constructor);
     }
 
-    public static <T extends BaseEntityAbstractClass<?>>
-                    void mapToExistingEntity(T source, T destination) throws IllegalAccessException {
-
-        setFields(source, destination);
-    }
-
+    /**
+     * Copy fields to existing entity
+     * @param source
+     * @param destination
+     * @param <T>
+     * @param <U>
+     * @throws IllegalAccessException
+     */
     public static <T, U extends T> void mapToExistingObject(U source, T destination) throws IllegalAccessException {
 
         setFields(source,  destination);
     }
 
+    /**
+     * Convert entity
+     * @param object
+     * @param clazz
+     * @param constructor
+     * @param <T>
+     * @param <R>
+     * @return
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     */
     private static <T, R extends BaseEntityAbstractClass<?>> R convertEntity(T object, Class<?> clazz, Constructor<R> constructor)
             throws InstantiationException, IllegalAccessException, InvocationTargetException {
         constructor.setAccessible(true);
@@ -62,6 +95,14 @@ public class EntityMapper {
         return entity;
     }
 
+    /**
+     * Copy fields with java reflection
+     * @param source
+     * @param destination
+     * @param <T>
+     * @param <R>
+     * @throws IllegalAccessException
+     */
     private static <T, R> void setFields(T source,  R destination) throws IllegalAccessException {
         Class<?> clazz = destination.getClass();
 

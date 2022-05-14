@@ -6,6 +6,9 @@ import sk.durovic.service.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Worker to persist, update entities in DB
+ */
 @Slf4j
 public class JpaPersistWorker extends JpaProcessWorker{
 

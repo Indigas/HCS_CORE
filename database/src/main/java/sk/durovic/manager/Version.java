@@ -6,12 +6,17 @@ import sk.durovic.worker.JpaProcessWorker;
 import sk.durovic.worker.JpaProcessor;
 import sk.durovic.worker.JpaRemoveWorker;
 
-import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Track version of entity
+ */
 public class Version {
 
+    /**
+     * Status of entity represents following processing task.
+     * Used by workers to execute optimal task
+     */
     public enum Status implements JpaProcessor {
         // Entity can be fetched from container.
         // Entity will be tracked with version.
@@ -37,6 +42,11 @@ public class Version {
             this.worker = worker;
         }
 
+        /**
+         * Initialize worker to following processing task
+         * @param list
+         * @param clearContainer
+         */
         @Override
         public void initialize(List<? extends BaseEntityAbstractClass<?>> list, boolean clearContainer){
             setWorker(new JpaPersistWorker(list, clearContainer));

@@ -6,8 +6,18 @@ import sk.durovic.model.BaseEntityAbstractClass;
 import javax.persistence.Entity;
 import java.lang.reflect.Field;
 
+/**
+ * Helper methods to get entity class or setId of referenced entity
+ */
 public class EntityManipulator {
 
+    /**
+     * Return entity class of object. Class has to be annotated with Entity annotation
+     * @param object
+     * @param <T>
+     * @param <R>
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static <T, R extends BaseEntityAbstractClass<?>> Class<R> getEntityClass(T object) {
 
@@ -23,7 +33,13 @@ public class EntityManipulator {
         throw new ObjectIsNotEntityException(object + " is not a Entity class");
     }
 
-
+    /**
+     * Set id of entity, which is not stored in container
+     * @param object
+     * @param id
+     * @param <T>
+     * @param <ID>
+     */
     static <T extends BaseEntityAbstractClass<ID>, ID> void setIdOfReferenceEntity(T object, ID id){
         Class<?> clazz = object.getClass();
 

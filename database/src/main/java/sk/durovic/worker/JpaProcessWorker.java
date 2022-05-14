@@ -11,6 +11,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Abstract class for child workers. Child worker need to override execute method in order to perform desired task.
+ */
 @Slf4j
 public abstract class JpaProcessWorker implements Runnable {
 
@@ -69,6 +72,13 @@ public abstract class JpaProcessWorker implements Runnable {
 
     }
 
+    /**
+     * Method to catch exceptions and execute task
+     * @param entity
+     * @param <T>
+     * @param <ID>
+     * @throws EntityIntegrationException
+     */
     private <T extends BaseEntityAbstractClass<ID>, ID> void apply(T entity) throws EntityIntegrationException {
         try {
             execute(entity);
@@ -82,5 +92,11 @@ public abstract class JpaProcessWorker implements Runnable {
         }
     }
 
+    /**
+     * Method performing CRUD operations, or other processes based on entity status
+     * @param entity
+     * @param <T>
+     * @param <ID>
+     */
     abstract public <T extends BaseEntityAbstractClass<ID>, ID> void execute(T entity);
 }

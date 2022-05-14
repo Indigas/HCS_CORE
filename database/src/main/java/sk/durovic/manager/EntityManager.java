@@ -6,7 +6,6 @@ import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.service.Service;
 import sk.durovic.worker.JpaWorkers;
 
-import javax.validation.constraints.NotNull;
 import java.io.Closeable;
 import java.lang.reflect.Constructor;
 import java.util.Optional;
