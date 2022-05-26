@@ -28,6 +28,7 @@ class Container {
 
     Container(){
         entityTable = new HashMap<>();
+        initEntityTable();
     }
 
     /**
@@ -40,7 +41,9 @@ class Container {
         for (Map.Entry<Entry<Version.Status, Class<?>>, List<? extends BaseEntityAbstractClass<?>>> entry :
                 entityTable.entrySet()) {
 
-            if(entry.getKey().getValue() == entity.getClass()){
+            Entry<Version.Status, Class<?>> entityEntry = new MultiEntry<>(entity.getVersion().getStatus(), entity.getClass());
+            if(//entry.getKey().getValue() == entity.getClass()
+                    entry.getKey().equals(entityEntry)){
 
                 Iterator<? extends BaseEntityAbstractClass<?>> it = entry.getValue().listIterator();
                 while(it.hasNext()){
@@ -48,8 +51,7 @@ class Container {
                     Version version = ent.getVersion();
 
                     if(entity.getId() == null){
-                        entity.getVersion().onSave();
-                        getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
+                        saveEntityToContainer(entity);
                         return;
                     }
 
@@ -65,16 +67,24 @@ class Container {
                             throw new EntityChangeVersion("Entity has lower version as actually saved");
 
                         it.remove();
-                        entity.getVersion().onSave();
-                        getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
+                        saveEntityToContainer(entity);
                         return;
                     }
 
                 }
+
+                saveEntityToContainer(entity);
+                return;
+
             }
 
         }
 
+    }
+
+    private <T extends BaseEntityAbstractClass<?>> void saveEntityToContainer(T entity) {
+        entity.getVersion().onSave();
+        getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
     }
 
     @SuppressWarnings("unchecked")
@@ -87,7 +97,11 @@ class Container {
     }
 
     <T extends BaseEntityAbstractClass<?>> boolean removeFromContainer(T entity){
-        return getByClass(entity.getClass()).remove(entity);
+        for (Version.Status status : Version.Status.values()) {
+            if(getListOfEntities(status, entity.getClass()).remove(entity))
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -165,6 +179,7 @@ class Container {
             for (Class<?> clazz : clazzes){
                 MultiEntry<Version.Status, Class<?>> entry = new MultiEntry<>();
                 entry.put(status, clazz);
+                keys.add(entry);
             }
         }
 

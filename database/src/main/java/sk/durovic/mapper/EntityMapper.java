@@ -28,9 +28,7 @@ public class EntityMapper {
 
     /**
      * Change entity from mutable to immutable form, which can be persisted.
-     * @param object
-     * @param <T>
-     * @param <R>
+     * @param object Mutable entity convert to immutable entity able to be persisted
      * @return
      * @throws Exception
      */
@@ -47,8 +45,6 @@ public class EntityMapper {
     /**
      * Convert entity to it's mutable form
      * @param object
-     * @param <T>
-     * @param <R>
      * @return
      * @throws Exception
      */
@@ -61,11 +57,10 @@ public class EntityMapper {
     }
 
     /**
-     * Copy fields to existing entity
+     * Copy fields to existing entity. Using destination fields to be set up from source.
+     * Use destination as super class for source.
      * @param source
      * @param destination
-     * @param <T>
-     * @param <U>
      * @throws IllegalAccessException
      */
     public static <T, U extends T> void mapToExistingObject(U source, T destination) throws IllegalAccessException {
@@ -78,8 +73,6 @@ public class EntityMapper {
      * @param object
      * @param clazz
      * @param constructor
-     * @param <T>
-     * @param <R>
      * @return
      * @throws InstantiationException
      * @throws IllegalAccessException
@@ -99,8 +92,6 @@ public class EntityMapper {
      * Copy fields with java reflection
      * @param source
      * @param destination
-     * @param <T>
-     * @param <R>
      * @throws IllegalAccessException
      */
     private static <T, R> void setFields(T source,  R destination) throws IllegalAccessException {

@@ -17,10 +17,8 @@ public abstract class BaseEntityAbstractClass<ID> {
     @Override
     public boolean equals(Object obj) {
 
-
-
             if (obj instanceof BaseEntityAbstractClass) {
-                if (this.getId() == null || ((BaseEntityAbstractClass) obj).getId() == null)
+                if (this.getId() == null || ((BaseEntityAbstractClass<?>) obj).getId() == null)
                     return false;
 
 

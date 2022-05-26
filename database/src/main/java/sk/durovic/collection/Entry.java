@@ -2,8 +2,9 @@ package sk.durovic.collection;
 
 
 import sk.durovic.manager.Version;
-import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.BaseEntityAbstractClass;
+
+import java.util.Objects;
 
 /**
  * used for entity container
@@ -41,18 +42,25 @@ public class Entry <K, V>{
     }
 
     public static <T extends BaseEntityAbstractClass<?>> Entry<T , Version> createEntryWithVersion(T entity, Version version) throws IllegalAccessException {
-        Version newVersion = new Version();
-        EntityMapper.mapToExistingObject(version, newVersion);
-        newVersion.incrementVersion();
+        //Version newVersion = new Version();
+        //EntityMapper.mapToExistingObject(version, newVersion);
+        //newVersion.incrementVersion();
 
-        return new Entry<>(entity, newVersion);
+        version.incrementVersion();
+
+        return new Entry<>(entity, version);
     }
 
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Entry)
-            return key.equals(obj);
+            return key.equals(((Entry<?, ?>)obj).getKey());
 
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, value);
     }
 }
