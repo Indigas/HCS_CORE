@@ -1,4 +1,4 @@
-package sk.durovic.manager;
+package sk.durovic.manager.basic;
 
 import sk.durovic.exception.ObjectIsNotEntityException;
 import sk.durovic.model.BaseEntityAbstractClass;

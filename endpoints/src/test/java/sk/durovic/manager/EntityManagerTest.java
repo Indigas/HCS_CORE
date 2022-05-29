@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.dao.DataIntegrityViolationException;
 import sk.durovic.configuration.EntityManagerConfiguration;
 import sk.durovic.helper.Helper;
+import sk.durovic.manager.basic.EntityManagerBasic;
+import sk.durovic.manager.basic.ServiceContainerBasic;
 import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.Contact;
 import sk.durovic.model.Patient;
@@ -21,7 +23,6 @@ import javax.validation.ConstraintViolationException;
 import java.lang.reflect.Field;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.hamcrest.MatcherAssert.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -41,7 +42,7 @@ class EntityManagerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        entityManager = new EntityManager();
+        entityManager = new EntityManagerBasic();
         setContext();
 
         PatientEntity pa = new PatientEntity();
@@ -89,7 +90,7 @@ class EntityManagerTest {
     private void setContext() throws Exception {
         Field field = entityManager.getClass().getDeclaredField("serviceContainer");
         field.setAccessible(true);
-        ServiceContainer sc = (ServiceContainer) field.get(entityManager);
+        ServiceContainerBasic sc = (ServiceContainerBasic) field.get(entityManager);
         Field ff = sc.getClass().getDeclaredField("context");
         ff.setAccessible(true);
         ff.set(sc, context);

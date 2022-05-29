@@ -1,8 +1,7 @@
 package sk.durovic.collection;
 
 import org.junit.jupiter.api.Test;
-import sk.durovic.manager.Version;
-import sk.durovic.model.access.PatientEntity;
+import sk.durovic.manager.basic.Version;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,7 +1,7 @@
 package sk.durovic.model;
 
 
-import sk.durovic.manager.Version;
+import sk.durovic.manager.basic.Version;
 
 public abstract class BaseEntityAbstractClass<ID> {
 

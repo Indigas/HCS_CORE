@@ -1,4 +1,4 @@
-package sk.durovic.manager;
+package sk.durovic.manager.basic;
 
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.worker.JpaPersistWorker;

@@ -1,6 +1,6 @@
 package sk.durovic.mapper;
 
-import sk.durovic.manager.EntityManipulator;
+import sk.durovic.manager.basic.EntityManipulator;
 import sk.durovic.model.*;
 import sk.durovic.model.access.*;
 

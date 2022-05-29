@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import sk.durovic.exception.EntityIntegrationException;
 import sk.durovic.manager.ServiceContainer;
+import sk.durovic.manager.basic.ServiceContainerBasic;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import javax.validation.ConstraintViolationException;
@@ -22,7 +23,7 @@ public abstract class JpaProcessWorker implements Runnable {
     private final boolean clearSaveContainer;
 
     JpaProcessWorker(List<? extends BaseEntityAbstractClass<?>> listOfEntities, boolean clearSaveContainer) {
-        this.serviceContainer = new ServiceContainer();
+        this.serviceContainer = new ServiceContainerBasic();
         this.listOfEntities = listOfEntities;
         this.clearSaveContainer = clearSaveContainer;
     }

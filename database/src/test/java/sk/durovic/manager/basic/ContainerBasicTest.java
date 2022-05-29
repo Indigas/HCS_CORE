@@ -1,8 +1,9 @@
-package sk.durovic.manager;
+package sk.durovic.manager.basic;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sk.durovic.manager.Container;
 import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.Patient;
 import sk.durovic.model.access.PatientEntity;
@@ -13,14 +14,14 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.MatcherAssert.*;
 
-class ContainerTest {
+class ContainerBasicTest {
 
     private Container container;
     private Patient patient;
 
     @BeforeEach
     void setUp() throws Exception {
-        container = Container.class.getDeclaredConstructor().newInstance();
+        container = ContainerBasic.class.getDeclaredConstructor().newInstance();
         patient = EntityMapper.mapEntityToPersist(new PatientEntity());
         EntityManipulator.setIdOfReferenceEntity(patient, "test123");
     }

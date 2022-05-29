@@ -1,7 +1,7 @@
 package sk.durovic.collection;
 
 
-import sk.durovic.manager.Version;
+import sk.durovic.manager.basic.Version;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import java.util.Objects;
