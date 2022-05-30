@@ -1,5 +1,6 @@
 package sk.durovic.manager.basic;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import sk.durovic.exception.ObjectIsNotEntityException;
 import sk.durovic.manager.EntityContainer;
@@ -14,6 +15,7 @@ import java.util.Optional;
 /**
  * Class provide methods to use CRUD operations on entity and manage them.
  */
+@Slf4j
 @Component
 public class EntityManagerBasic implements EntityManager {
 
@@ -84,7 +86,8 @@ public class EntityManagerBasic implements EntityManager {
             throw new IllegalArgumentException("Entity is not managed by manager. Save it first.");
 
         Optional<T> loadedEntity = load(entity.getClass(), entity.getId());
-        loadedEntity.ifPresent(entityContainer::addToContainer);
+        log.debug("Refresh action on Entity: "+entity.getClass()+" with ID: "+entity.getId());
+        loadedEntity.orElseThrow(IllegalArgumentException::new);
     }
 
     @Override

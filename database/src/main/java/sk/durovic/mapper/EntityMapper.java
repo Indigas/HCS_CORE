@@ -46,7 +46,7 @@ public class EntityMapper {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        throw new RuntimeException("Error while converting object to entity: "+object.getClass());
     }
 
     /**
@@ -65,7 +65,7 @@ public class EntityMapper {
         } catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        throw new RuntimeException("Error while converting object to mutable entity: "+object.getClass());
     }
 
     /**

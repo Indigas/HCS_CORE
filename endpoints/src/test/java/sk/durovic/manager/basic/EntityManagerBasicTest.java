@@ -3,6 +3,7 @@ package sk.durovic.manager.basic;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -82,6 +83,13 @@ class EntityManagerBasicTest {
     }
 
     @Test
+    void loadEntityNotInContainer(){
+        Optional<Patient> loaded = manager.load(Patient.class, patient.getId());
+
+        assertTrue(loaded.isEmpty());
+    }
+
+    @Test
     void contains() {
         manager.save(patient);
 
@@ -112,10 +120,11 @@ class EntityManagerBasicTest {
     }
 
     @Test
-    void release() {
+    void release() throws Exception {
         manager.lock(patient);
 
         manager.release(patient);
+        assertTrue(getContainer(entityContainer).getByStatus(Version.Status.OPTIMISTIC_LOCK).contains(patient));
         assertTrue(patient.getVersion().isOptimisticLock());
     }
 
@@ -133,6 +142,7 @@ class EntityManagerBasicTest {
 
     @Test
     void commit() {
+
     }
 
     @Test
@@ -145,6 +155,9 @@ class EntityManagerBasicTest {
 
     @Test
     void getReference() {
+        Patient ref = manager.getReference(Patient.class, "PatientTest");
+
+        assertThat(ref, Matchers.hasProperty("id", Matchers.is("PatientTest")));
     }
 
     private void setVariables() throws Exception {

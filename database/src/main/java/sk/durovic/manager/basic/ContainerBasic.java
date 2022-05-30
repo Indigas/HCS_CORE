@@ -121,8 +121,11 @@ class ContainerBasic implements Container {
         if(!entity.getVersion().isStatusChanged())
             return;
 
-        getListOfEntities(entity.getVersion().getStatusOld(), entity.getClass()).remove(entity);
-        getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
+        if(getListOfEntities(entity.getVersion().getStatusOld(), entity.getClass()).remove(entity))
+            getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
+        else
+            throw new RuntimeException("Entity is not present in container. >>"+entity.getClass()+
+                    " and ID: " +entity.getId());
     }
 
     /**
