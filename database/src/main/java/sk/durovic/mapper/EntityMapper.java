@@ -36,12 +36,17 @@ public class EntityMapper {
      */
     @SuppressWarnings("unchecked")
     public static <T, R extends BaseEntityAbstractClass<?>> R mapEntityToPersist(T object)
-            throws Exception {
+            {
         //Class<?> clazz = object.getClass().getSuperclass();
         Class<?> clazz = EntityManipulator.getEntityClass(object);
-        Constructor<R> constructor = (Constructor<R>) clazz.getDeclaredConstructor();
+        try {
+            Constructor<R> constructor = (Constructor<R>) clazz.getDeclaredConstructor();
 
-        return convertEntity(object, clazz, constructor);
+            return convertEntity(object, clazz, constructor);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -70,9 +75,12 @@ public class EntityMapper {
      * @param destination
      * @throws IllegalAccessException
      */
-    static <T, U extends T> void mapToExistingObject(U source, T destination) throws IllegalAccessException {
-
-        setFields(source,  destination);
+    public static <T, U extends T> void mapToExistingObject(U source, T destination) {
+        try {
+            setFields(source, destination);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**

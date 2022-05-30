@@ -121,7 +121,6 @@ class EntityManagerBasicTest {
 
     @Test
     void refresh() {
-        manager.save(patient);
     }
 
     @Test

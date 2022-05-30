@@ -147,6 +147,7 @@ public class EntityProcessor extends AbstractProcessor {
             out.println();
 
             writeConstructorWithEntity(out, simpleClassName, extendingClass);
+            writeCreateImmutableEntity(out, simpleClassName, extendingClass);
             writeToPrintWriter(out, fields, "setters");
             writeToPrintWriter(out, fields, "connectors");
 
@@ -294,8 +295,18 @@ public class EntityProcessor extends AbstractProcessor {
         writeEmptyConstructor(sb, childClass);
         sb.append("     public ");
         contentBody(sb, childClass, parentClass, "entity",
-                "sk.durovic.mapper.EntityMapper.mapEntity",
-                "entity", "");
+                "sk.durovic.mapper.EntityMapper.mapToExistingObject",
+                "entity, this", "");
+        out.println(sb.toString());
+    }
+
+    private void writeCreateImmutableEntity(PrintWriter out, String childClass, String parentClass){
+        StringBuilder sb = new StringBuilder();
+        sb.append("     public ");
+        contentBody(sb, "create"+parentClass.substring(parentClass.lastIndexOf(".")+1),
+                "", "",
+                "return sk.durovic.mapper.EntityMapper.mapEntityToPersist",
+                "this", parentClass+" ");
         out.println(sb.toString());
     }
 
