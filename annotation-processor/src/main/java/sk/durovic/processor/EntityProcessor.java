@@ -146,8 +146,10 @@ public class EntityProcessor extends AbstractProcessor {
             out.println(" {");
             out.println();
 
+            writeConstructorWithEntity(out, simpleClassName, extendingClass);
             writeToPrintWriter(out, fields, "setters");
             writeToPrintWriter(out, fields, "connectors");
+
 
             out.print("}");
         }
@@ -165,6 +167,7 @@ public class EntityProcessor extends AbstractProcessor {
             out.println(writeMethod(field, nameOfMapping));
         }
     }
+
 
     /**
      * Decide which methods to create
@@ -199,6 +202,7 @@ public class EntityProcessor extends AbstractProcessor {
 
         methodBody(sb, name, argumentType, parameterName, methodName, parameterName, SETTER);
     }
+
 
     /**
      * Method to pass different method prefixes to create methods
@@ -271,11 +275,32 @@ public class EntityProcessor extends AbstractProcessor {
      * @param parameterName name of parameter
      * @param methodName method from parent entity to be called
      * @param parameter same as parameter name
-     * @param methodPrefix used to determine usage of method as set, connect, get
+     * @param methodPrefix used to determine usage of method as set, connect
      */
     private void methodBody(StringBuilder sb, String name, String argumentType, String parameterName,
                             String methodName, String parameter, String methodPrefix) {
         sb.append("     public void ");
+        contentBody(sb, name, argumentType, parameterName, methodName, parameter, methodPrefix);
+    }
+
+    private void writeEmptyConstructor(StringBuilder sb, String childClass){
+        sb.append("     public ");
+        sb.append(childClass);
+        sb.append("(){}\n\n");
+    }
+
+    private void writeConstructorWithEntity(PrintWriter out, String childClass, String parentClass){
+        StringBuilder sb = new StringBuilder();
+        writeEmptyConstructor(sb, childClass);
+        sb.append("     public ");
+        contentBody(sb, childClass, parentClass, "entity",
+                "sk.durovic.mapper.EntityMapper.mapEntity",
+                "entity", "");
+        out.println(sb.toString());
+    }
+
+    private void contentBody(StringBuilder sb, String name, String argumentType, String parameterName,
+                             String methodName, String parameter, String methodPrefix) {
         sb.append(methodPrefix);
         sb.append(name);
         sb.append("(");

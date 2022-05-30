@@ -4,6 +4,7 @@ package sk.durovic.manager.basic;
 import sk.durovic.collection.Entry;
 import sk.durovic.collection.MultiEntry;
 import sk.durovic.exception.EntityChangeVersion;
+import sk.durovic.exception.EntityLocked;
 import sk.durovic.manager.Container;
 import sk.durovic.manager.basic.Version;
 import sk.durovic.model.*;
@@ -117,6 +118,9 @@ class ContainerBasic implements Container {
      */
     @Override
     public <T extends BaseEntityAbstractClass<?>> void onChangeStatus(T entity){
+        if(!entity.getVersion().isStatusChanged())
+            return;
+
         getListOfEntities(entity.getVersion().getStatusOld(), entity.getClass()).remove(entity);
         getListOfEntities(entity.getVersion().getStatus(), entity.getClass()).add(entity);
     }

@@ -2,8 +2,6 @@ package sk.durovic.manager.basic;
 
 import sk.durovic.manager.Container;
 import sk.durovic.manager.EntityContainer;
-import sk.durovic.manager.basic.ContainerBasic;
-import sk.durovic.manager.basic.Version;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.worker.JpaProcessor;
 
@@ -48,6 +46,7 @@ class EntityContainerBasic implements EntityContainer {
 
     @Override
     public <T extends BaseEntityAbstractClass<?>> void onLock(T entity) {
+        onSave(entity);
         entity.getVersion().lock();
         container.onChangeStatus(entity);
     }

@@ -1,5 +1,6 @@
 package sk.durovic.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import sk.durovic.manager.basic.EntityManipulator;
 import sk.durovic.model.*;
 import sk.durovic.model.access.*;
@@ -13,6 +14,7 @@ import java.util.Map;
 /**
  * Mapper class. Used to map entities from mutable to immutable form and vice versa.
  */
+@Slf4j
 public class EntityMapper {
 
     private static Map<Class<?>, Class<?>> entityMap = new HashMap<>();
@@ -49,11 +51,16 @@ public class EntityMapper {
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    public static <T, R extends BaseEntityAbstractClass<?>> R mapEntity(T object) throws Exception{
+    public static <T, R extends BaseEntityAbstractClass<?>> R mapEntity(T object) {
         Class<?> clazz = object.getClass();
-        Constructor<R> constructor = (Constructor<R>) entityMap.get(clazz).getDeclaredConstructor();
+        try {
+            Constructor<R> constructor = (Constructor<R>) entityMap.get(clazz).getDeclaredConstructor();
 
-        return convertEntity(object, clazz, constructor);
+            return convertEntity(object, clazz, constructor);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -63,7 +70,7 @@ public class EntityMapper {
      * @param destination
      * @throws IllegalAccessException
      */
-    public static <T, U extends T> void mapToExistingObject(U source, T destination) throws IllegalAccessException {
+    static <T, U extends T> void mapToExistingObject(U source, T destination) throws IllegalAccessException {
 
         setFields(source,  destination);
     }

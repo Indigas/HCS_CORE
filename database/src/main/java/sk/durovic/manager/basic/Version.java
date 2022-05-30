@@ -79,6 +79,10 @@ public class Version {
         return this.version > versionOld;
     }
 
+    boolean isStatusChanged(){
+        return this.status != this.statusOld;
+    }
+
     public void incrementVersion(){
         this.version++;
     }
@@ -100,10 +104,7 @@ public class Version {
     }
 
     boolean isReadyForChange(){
-        if(status == Status.LOCK || status == Status.TO_REMOVE)
-            return false;
-
-        return true;
+        return status != Status.LOCK && status != Status.TO_REMOVE;
     }
 
     Status getStatus(){
@@ -137,6 +138,22 @@ public class Version {
 
     private void onStatusChange(){
         this.statusOld = this.status;
+    }
+
+    public boolean isLocked(){
+        return this.status == Status.LOCK;
+    }
+
+    public boolean isToRemove(){
+        return this.status == Status.TO_REMOVE;
+    }
+
+    public boolean isToSave(){
+        return this.status == Status.TO_SAVE;
+    }
+
+    public boolean isOptimisticLock(){
+        return this.status == Status.OPTIMISTIC_LOCK;
     }
 
 }

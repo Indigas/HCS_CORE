@@ -3,6 +3,7 @@ package sk.durovic.model;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import sk.durovic.annotations.EntityProcessor;
+import sk.durovic.model.access.PatientEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -45,5 +46,6 @@ public class Patient extends BaseEntityAbstractClass<String>  {
     @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
     private final List<MedicalRecord> medicalRecords = new LinkedList<>();
+
 
 }
