@@ -1,5 +1,7 @@
 package sk.durovic.manager.basic;
 
+import org.springframework.context.ApplicationContext;
+import sk.durovic.exception.EntityChangeVersion;
 import sk.durovic.manager.Container;
 import sk.durovic.manager.EntityContainer;
 import sk.durovic.model.BaseEntityAbstractClass;
@@ -40,6 +42,7 @@ class EntityContainerBasic implements EntityContainer {
 
     @Override
     public <T extends BaseEntityAbstractClass<?>> void onRemove(T entity){
+        onSave(entity);
         entity.getVersion().toRemove();
         container.onChangeStatus(entity);
     }
@@ -57,14 +60,19 @@ class EntityContainerBasic implements EntityContainer {
         container.onChangeStatus(entity);
     }
 
+    @Override
+    public <T extends BaseEntityAbstractClass<?>> boolean contains(T entity) {
+        return onLoad(entity).isPresent();
+    }
+
     /**
      * called to perform worker tasks on entities, ec CRUD operations
-     * @param clearContainer
+     * @param context Application context to fetch services
      * @return
      */
     @SuppressWarnings("unchecked")
     @Override
-    public JpaProcessor[] onFlush(boolean clearContainer){
+    public JpaProcessor[] onFlush(ApplicationContext context){
         JpaProcessor[] processors = new JpaProcessor[]{
                 Version.Status.TO_SAVE,
                 Version.Status.TO_REMOVE,
@@ -73,7 +81,8 @@ class EntityContainerBasic implements EntityContainer {
         };
 
         Arrays.stream(processors).forEach(status ->
-                status.initialize( (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus((Version.Status)status), clearContainer));
+                status.initialize( (List<? extends BaseEntityAbstractClass<?>>) container.getByStatus((Version.Status)status),
+                        context));
 
         return processors;
     }

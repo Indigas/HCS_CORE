@@ -1,5 +1,6 @@
 package sk.durovic.manager;
 
+import org.springframework.context.ApplicationContext;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.worker.JpaProcessor;
 
@@ -14,6 +15,7 @@ public interface EntityContainer {
     <T extends BaseEntityAbstractClass<?>> void onRemove(T entity);
     <T extends BaseEntityAbstractClass<?>> void onLock(T entity);
     <T extends BaseEntityAbstractClass<?>> void onRelease(T entity);
-    JpaProcessor[] onFlush(boolean clearContainer);
+    <T extends BaseEntityAbstractClass<?>> boolean contains(T entity);
+    JpaProcessor[] onFlush(ApplicationContext context);
     void clear();
 }

@@ -205,5 +205,6 @@ class ContainerBasic implements Container {
 
     public void clear(){
         entityTable.clear();
+        initEntityTable();
     }
 }

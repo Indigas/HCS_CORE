@@ -1,6 +1,7 @@
 package sk.durovic.manager.basic;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import sk.durovic.exception.ObjectIsNotEntityException;
 import sk.durovic.manager.EntityContainer;
@@ -22,11 +23,13 @@ public class EntityManagerBasic implements EntityManager {
     private final EntityContainer entityContainer;
     private final ServiceContainerBasic serviceContainer;
     private final JpaWorkers jpaWorkers;
+    private final ApplicationContext context;
 
-    public EntityManagerBasic() {
+    public EntityManagerBasic(ApplicationContext context) {
         this.entityContainer = new EntityContainerBasic();
-        this.serviceContainer = new ServiceContainerBasic();
+        this.serviceContainer = new ServiceContainerBasic(context);
         this.jpaWorkers = new JpaWorkers();
+        this.context = context;
     }
 
     /**
@@ -61,7 +64,7 @@ public class EntityManagerBasic implements EntityManager {
     @SuppressWarnings("unchecked")
     @Override
     public <T extends BaseEntityAbstractClass<?>> boolean contains(T entity) {
-        return load(entity.getClass(), entity.getId()).isPresent();
+        return entityContainer.contains(entity);
     }
 
     @Override
@@ -100,7 +103,7 @@ public class EntityManagerBasic implements EntityManager {
      */
     @Override
     public void flush(){
-        jpaWorkers.execute(entityContainer.onFlush(false));
+        jpaWorkers.execute(entityContainer.onFlush(context));
     }
 
     /**
@@ -108,7 +111,8 @@ public class EntityManagerBasic implements EntityManager {
      */
     @Override
     public void commit(){
-        jpaWorkers.execute(entityContainer.onFlush(true));
+        jpaWorkers.execute(entityContainer.onFlush(context));
+        entityContainer.clear();
     }
 
     @Override

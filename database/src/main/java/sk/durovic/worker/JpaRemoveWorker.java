@@ -1,5 +1,6 @@
 package sk.durovic.worker;
 
+import org.springframework.context.ApplicationContext;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.service.Service;
 
@@ -11,8 +12,9 @@ import java.util.Optional;
  */
 public class JpaRemoveWorker extends JpaProcessWorker{
 
-    public JpaRemoveWorker(List<? extends BaseEntityAbstractClass<?>> listOfEntities) {
-        super(listOfEntities, true);
+    public JpaRemoveWorker(List<? extends BaseEntityAbstractClass<?>> listOfEntities, ApplicationContext context)
+    {
+        super(listOfEntities, context);
     }
 
     @Override

@@ -10,8 +10,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.DataIntegrityViolationException;
 import sk.durovic.configuration.EntityManagerConfiguration;
 import sk.durovic.exception.EntityChangeVersion;
+import sk.durovic.exception.EntityIntegrationException;
+import sk.durovic.helper.Helper;
 import sk.durovic.manager.Container;
 import sk.durovic.manager.EntityContainer;
 import sk.durovic.manager.EntityManager;
@@ -21,9 +24,13 @@ import sk.durovic.model.Contact;
 import sk.durovic.model.Patient;
 import sk.durovic.model.access.ContactEntity;
 import sk.durovic.model.access.PatientEntity;
+import sk.durovic.service.PatientService;
 
+import javax.validation.ConstraintViolationException;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.MatcherAssert.*;
@@ -44,11 +51,14 @@ class EntityManagerBasicTest {
     private Patient patient;
     private Contact contact;
 
+    @Autowired
+    private PatientService service;
+
 
     @BeforeEach
     void setUp() throws Exception {
-        this.manager = EntityManagerFactory.getBasicEntityManager();
-        setContext();
+        this.manager = EntityManagerFactory.getBasicEntityManager(context);
+        //setContext();
         setVariables();
         this.entityContainer = getEntityContainer(this.manager);
     }
@@ -69,6 +79,48 @@ class EntityManagerBasicTest {
         manager.save(patient);
 
         PatientEntity entity = EntityMapper.mapEntity(patient);
+    }
+
+    @Test
+    void saveContactWithoutParentEntity() {
+        final Throwable[] throwableThread = new Throwable[1];
+        assertThrows(EntityIntegrationException.class, () -> {
+            manager.save(contact);
+            manager.flush();
+            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+                    @Override
+                    public void uncaughtException(Thread thread, Throwable throwable) {
+                        throwableThread[0] =throwable;
+                    }
+            });
+            Thread.currentThread().join(5000);
+            if(throwableThread[0].getClass() == EntityIntegrationException.class)
+                throw new EntityIntegrationException("");
+
+        });
+    }
+
+    @Test
+    public void saveChildWithNonExistingParent() throws Exception {
+        ContactEntity ce = new ContactEntity(contact);
+        ce.connectPatient(patient);
+        contact = ce.createContact();
+
+        final Throwable[] throwableThread = new Throwable[1];
+        assertThrows(EntityIntegrationException.class, () -> {
+            manager.save(contact);
+            manager.flush();
+            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(Thread thread, Throwable throwable) {
+                    throwableThread[0] =throwable;
+                }
+            });
+            Thread.currentThread().join(5000);
+            if(throwableThread[0].getClass() == EntityIntegrationException.class)
+                throw new EntityIntegrationException("");
+
+        });
     }
 
     @Test
@@ -134,24 +186,48 @@ class EntityManagerBasicTest {
 
     @Test
     void remove() {
+        manager.save(patient);
+        manager.remove(patient);
+
+        assertTrue(patient.getVersion().isToRemove());
     }
 
     @Test
-    void flush() {
+    void removePersisted() throws InterruptedException {
+        PatientEntity entity = new PatientEntity();
+        entity.setFirstName("Persisted");
+        patient = entity.createPatient();
+        manager.save(patient);
+        manager.flush();
+        Thread.currentThread().join(5000);
+
+        manager.remove(patient);
+        manager.flush();
+        Thread.currentThread().join(5000);
+
+        Patient saved = testEntityManager.find(Patient.class, patient.getId());
+
+        assertNull(saved);
     }
 
     @Test
-    void commit() {
+    void flush() throws InterruptedException {
+        Patient persisted = executeFlushOrCommit(EntityManager::flush);
 
+        assertThat(persisted, Matchers.is(patient));
+        assertThat(persisted, Matchers.hasProperty("lastName", Matchers.is("entity")));
+        assertTrue(manager.contains(patient));
     }
 
     @Test
-    void close() {
+    void commit() throws InterruptedException {
+        Patient persisted = executeFlushOrCommit(EntityManager::commit);
+
+        assertThat(persisted, Matchers.is(patient));
+        assertThat(persisted, Matchers.hasProperty("lastName", Matchers.is("entity")));
+        assertFalse(manager.contains(patient));
     }
 
-    @Test
-    void clear() {
-    }
 
     @Test
     void getReference() {
@@ -160,16 +236,32 @@ class EntityManagerBasicTest {
         assertThat(ref, Matchers.hasProperty("id", Matchers.is("PatientTest")));
     }
 
+    private Patient executeFlushOrCommit(Consumer<EntityManager> consumer) throws InterruptedException {
+        PatientEntity entity = new PatientEntity();
+        entity.setLastName("entity");
+        patient = entity.createPatient();
+
+        manager.save(patient);
+        consumer.accept(manager);
+
+        Thread.currentThread().join(5000);
+        Patient persisted = testEntityManager.find(Patient.class, patient.getId());
+        manager.remove(patient);
+        consumer.accept(manager);
+
+        Thread.currentThread().join(5000);
+        return persisted;
+    }
+
     private void setVariables() throws Exception {
         PatientEntity pa = new PatientEntity();
         pa.setFirstName("majky");
-        this.patient = EntityMapper.mapEntityToPersist(pa);
+        this.patient = pa.createPatient();
         EntityManipulator.setIdOfReferenceEntity(patient, "PatientTest");
 
         ContactEntity ce = new ContactEntity();
         ce.setFullName("abc");
-        this.contact = EntityMapper.mapEntityToPersist(ce);
-        EntityManipulator.setIdOfReferenceEntity(contact, 10L);
+        this.contact = ce.createContact();
     }
 
     private void setContext() throws Exception {

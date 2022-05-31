@@ -1,7 +1,6 @@
 package sk.durovic.manager.basic;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import sk.durovic.manager.ServiceContainer;
 import sk.durovic.model.*;
@@ -18,11 +17,14 @@ public class ServiceContainerBasic implements ServiceContainer {
 
     private final Map<Class<?>, Class<?>> servicesMap = new HashMap<>();
 
-    @Autowired
-    private ApplicationContext context;
+    private final ApplicationContext context;
 
     {
         setServices();
+    }
+
+    public ServiceContainerBasic(ApplicationContext context) {
+        this.context = context;
     }
 
     /**
@@ -50,6 +52,7 @@ public class ServiceContainerBasic implements ServiceContainer {
     public void clear(){
         servicesMap.clear();
     }
+
 
     private void setServices(){
         servicesMap.put(Patient.class, PatientService.class);

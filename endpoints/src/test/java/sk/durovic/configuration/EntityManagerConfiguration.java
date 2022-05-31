@@ -13,9 +13,6 @@ import sk.durovic.service.impl.*;
 public class EntityManagerConfiguration {
 
     @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
     private ContactRepository contactRepository;
 
     @Autowired

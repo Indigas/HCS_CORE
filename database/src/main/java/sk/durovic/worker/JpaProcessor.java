@@ -1,5 +1,6 @@
 package sk.durovic.worker;
 
+import org.springframework.context.ApplicationContext;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import java.util.List;
@@ -11,5 +12,5 @@ public interface JpaProcessor {
 
     JpaProcessWorker getWorker();
 
-    void initialize(List<? extends BaseEntityAbstractClass<?>> list, boolean clearContainer);
+    void initialize(List<? extends BaseEntityAbstractClass<?>> list, ApplicationContext context);
 }

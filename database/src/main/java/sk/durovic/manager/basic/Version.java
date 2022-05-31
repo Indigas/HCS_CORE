@@ -1,5 +1,6 @@
 package sk.durovic.manager.basic;
 
+import org.springframework.context.ApplicationContext;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.worker.JpaPersistWorker;
 import sk.durovic.worker.JpaProcessWorker;
@@ -31,8 +32,9 @@ public class Version {
         // Entity to remove from DB
         TO_REMOVE{
             @Override
-            public void initialize(List<? extends BaseEntityAbstractClass<?>> list, boolean clearContainer){
-                setWorker(new JpaRemoveWorker(list));
+            public void initialize(List<? extends BaseEntityAbstractClass<?>> list,
+                                   ApplicationContext context){
+                setWorker(new JpaRemoveWorker(list, context));
             }
         };
 
@@ -48,8 +50,9 @@ public class Version {
          * @param clearContainer
          */
         @Override
-        public void initialize(List<? extends BaseEntityAbstractClass<?>> list, boolean clearContainer){
-            setWorker(new JpaPersistWorker(list, clearContainer));
+        public void initialize(List<? extends BaseEntityAbstractClass<?>> list,
+                               ApplicationContext context){
+            setWorker(new JpaPersistWorker(list, context));
         }
 
         @Override
