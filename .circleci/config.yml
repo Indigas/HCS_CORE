@@ -12,14 +12,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install annotation processor
-          command: mvn -Duser.home=/var/maven install -P dev
-      - run:
-          name: Install database module
-          command: mvn -Duser.home=/var/maven -pl database install
-      - run:
           name: Initialize database schema/tables
           command: mvn -Duser.home=/var/maven -pl database flyway:migrate -P dev
       - run:
-          name: Run tests
-          command: mvn -Duser.home=/var/maven test
+          name: Install
+          command: mvn -Duser.home=/var/maven install -P dev
