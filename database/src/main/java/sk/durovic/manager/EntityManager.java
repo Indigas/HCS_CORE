@@ -15,6 +15,7 @@ public interface EntityManager extends Closeable {
     <T extends BaseEntityAbstractClass<?>> void release(T entity);
     <T extends BaseEntityAbstractClass<?>> void refresh(T entity);
     <T extends BaseEntityAbstractClass<?>> void remove(T entity);
+    <T extends BaseEntityAbstractClass<?>> void removeFromContainer(T entity);
     void flush();
     void commit();
     void clear();

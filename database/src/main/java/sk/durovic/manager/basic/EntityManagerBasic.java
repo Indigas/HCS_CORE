@@ -98,6 +98,11 @@ public class EntityManagerBasic implements EntityManager {
         entityContainer.onRemove(entity);
     }
 
+    @Override
+    public <T extends BaseEntityAbstractClass<?>> void removeFromContainer(T entity) {
+        entityContainer.onRemoveFromContainer(entity);
+    }
+
     /**
      * Perform task on saved entities without clearing container
      */

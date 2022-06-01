@@ -16,6 +16,7 @@ public interface EntityContainer {
     <T extends BaseEntityAbstractClass<?>> void onLock(T entity);
     <T extends BaseEntityAbstractClass<?>> void onRelease(T entity);
     <T extends BaseEntityAbstractClass<?>> boolean contains(T entity);
+    <T extends BaseEntityAbstractClass<?>> void onRemoveFromContainer(T entity);
     JpaProcessor[] onFlush(ApplicationContext context);
     void clear();
 }

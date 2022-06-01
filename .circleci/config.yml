@@ -1,0 +1,27 @@
+version: 2.1
+executors:
+  build:
+    docker:
+      - image: maven:3.8.5-jdk-11
+      - image: mysql:8.0.29-oracle
+        environment:
+          MYSQL_USER: springTest
+          MYSQL_PASSWORD: test
+
+jobs:
+  devJob:
+    executor: build
+    steps:
+      - checkout
+      - run:
+          name: Create non-root user
+          command: sudo useradd test
+      - run:
+          name: Switch to non-root user
+          command: sudo -u test
+      - run:
+          name: Initialize database schema/tables
+          command: mvn -pl database flyway:migrate -P dev
+      - run:
+          name: Run tests
+          command: mvn clean test

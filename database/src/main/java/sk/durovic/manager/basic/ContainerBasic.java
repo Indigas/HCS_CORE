@@ -1,6 +1,7 @@
 package sk.durovic.manager.basic;
 
 
+import lombok.extern.slf4j.Slf4j;
 import sk.durovic.collection.Entry;
 import sk.durovic.collection.MultiEntry;
 import sk.durovic.exception.EntityChangeVersion;
@@ -14,6 +15,7 @@ import java.util.*;
 /**
  * Hold entities in predefined map
  */
+@Slf4j
 class ContainerBasic implements Container {
 
     private final Class<?>[] clazzes =

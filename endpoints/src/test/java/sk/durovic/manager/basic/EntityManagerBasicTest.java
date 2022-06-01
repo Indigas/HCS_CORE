@@ -78,7 +78,12 @@ class EntityManagerBasicTest {
     void saveWithChange() throws Exception{
         manager.save(patient);
 
-        PatientEntity entity = EntityMapper.mapEntity(patient);
+        PatientEntity entity = new PatientEntity(patient);
+        Patient entityPatient = entity.createPatient();
+        manager.save(entityPatient);
+
+        assertTrue(manager.contains(entityPatient));
+        assertThat(getContainer(entityContainer).getByClass(Patient.class), Matchers.hasSize(1));
     }
 
     @Test
@@ -225,6 +230,14 @@ class EntityManagerBasicTest {
 
         assertThat(persisted, Matchers.is(patient));
         assertThat(persisted, Matchers.hasProperty("lastName", Matchers.is("entity")));
+        assertFalse(manager.contains(patient));
+    }
+
+    @Test
+    void removeFromContainer(){
+        manager.save(patient);
+        manager.removeFromContainer(patient);
+
         assertFalse(manager.contains(patient));
     }
 

@@ -48,6 +48,11 @@ class EntityContainerBasic implements EntityContainer {
     }
 
     @Override
+    public <T extends BaseEntityAbstractClass<?>> void onRemoveFromContainer(T entity) {
+        container.removeFromContainer(entity);
+    }
+
+    @Override
     public <T extends BaseEntityAbstractClass<?>> void onLock(T entity) {
         onSave(entity);
         entity.getVersion().lock();
