@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Install annotation processor
           command: mvn -Duser.home=/var/maven -pl annotation-processor install
-      - run: ls -l /root/.m2
+      - run: ls -l /usr/share/maven/ref
       - run:
           name: Install database module
           command: mvn -Duser.home=/var/maven -pl database install
