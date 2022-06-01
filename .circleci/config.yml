@@ -1,16 +1,13 @@
 version: 2.1
-executors:
+
+jobs:
   build:
     docker:
       - image: maven:3.8.5-jdk-11
       - image: mysql:8.0.29-oracle
-        environment:
-          MYSQL_USER: springTest
-          MYSQL_PASSWORD: test
-
-jobs:
-  devJob:
-    executor: build
+    environment:
+        MYSQL_USER: springTest
+        MYSQL_PASSWORD: test
     steps:
       - checkout
       - run:
