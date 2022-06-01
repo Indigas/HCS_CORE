@@ -12,12 +12,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Create non-root user
-          command: sudo useradd test
-      - run:
-          name: Switch to non-root user
-          command: sudo -u test
-      - run:
           name: Initialize database schema/tables
           command: mvn -pl database flyway:migrate -P dev
       - run:
