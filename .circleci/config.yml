@@ -13,8 +13,7 @@ jobs:
       - checkout
       - run:
           name: Install annotation processor
-          command: mvn -Duser.home=/var/maven install
-      - run: ls -l /usr/share/maven/ref
+          command: mvn -Duser.home=/var/maven install -P dev
       - run:
           name: Install database module
           command: mvn -Duser.home=/var/maven -pl database install
