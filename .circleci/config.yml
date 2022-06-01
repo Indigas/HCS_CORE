@@ -13,7 +13,7 @@ jobs:
       - checkout
       - run:
           name: Set user home property
-          command: mvn -Duser.home=/var/maven
+          command: mvn -Duser.home=/var/maven -pl database flyway:migrate -P dev
       - run:
           name: Initialize database schema/tables
           command: mvn -pl database flyway:migrate -P dev
