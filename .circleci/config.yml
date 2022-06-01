@@ -12,8 +12,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Initialize database schema/tables
-          command: mvn -Duser.home=/var/maven -pl database flyway:migrate -P dev
-      - run:
           name: Install
           command: mvn -Duser.home=/var/maven install -P dev
+      - run:
+          name: Initialize database schema/tables
+          command: mvn -Duser.home=/var/maven -pl database flyway:migrate -P dev
