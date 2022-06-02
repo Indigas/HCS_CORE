@@ -9,11 +9,15 @@ jobs:
           MYSQL_ROOT_PASSWORD: test
           MYSQL_USER: springTest
           MYSQL_PASSWORD: test
+          MYSQL_DATABASE: testdb
     steps:
       - checkout
       - run:
           name: Install
-          command: mvn -Duser.home=/var/maven install -P dev
+          command: mvn install -DskipTests
       - run:
           name: Initialize database schema/tables
-          command: mvn -Duser.home=/var/maven -pl database flyway:migrate -P dev
+          command: mvn -pl database flyway:migrate
+      - run:
+          name: Run tests
+          command: mvn test

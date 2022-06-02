@@ -52,7 +52,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>8.0.5</version>
                 <configuration>
-                    <url>jdbc:mysql://localhost:3306/testdb?serverTimezone=UTC</url>
+                    <url>jdbc:mysql://localhost:3306/testdb</url>
                     <user>springTest</user>
                     <password>test</password>
                     <driver>com.mysql.cj.jdbc.Driver</driver>

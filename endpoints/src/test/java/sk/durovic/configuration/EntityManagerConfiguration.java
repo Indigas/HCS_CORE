@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import sk.durovic.manager.factory.EntityManagerFactory;
 import sk.durovic.model.MedicalRecord;
 import sk.durovic.repository.*;
 import sk.durovic.service.*;
@@ -11,6 +12,9 @@ import sk.durovic.service.impl.*;
 
 @TestConfiguration
 public class EntityManagerConfiguration {
+
+    @Autowired
+    private ApplicationContext context;
 
     @Autowired
     private ContactRepository contactRepository;
@@ -50,6 +54,11 @@ public class EntityManagerConfiguration {
     @Bean
     public DiagnoseService getDiagnoseService(){
         return new DiagnoseServiceImpl(diagnoseRepository);
+    }
+
+    @Bean
+    public EntityManagerFactory getFactory() {
+        return new EntityManagerFactory(context);
     }
 
 }

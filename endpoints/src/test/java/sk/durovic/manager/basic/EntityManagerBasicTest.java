@@ -44,6 +44,9 @@ class EntityManagerBasicTest {
     private ApplicationContext context;
 
     @Autowired
+    private EntityManagerFactory factory;
+
+    @Autowired
     private TestEntityManager testEntityManager;
 
     private EntityManager manager;
@@ -57,7 +60,7 @@ class EntityManagerBasicTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        this.manager = EntityManagerFactory.getBasicEntityManager(context);
+        this.manager = factory.getBasicEntityManager();
         //setContext();
         setVariables();
         this.entityContainer = getEntityContainer(this.manager);
