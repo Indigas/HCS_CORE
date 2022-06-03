@@ -1,7 +1,0 @@
-version: "3.8"
-
-services:
-  core:
-    image: indigas/hcs_core
-    ports:
-      - "8080:8080"
