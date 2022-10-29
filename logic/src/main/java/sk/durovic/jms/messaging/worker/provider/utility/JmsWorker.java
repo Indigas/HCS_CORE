@@ -1,6 +1,6 @@
-package jms.messaging.worker.provider.utility;
+package sk.durovic.jms.messaging.worker.provider.utility;
 
-import jms.messaging.worker.provider.JmsWorkerProvider;
+import sk.durovic.jms.messaging.worker.provider.JmsWorkerProvider;
 
 import java.util.ServiceLoader;
 

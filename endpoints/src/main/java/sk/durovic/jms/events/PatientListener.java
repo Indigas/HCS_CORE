@@ -1,17 +1,15 @@
 package sk.durovic.jms.events;
 
-import jms.messaging.event.PatientEvent;
-import jms.messaging.worker.JmsMessageWorker;
-import jms.messaging.worker.implementations.JmsPatientWorker;
-import jms.messaging.worker.provider.utility.JmsWorker;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import sk.durovic.worker.JmsWorkerTask;
+import sk.durovic.jms.messaging.event.PatientEvent;
+import sk.durovic.jms.messaging.worker.JmsMessageWorker;
+import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
+import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
 
 @Component
 public class PatientListener {
@@ -21,13 +19,7 @@ public class PatientListener {
         // ziskat spravneho workera z poolu a spustit v inom threade
         JmsMessageWorker worker = JmsWorker.provider().createJmsPatientWorker();
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                worker.processMessage(event);
-            }
-        });
+        JmsWorkerTask.processWithoutReply(worker::processMessage, event);
 
     }
 }

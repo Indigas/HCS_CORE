@@ -1,4 +1,4 @@
-package jms.messaging.event;
+package sk.durovic.jms.messaging.event;
 
 import lombok.Data;
 

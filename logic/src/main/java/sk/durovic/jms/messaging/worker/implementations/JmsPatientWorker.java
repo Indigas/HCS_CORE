@@ -1,6 +1,6 @@
-package jms.messaging.worker.implementations;
+package sk.durovic.jms.messaging.worker.implementations;
 
-import jms.messaging.worker.JmsMessageWorker;
+import sk.durovic.jms.messaging.worker.JmsMessageWorker;
 
 public class JmsPatientWorker implements JmsMessageWorker {
 

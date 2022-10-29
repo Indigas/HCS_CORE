@@ -1,4 +1,4 @@
-package jms.messaging.worker;
+package sk.durovic.jms.messaging.worker;
 
 public interface JmsMessageWorker {
 
