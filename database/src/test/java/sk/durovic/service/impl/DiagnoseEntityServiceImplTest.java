@@ -15,16 +15,15 @@ import sk.durovic.repository.DiagnoseRepository;
 
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class DiagnoseServiceImplTest {
+class DiagnoseEntityServiceImplTest {
 
     @Mock
     private DiagnoseRepository repo;
 
     @InjectMocks
-    private DiagnoseServiceImpl service;
+    private DiagnoseEntityServiceImpl service;
 
     private DiagnoseEntity diagnoseE;
     private Diagnose diagnose;

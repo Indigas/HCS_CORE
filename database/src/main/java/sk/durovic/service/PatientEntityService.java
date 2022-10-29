@@ -5,10 +5,8 @@ import org.hibernate.NonUniqueObjectException;
 import sk.durovic.model.Patient;
 import sk.durovic.repository.PatientRepository;
 
-import java.util.Optional;
-
 @Slf4j
-public abstract class PatientService extends Service<Patient, String, PatientRepository> {
+public abstract class PatientEntityService extends EntityService<Patient, String, PatientRepository> {
 
     @Override
     public Patient save(Patient object) {

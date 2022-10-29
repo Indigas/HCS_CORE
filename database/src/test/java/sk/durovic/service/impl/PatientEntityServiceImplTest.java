@@ -17,13 +17,13 @@ import sk.durovic.repository.PatientRepository;
 import static org.hamcrest.MatcherAssert.*;
 
 @ExtendWith(MockitoExtension.class)
-class PatientServiceImplTest {
+class PatientEntityServiceImplTest {
 
     @Mock
     private PatientRepository repo;
 
     @InjectMocks
-    private PatientServiceImpl service;
+    private PatientEntityServiceImpl service;
 
     private PatientEntity patientE;
     private Patient patient;

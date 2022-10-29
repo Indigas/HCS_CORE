@@ -1,9 +1,7 @@
 package sk.durovic.service;
 
 import org.springframework.data.repository.CrudRepository;
-import sk.durovic.model.BaseEntityAbstractClass;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -12,7 +10,7 @@ import java.util.Optional;
  * @param <ID> id of given entity
  * @param <R> repository of given entity
  */
-public abstract class Service<T, ID, R extends CrudRepository<T, ID>> {
+public abstract class EntityService<T, ID, R extends CrudRepository<T, ID>> {
 
     protected R repo;
 

@@ -14,16 +14,15 @@ import sk.durovic.model.access.DiseaseEntity;
 import sk.durovic.repository.DiseaseRepository;
 
 import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class DiseaseServiceImplTest {
+class DiseaseEntityServiceImplTest {
 
     @Mock
     private DiseaseRepository repo;
 
     @InjectMocks
-    private DiseaseServiceImpl service;
+    private DiseaseEntityServiceImpl service;
 
     private DiseaseEntity diseaseE;
     private Disease disease;

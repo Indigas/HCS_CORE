@@ -14,16 +14,15 @@ import sk.durovic.model.access.MedicalRecordEntity;
 import sk.durovic.repository.MedicalRecordRepository;
 
 import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class MedicalRecordServiceImplTest {
+class MedicalRecordEntityServiceImplTest {
 
     @Mock
     private MedicalRecordRepository repo;
 
     @InjectMocks
-    private MedicalRecordServiceImpl service;
+    private MedicalRecordEntityServiceImpl service;
 
     private MedicalRecordEntity medicalRecordE;
     private MedicalRecord medicalRecord;

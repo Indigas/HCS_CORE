@@ -3,18 +3,15 @@ package sk.durovic.manager.basic;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.DataIntegrityViolationException;
 import sk.durovic.configuration.EntityManagerConfiguration;
 import sk.durovic.exception.EntityChangeVersion;
 import sk.durovic.exception.EntityIntegrationException;
-import sk.durovic.helper.Helper;
 import sk.durovic.manager.Container;
 import sk.durovic.manager.EntityContainer;
 import sk.durovic.manager.EntityManager;
@@ -24,11 +21,9 @@ import sk.durovic.model.Contact;
 import sk.durovic.model.Patient;
 import sk.durovic.model.access.ContactEntity;
 import sk.durovic.model.access.PatientEntity;
-import sk.durovic.service.PatientService;
+import sk.durovic.service.PatientEntityService;
 
-import javax.validation.ConstraintViolationException;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -55,7 +50,7 @@ class EntityManagerBasicTest {
     private Contact contact;
 
     @Autowired
-    private PatientService service;
+    private PatientEntityService service;
 
 
     @BeforeEach

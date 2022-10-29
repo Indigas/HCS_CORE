@@ -2,7 +2,7 @@ package sk.durovic.worker;
 
 import org.springframework.context.ApplicationContext;
 import sk.durovic.model.BaseEntityAbstractClass;
-import sk.durovic.service.Service;
+import sk.durovic.service.EntityService;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +19,7 @@ public class JpaRemoveWorker extends JpaProcessWorker{
 
     @Override
     public <T extends BaseEntityAbstractClass<ID>, ID> void execute(T entity) {
-        Optional<Service<T,ID,?>> service = getServiceContainer().getService(entity.getClass());
+        Optional<EntityService<T,ID,?>> service = getServiceContainer().getService(entity.getClass());
         service.ifPresent(serv -> serv.deleteById(entity.getId()));
     }
 }

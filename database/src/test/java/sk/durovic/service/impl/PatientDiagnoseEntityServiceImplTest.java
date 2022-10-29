@@ -23,7 +23,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class PatientDiagnoseServiceImplTest {
+class PatientDiagnoseEntityServiceImplTest {
 
     @Mock
     private PatientDiagnoseRepository repo;

@@ -5,7 +5,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import sk.durovic.manager.factory.EntityManagerFactory;
-import sk.durovic.model.MedicalRecord;
 import sk.durovic.repository.*;
 import sk.durovic.service.*;
 import sk.durovic.service.impl.*;
@@ -32,28 +31,28 @@ public class EntityManagerConfiguration {
     private DiagnoseRepository diagnoseRepository;
 
     @Bean
-    public ContactService getContactService(){
-        return new ContactServiceImpl(contactRepository);
+    public ContactEntityService getContactService(){
+        return new ContactEntityServiceImpl(contactRepository);
     }
 
     @Bean
-    public PatientService getPatientService(){
-        return new PatientServiceImpl(patientRepository);
+    public PatientEntityService getPatientService(){
+        return new PatientEntityServiceImpl(patientRepository);
     }
 
     @Bean
-    public MedicalRecordService getMedicalRecordService(){
-        return new MedicalRecordServiceImpl(medicalRecordRepository);
+    public MedicalRecordEntityService getMedicalRecordService(){
+        return new MedicalRecordEntityServiceImpl(medicalRecordRepository);
     }
 
     @Bean
-    public DiseaseService getDiseaseService(){
-        return new DiseaseServiceImpl(diseaseRepository);
+    public DiseaseEntityService getDiseaseService(){
+        return new DiseaseEntityServiceImpl(diseaseRepository);
     }
 
     @Bean
-    public DiagnoseService getDiagnoseService(){
-        return new DiagnoseServiceImpl(diagnoseRepository);
+    public DiagnoseEntityService getDiagnoseService(){
+        return new DiagnoseEntityServiceImpl(diagnoseRepository);
     }
 
     @Bean

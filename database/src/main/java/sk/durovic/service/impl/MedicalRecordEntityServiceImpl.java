@@ -3,13 +3,13 @@ package sk.durovic.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sk.durovic.repository.MedicalRecordRepository;
-import sk.durovic.service.MedicalRecordService;
+import sk.durovic.service.MedicalRecordEntityService;
 
 @Service
-public class MedicalRecordServiceImpl extends MedicalRecordService {
+public class MedicalRecordEntityServiceImpl extends MedicalRecordEntityService {
 
     @Autowired
-    public MedicalRecordServiceImpl(MedicalRecordRepository repo) {
+    public MedicalRecordEntityServiceImpl(MedicalRecordRepository repo) {
         this.repo = repo;
     }
 }

@@ -7,7 +7,7 @@ import sk.durovic.exception.ObjectIsNotEntityException;
 import sk.durovic.manager.EntityContainer;
 import sk.durovic.manager.EntityManager;
 import sk.durovic.model.BaseEntityAbstractClass;
-import sk.durovic.service.Service;
+import sk.durovic.service.EntityService;
 import sk.durovic.worker.JpaWorkers;
 
 import java.lang.reflect.Constructor;
@@ -53,7 +53,7 @@ public class EntityManagerBasic implements EntityManager {
         Optional<T> entity = entityContainer.onLoad(getReference(clazz, id));
 
         if(entity.isEmpty()) {
-            Optional<Service<T, ID, ?>> service = serviceContainer.getService(clazz);
+            Optional<EntityService<T, ID, ?>> service = serviceContainer.getService(clazz);
             entity = service.isPresent() ? service.get().load(id) : Optional.empty();
             entity.ifPresent(entityContainer::addToContainer);
         }

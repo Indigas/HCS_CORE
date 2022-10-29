@@ -55,11 +55,11 @@ public class ServiceContainerBasic implements ServiceContainer {
 
 
     private void setServices(){
-        servicesMap.put(Patient.class, PatientService.class);
-        servicesMap.put(MedicalRecord.class, MedicalRecordService.class);
-        servicesMap.put(Disease.class, DiagnoseService.class);
-        servicesMap.put(Diagnose.class, DiagnoseService.class);
-        servicesMap.put(Contact.class, ContactService.class);
+        servicesMap.put(Patient.class, PatientEntityService.class);
+        servicesMap.put(MedicalRecord.class, MedicalRecordEntityService.class);
+        servicesMap.put(Disease.class, DiagnoseEntityService.class);
+        servicesMap.put(Diagnose.class, DiagnoseEntityService.class);
+        servicesMap.put(Contact.class, ContactEntityService.class);
         servicesMap.put(Patient_Diagnose.class, PatientDiagnoseService.class);
     }
 

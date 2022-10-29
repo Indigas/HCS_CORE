@@ -10,7 +10,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sk.durovic.helper.Helper;
 import sk.durovic.mapper.EntityMapper;
-import sk.durovic.model.BaseEntity;
 import sk.durovic.model.Contact;
 import sk.durovic.model.access.ContactEntity;
 import sk.durovic.model.access.PatientEntity;
@@ -20,13 +19,13 @@ import sk.durovic.repository.ContactRepository;
 import static org.hamcrest.MatcherAssert.*;
 
 @ExtendWith(MockitoExtension.class)
-class ContactServiceImplTest {
+class ContactEntityServiceImplTest {
 
     @Mock
     private ContactRepository repo;
 
     @InjectMocks
-    private ContactServiceImpl service;
+    private ContactEntityServiceImpl service;
 
     private Patient patient;
     private ContactEntity contactE;

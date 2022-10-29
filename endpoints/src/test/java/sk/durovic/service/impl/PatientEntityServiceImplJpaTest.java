@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import sk.durovic.model.Patient;
 import sk.durovic.model.access.PatientEntity;
 import sk.durovic.repository.PatientRepository;
-import sk.durovic.service.PatientService;
+import sk.durovic.service.PatientEntityService;
 
 import java.util.Optional;
 
@@ -19,11 +19,11 @@ import static org.hamcrest.MatcherAssert.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class PatientServiceImplJpaTest {
+class PatientEntityServiceImplJpaTest {
 
     @Autowired
     private PatientRepository repo;
-    private PatientService service;
+    private PatientEntityService service;
     private Patient patient;
 
     @Autowired
@@ -31,7 +31,7 @@ class PatientServiceImplJpaTest {
 
     @BeforeEach
     void setUp() {
-        this.service = new PatientServiceImpl(repo);
+        this.service = new PatientEntityServiceImpl(repo);
         PatientEntity entity = new PatientEntity();
         entity.setLastName("test");
         this.patient = entity.createPatient();
