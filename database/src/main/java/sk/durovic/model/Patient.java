@@ -36,18 +36,18 @@ public class Patient extends BaseEntityAbstractClass<String> implements Serializ
 
     @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
-    private final List<Contact> contacts = new LinkedList<>();
+    private transient final List<Contact> contacts = new LinkedList<>();
 
     @Enumerated(EnumType.STRING)
     private BloodGroup bloodGroup;
 
     @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
-    private final List<Disease> diseases = new LinkedList<>();
+    private transient final List<Disease> diseases = new LinkedList<>();
 
     @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
-    private final List<MedicalRecord> medicalRecords = new LinkedList<>();
+    private transient final List<MedicalRecord> medicalRecords = new LinkedList<>();
 
 
 }

@@ -29,5 +29,5 @@ public class Diagnose extends BaseEntity implements Serializable {
     private String description;
 
     @OneToMany(mappedBy = "diagnose", fetch = FetchType.LAZY)
-    private List<MedicalRecord> medicalRecords;
+    private transient List<MedicalRecord> medicalRecords;
 }

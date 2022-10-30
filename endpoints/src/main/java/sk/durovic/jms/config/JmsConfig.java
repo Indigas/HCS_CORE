@@ -9,9 +9,8 @@ import org.springframework.stereotype.Component;
 public class JmsConfig {
 
     @Bean
-    public MessageConverter messageConverter(){
+    public MessageConverter jacksonConverter(){
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
-
 
         return converter;
     }
