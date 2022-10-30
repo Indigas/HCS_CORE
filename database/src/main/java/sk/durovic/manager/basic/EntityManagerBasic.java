@@ -10,6 +10,7 @@ import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.service.EntityService;
 import sk.durovic.worker.JpaWorkers;
 
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.Optional;
 
@@ -48,7 +49,7 @@ public class EntityManagerBasic implements EntityManager {
      * @return
      */
     @Override
-    public <T extends BaseEntityAbstractClass<ID>, ID> Optional<T> load(Class<T> clazz, ID id) {
+    public <T extends BaseEntityAbstractClass<ID>, ID extends Serializable> Optional<T> load(Class<T> clazz, ID id) {
 
         Optional<T> entity = entityContainer.onLoad(getReference(clazz, id));
 
@@ -141,7 +142,7 @@ public class EntityManagerBasic implements EntityManager {
      * @return
      */
     @Override
-    public <T extends BaseEntityAbstractClass<ID>, ID> T getReference(Class<T> clazz, ID id){
+    public <T extends BaseEntityAbstractClass<ID>, ID extends Serializable> T getReference(Class<T> clazz, ID id){
         if (id == null)
             throw new NullPointerException("ID is null");
 

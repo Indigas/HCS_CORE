@@ -1,19 +1,22 @@
 package sk.durovic.model;
 
 import lombok.Getter;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity
 @Immutable
 @Table(name = "patient_diagnose")
 @Subselect("SELECT uuid() as id, p.* FROM patient_diagnose p")
 @Getter
-public class Patient_Diagnose extends BaseEntityAbstractClass<String>{
+public class Patient_Diagnose extends BaseEntityAbstractClass<String> implements Serializable {
 
     @Id
     private String id;

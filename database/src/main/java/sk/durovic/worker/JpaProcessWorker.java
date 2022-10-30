@@ -9,6 +9,7 @@ import sk.durovic.manager.basic.ServiceContainerBasic;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import javax.validation.ConstraintViolationException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -78,7 +79,7 @@ public abstract class JpaProcessWorker implements Runnable {
      * @param <ID>
      * @throws EntityIntegrationException
      */
-    private <T extends BaseEntityAbstractClass<ID>, ID> void apply(T entity) {
+    private <T extends BaseEntityAbstractClass<ID>, ID extends Serializable> void apply(T entity) {
         try {
             execute(entity);
         } catch (ConstraintViolationException constraintViolationException){
@@ -97,5 +98,5 @@ public abstract class JpaProcessWorker implements Runnable {
      * @param <T>
      * @param <ID>
      */
-    abstract public <T extends BaseEntityAbstractClass<ID>, ID> void execute(T entity);
+    abstract public <T extends BaseEntityAbstractClass<ID>, ID extends Serializable> void execute(T entity);
 }

@@ -5,11 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import sk.durovic.collection.Entry;
 import sk.durovic.collection.MultiEntry;
 import sk.durovic.exception.EntityChangeVersion;
-import sk.durovic.exception.EntityLocked;
 import sk.durovic.manager.Container;
-import sk.durovic.manager.basic.Version;
 import sk.durovic.model.*;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -172,7 +171,7 @@ class ContainerBasic implements Container {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends BaseEntityAbstractClass<ID>, ID> List<T> getByClass(Class<T> clazz){
+    public <T extends BaseEntityAbstractClass<ID>, ID extends Serializable> List<T> getByClass(Class<T> clazz){
         List<T> allWithClass = new LinkedList<>();
 
         for (Map.Entry<Entry<Version.Status, Class<?>>, List<? extends BaseEntityAbstractClass<?>>> entry :

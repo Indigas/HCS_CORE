@@ -1,8 +1,8 @@
 package sk.durovic.model;
 
-import lombok.val;
+import java.io.Serializable;
 
-public enum BloodGroup {
+public enum BloodGroup implements Serializable {
     AA("AA");
 
     private BloodGroup(String bloodGroup) {

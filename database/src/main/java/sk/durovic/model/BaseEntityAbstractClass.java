@@ -3,7 +3,9 @@ package sk.durovic.model;
 
 import sk.durovic.manager.basic.Version;
 
-public abstract class BaseEntityAbstractClass<ID> {
+import java.io.Serializable;
+
+public abstract class BaseEntityAbstractClass<ID extends Serializable> implements Serializable {
 
     private Version version = new Version();
 

@@ -4,6 +4,7 @@ import sk.durovic.exception.ObjectIsNotEntityException;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 
 /**
@@ -40,7 +41,7 @@ public class EntityManipulator {
      * @param <T>
      * @param <ID>
      */
-    static <T extends BaseEntityAbstractClass<ID>, ID> void setIdOfReferenceEntity(T object, ID id){
+    static <T extends BaseEntityAbstractClass<ID>, ID extends Serializable> void setIdOfReferenceEntity(T object, ID id){
         Class<?> clazz = object.getClass();
 
         while(clazz != Object.class){

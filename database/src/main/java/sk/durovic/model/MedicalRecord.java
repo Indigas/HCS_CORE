@@ -7,15 +7,19 @@ import lombok.Setter;
 import org.hibernate.annotations.Type;
 import sk.durovic.annotations.EntityProcessor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Setter(AccessLevel.PROTECTED)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
-public class MedicalRecord extends BaseEntity{
+public class MedicalRecord extends BaseEntity implements Serializable {
 
     @Column
     private String date;

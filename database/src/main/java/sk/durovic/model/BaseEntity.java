@@ -1,9 +1,10 @@
 package sk.durovic.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @MappedSuperclass
-public abstract class BaseEntity extends BaseEntityAbstractClass<Long>{
+public abstract class BaseEntity extends BaseEntityAbstractClass<Long> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

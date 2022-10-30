@@ -9,13 +9,14 @@ import sk.durovic.annotations.EntityProcessor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
-public class Disease extends BaseEntity{
+public class Disease extends BaseEntity implements Serializable {
 
     @Column
     private String name;
