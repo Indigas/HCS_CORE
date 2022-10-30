@@ -1,6 +1,7 @@
 package sk.durovic.jms;
 
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -32,6 +33,7 @@ public class receiveJmsPatientMessageTest {
     private static final String json = "{\"patient\":{\"id\":\"ABC\",\"firstName\":\"Marek\",\"lastName\":\"Durovic\",\"email\":\"marek@gmail\"}}";
 
     @Test
+    @Disabled
     void receivePatientEvent() throws JMSException {
 
         MessageCreator msg = new MessageCreator() {
