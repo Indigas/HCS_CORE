@@ -14,7 +14,7 @@ import sk.durovic.model.Patient;
 import sk.durovic.model.access.PatientEntity;
 import sk.durovic.repository.PatientRepository;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class PatientEntityServiceImplTest {

@@ -2,11 +2,10 @@ package sk.durovic.manager.basic;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import sk.durovic.manager.basic.EntityManipulator;
 import sk.durovic.model.Patient;
 import sk.durovic.model.access.PatientEntity;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 class EntityManipulatorTest {
 

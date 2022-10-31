@@ -2,7 +2,6 @@ package sk.durovic.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sk.durovic.model.Patient;
 import sk.durovic.model.Patient_Diagnose;
 import sk.durovic.repository.PatientDiagnoseRepository;
 import sk.durovic.service.PatientDiagnoseService;

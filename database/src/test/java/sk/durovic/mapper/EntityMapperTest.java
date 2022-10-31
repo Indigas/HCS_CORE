@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import sk.durovic.model.Patient;
 import sk.durovic.model.access.PatientEntity;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 class EntityMapperTest {
 

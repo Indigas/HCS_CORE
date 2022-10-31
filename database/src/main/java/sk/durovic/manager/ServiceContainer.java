@@ -1,6 +1,5 @@
 package sk.durovic.manager;
 
-import org.springframework.context.ApplicationContext;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import java.util.Optional;

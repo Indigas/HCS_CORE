@@ -1,7 +1,5 @@
 package sk.durovic.helper;
 
-import sk.durovic.model.Patient_Diagnose;
-
 import java.lang.reflect.Field;
 
 public class Helper {

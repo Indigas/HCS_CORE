@@ -1,13 +1,14 @@
 package sk.durovic.manager.basic;
 
 import org.springframework.context.ApplicationContext;
-import sk.durovic.exception.EntityChangeVersion;
 import sk.durovic.manager.Container;
 import sk.durovic.manager.EntityContainer;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.worker.JpaProcessor;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Class for calling methods on container based on events

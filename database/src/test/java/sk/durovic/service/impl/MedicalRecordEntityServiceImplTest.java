@@ -13,7 +13,7 @@ import sk.durovic.model.MedicalRecord;
 import sk.durovic.model.access.MedicalRecordEntity;
 import sk.durovic.repository.MedicalRecordRepository;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class MedicalRecordEntityServiceImplTest {

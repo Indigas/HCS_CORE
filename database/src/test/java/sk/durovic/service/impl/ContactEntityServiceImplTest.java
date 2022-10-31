@@ -11,12 +11,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import sk.durovic.helper.Helper;
 import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.Contact;
+import sk.durovic.model.Patient;
 import sk.durovic.model.access.ContactEntity;
 import sk.durovic.model.access.PatientEntity;
-import sk.durovic.model.Patient;
 import sk.durovic.repository.ContactRepository;
 
-import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class ContactEntityServiceImplTest {

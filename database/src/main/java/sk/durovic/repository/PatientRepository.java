@@ -1,6 +1,5 @@
 package sk.durovic.repository;
 
-import org.hibernate.NonUniqueObjectException;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import sk.durovic.model.Patient;

@@ -10,7 +10,6 @@ import org.hibernate.type.Type;
 
 import java.io.Serializable;
 import java.nio.charset.Charset;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;

@@ -27,8 +27,8 @@ import java.lang.reflect.Field;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.hamcrest.MatcherAssert.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

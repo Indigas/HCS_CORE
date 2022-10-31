@@ -9,18 +9,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sk.durovic.helper.Helper;
-import sk.durovic.model.Patient;
 import sk.durovic.model.Patient_Diagnose;
 import sk.durovic.repository.PatientDiagnoseRepository;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class PatientDiagnoseEntityServiceImplTest {

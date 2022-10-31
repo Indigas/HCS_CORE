@@ -6,24 +6,26 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sk.durovic.helper.Helper;
 import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.model.Contact;
+import sk.durovic.model.Patient;
 import sk.durovic.model.access.ContactEntity;
 import sk.durovic.model.access.PatientEntity;
-import sk.durovic.model.Patient;
 
 import javax.persistence.EntityManager;
 import javax.validation.ConstraintViolationException;
 import java.io.Serializable;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.hamcrest.MatcherAssert.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PatientHQLTest {
