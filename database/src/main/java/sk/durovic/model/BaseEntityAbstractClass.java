@@ -1,12 +1,14 @@
 package sk.durovic.model;
 
 
+import net.minidev.json.annotate.JsonIgnore;
 import sk.durovic.manager.basic.Version;
 
 import java.io.Serializable;
 
 public abstract class BaseEntityAbstractClass<ID extends Serializable> implements Serializable {
 
+    @JsonIgnore
     private Version version = new Version();
 
     abstract public ID getId();

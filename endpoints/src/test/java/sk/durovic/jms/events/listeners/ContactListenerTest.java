@@ -13,13 +13,10 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import sk.durovic.jms.messaging.worker.implementations.JmsContactWorker;
-import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @EnableJms

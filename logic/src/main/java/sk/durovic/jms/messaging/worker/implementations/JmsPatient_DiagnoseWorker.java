@@ -13,4 +13,9 @@ public class JmsPatient_DiagnoseWorker implements JmsMessageWorker {
     public void processMessage(Object message) {
         log.info("Started processing JMS message");
     }
+
+    @Override
+    public Object processMessageWithReply(Object message) {
+        return null;
+    }
 }

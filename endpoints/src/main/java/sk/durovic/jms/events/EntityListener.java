@@ -4,4 +4,5 @@ import javax.jms.Message;
 
 public interface EntityListener {
     public void receiveMessage(Message msg);
+    public void receiveAndReplyMessage(Message msg);
 }

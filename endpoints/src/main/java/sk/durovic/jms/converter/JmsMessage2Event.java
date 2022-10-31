@@ -4,27 +4,33 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import sk.durovic.jms.messaging.event.Event;
-import sk.durovic.model.BaseEntityAbstractClass;
+import sk.durovic.jms.messaging.event.result.EventMessageResult;
+import sk.durovic.jms.messaging.event.result.EventStatusResult;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
-import java.io.Serializable;
-import java.util.Optional;
 
 @Slf4j
 public class JmsMessage2Event {
 
-    public static <T extends BaseEntityAbstractClass<ID>, ID extends Serializable, R extends Event<T>>
-                Optional<Event<T>> convertMsg2Event(Message message, Class<R> eventClazz){
+    public static <T, R extends Event<T>>
+                Event<T> convertMsg2Event(Message message, Class<R> eventClazz){
         ObjectMapper objectMapper = new ObjectMapper();
+        Event<T> event = Event.createDefaultEvent();;
+        EventMessageResult result = new EventMessageResult();
 
         try {
-            Event<T> event = objectMapper.readValue(message.getBody(String.class), eventClazz);
-            return Optional.of(event);
+            event = objectMapper.readValue(message.getBody(String.class), eventClazz);
+
+            result.setStatus(EventStatusResult.OK);
+            event.setResult(result);
+
         } catch (JMSException | JsonProcessingException e){
             log.error("JMS message error", e);
+            result.setStatus(EventStatusResult.ERROR);
+            result.setMessage("Unexpected error when converting message");
         }
 
-        return Optional.empty();
+        return event;
     }
 }

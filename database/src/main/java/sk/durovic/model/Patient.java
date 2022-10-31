@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import sk.durovic.annotations.EntityProcessor;
 
@@ -34,17 +35,20 @@ public class Patient extends BaseEntityAbstractClass<String> implements Serializ
     @Column
     private String email;
 
+    @Enumerated(EnumType.STRING)
+    private BloodGroup bloodGroup;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
     private transient final List<Contact> contacts = new LinkedList<>();
 
-    @Enumerated(EnumType.STRING)
-    private BloodGroup bloodGroup;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
     private transient final List<Disease> diseases = new LinkedList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
     private transient final List<MedicalRecord> medicalRecords = new LinkedList<>();

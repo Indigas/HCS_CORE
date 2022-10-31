@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.Type;
 import sk.durovic.annotations.EntityProcessor;
 
@@ -28,6 +29,7 @@ public class Diagnose extends BaseEntity implements Serializable {
     @Type(type = "org.hibernate.type.TextType")
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "diagnose", fetch = FetchType.LAZY)
     private transient List<MedicalRecord> medicalRecords;
 }
