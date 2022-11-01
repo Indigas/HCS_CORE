@@ -1,5 +1,6 @@
 package sk.durovic.jms.messaging.event;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import sk.durovic.jms.messaging.actions.JmsEntityAction;
 import sk.durovic.jms.messaging.event.result.EventMessageResult;
 import sk.durovic.jms.messaging.event.result.EventStatusResult;
@@ -16,6 +17,7 @@ public abstract class Event<T> implements Serializable {
         return entity;
     }
 
+    @JsonIgnore
     public JmsEntityAction getAction() {
         return action;
     }
@@ -32,6 +34,7 @@ public abstract class Event<T> implements Serializable {
         this.result = result;
     }
 
+    @JsonIgnore
     public boolean isResultOk(){
         return getResult().getStatus() == EventStatusResult.OK;
     }

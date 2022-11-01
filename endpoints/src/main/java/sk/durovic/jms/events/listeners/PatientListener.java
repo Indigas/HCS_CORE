@@ -1,5 +1,8 @@
 package sk.durovic.jms.events.listeners;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
@@ -25,9 +28,11 @@ public class PatientListener implements EntityListener {
 
     private final JmsTemplate jmsTemplate;
     private final JmsMessageWorker worker;
+    private final ObjectMapper objectMapper;
 
-    public PatientListener(JmsTemplate jmsTemplate) {
+    public PatientListener(JmsTemplate jmsTemplate, ObjectMapper objectMapper) {
         this.jmsTemplate = jmsTemplate;
+        this.objectMapper = objectMapper;
         this.worker = JmsWorker.provider().createJmsPatientWorker();
     }
 
@@ -53,9 +58,12 @@ public class PatientListener implements EntityListener {
             messageToSend = JmsWorkerTask.processWithReply(worker::processMessageWithReply, result);
 
 
+
         try {
             jmsTemplate.convertAndSend(msg.getJMSReplyTo(), messageToSend);
         } catch (JMSException e) {
+            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }

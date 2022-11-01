@@ -1,7 +1,7 @@
 package sk.durovic.model;
 
 
-import net.minidev.json.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import sk.durovic.manager.basic.Version;
 
 import java.io.Serializable;
