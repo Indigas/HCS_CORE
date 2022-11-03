@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import sk.durovic.jms.converter.JmsMessage2Event;
 import sk.durovic.jms.events.EntityListener;
 import sk.durovic.jms.messaging.event.EntityEvent;
+import sk.durovic.jms.messaging.event.Event;
 import sk.durovic.jms.messaging.event.entity.PatientEvent;
 import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
@@ -29,7 +30,7 @@ public class PatientListener extends EntityListener<Patient> {
     @Override
     public void receiveMessage(Message msg){
 
-        EntityEvent<Patient> result = (EntityEvent<Patient>) JmsMessage2Event.convertMsg2Event(msg, PatientEvent.class);
+        Event<Patient> result = JmsMessage2Event.convertMsg2Event(msg, PatientEvent.class);
 
         if(result.isResultOk())
             getMessageProcessor().processMessage(result);
@@ -40,7 +41,7 @@ public class PatientListener extends EntityListener<Patient> {
     @Override
     public void receiveAndReplyMessage(Message msg) {
 
-        EntityEvent<Patient> result = (EntityEvent<Patient>) JmsMessage2Event.convertMsg2Event(msg, PatientEvent.class);
+        Event<Patient> result = JmsMessage2Event.convertMsg2Event(msg, PatientEvent.class);
 
         try {
             if (result.isResultOk())

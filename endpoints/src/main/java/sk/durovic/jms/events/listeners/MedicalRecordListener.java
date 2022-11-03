@@ -17,7 +17,7 @@ import javax.jms.Message;
 @Slf4j
 public class MedicalRecordListener extends EntityListener<MedicalRecord> {
 
-    protected MedicalRecordListener(JmsTemplate jmsTemplate) {
+    public MedicalRecordListener(JmsTemplate jmsTemplate) {
         super(jmsTemplate, JmsWorker.provider().createJmsMedicalRecordWorker());
     }
 
@@ -26,6 +26,7 @@ public class MedicalRecordListener extends EntityListener<MedicalRecord> {
     public void receiveMessage(Message msg) {
     }
 
+    @JmsListener(destination = JmsMedicalRecordWorker.MEDIACAL_RECORD_WITH_REPLY_QUEUE)
     @Override
     public void receiveAndReplyMessage(Message msg) {
 

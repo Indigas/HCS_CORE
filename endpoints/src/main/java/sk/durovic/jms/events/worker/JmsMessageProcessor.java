@@ -50,10 +50,9 @@ public class JmsMessageProcessor<T> {
             // call JMS task // get result
             log.info("JMS message processing with event > {}", event);
 
-            if(destination!=null) {
+            if(destination==null) {
                 worker.processMessage(event);
-            }
-            else {
+            } else {
                 WorkerResult<T> result = worker.processMessageWithReply(event);
 
                 // create message and send if needed

@@ -15,7 +15,7 @@ public class JmsContactWorker implements JmsMessageWorker<Contact> {
 
     @Override
     public void processMessage(Event<Contact> message) {
-
+        log.info("Started processing JMS message");
     }
 
     @Override

@@ -17,7 +17,7 @@ import javax.jms.Message;
 @Slf4j
 public class DiagnoseListener extends EntityListener<Diagnose> {
 
-    protected DiagnoseListener(JmsTemplate jmsTemplate) {
+    public DiagnoseListener(JmsTemplate jmsTemplate) {
         super(jmsTemplate, JmsWorker.provider().createJmsDiagnoseWorker());
     }
 
@@ -26,6 +26,7 @@ public class DiagnoseListener extends EntityListener<Diagnose> {
     public void receiveMessage(Message msg) {
     }
 
+    @JmsListener(destination = JmsDiagnoseWorker.DIAGNOSE_WITH_REPLY_QUEUE)
     @Override
     public void receiveAndReplyMessage(Message msg) {
 
