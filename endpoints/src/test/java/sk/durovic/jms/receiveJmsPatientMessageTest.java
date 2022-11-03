@@ -30,7 +30,7 @@ public class receiveJmsPatientMessageTest {
     @SpyBean
     private PatientListener listener;
 
-    private static final String json = "{\"patient\":{\"id\":\"D\",\"firstName\":\"Marek\",\"lastName\":\"Durovic\",\"email\":\"marek@gmail\"}}";
+    private static final String json = "{\"patient\":{\"id\":\"D\",\"firstName\":\"Marek\",\"lastName\":\"Durovic\",\"email\":\"marek@gmail\"},\"action\":\"GET\"}";
 
     @Test
     @Disabled
@@ -65,7 +65,7 @@ public class receiveJmsPatientMessageTest {
 
         Message receivedMsg = jmsTemplate.sendAndReceive(JmsPatientWorker.PATIENT_WITH_REPLY_QUEUE, msg);
 
-        System.out.println(receivedMsg.getJMSMessageID());
+        System.out.println(receivedMsg.getBody(String.class).toString());
     }
 
 }

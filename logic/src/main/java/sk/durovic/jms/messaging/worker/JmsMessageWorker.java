@@ -1,8 +1,11 @@
 package sk.durovic.jms.messaging.worker;
 
-public interface JmsMessageWorker {
+import sk.durovic.jms.messaging.event.Event;
+import sk.durovic.jms.messaging.worker.result.WorkerResult;
 
-     void processMessage(Object message);
-     Object processMessageWithReply(Object message);
+public interface JmsMessageWorker<T> {
+
+     void processMessage(Event<T> message);
+     WorkerResult<T> processMessageWithReply(Event<T> message);
 
 }

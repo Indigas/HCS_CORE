@@ -1,7 +1,5 @@
 package sk.durovic.jms.events.listeners;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
@@ -9,14 +7,11 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import sk.durovic.jms.converter.JmsMessage2Event;
 import sk.durovic.jms.events.EntityListener;
-import sk.durovic.jms.messaging.event.Event;
+import sk.durovic.jms.messaging.event.EntityEvent;
 import sk.durovic.jms.messaging.event.entity.PatientEvent;
-import sk.durovic.jms.messaging.event.result.EventStatusResult;
-import sk.durovic.jms.messaging.worker.JmsMessageWorker;
 import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
 import sk.durovic.model.Patient;
-import sk.durovic.worker.JmsWorkerTask;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -24,26 +19,20 @@ import javax.jms.Message;
 
 @Service
 @Slf4j
-public class PatientListener implements EntityListener {
+public class PatientListener extends EntityListener<Patient> {
 
-    private final JmsTemplate jmsTemplate;
-    private final JmsMessageWorker worker;
-    private final ObjectMapper objectMapper;
-
-    public PatientListener(JmsTemplate jmsTemplate, ObjectMapper objectMapper) {
-        this.jmsTemplate = jmsTemplate;
-        this.objectMapper = objectMapper;
-        this.worker = JmsWorker.provider().createJmsPatientWorker();
+    public PatientListener(JmsTemplate jmsTemplate) {
+        super(jmsTemplate, JmsWorker.provider().createJmsPatientWorker());
     }
 
     @JmsListener(destination = JmsPatientWorker.PATIENT_QUEUE)
     @Override
     public void receiveMessage(Message msg){
 
-        Event<Patient> result = JmsMessage2Event.convertMsg2Event(msg, PatientEvent.class);
+        EntityEvent<Patient> result = (EntityEvent<Patient>) JmsMessage2Event.convertMsg2Event(msg, PatientEvent.class);
 
-        if(result.getResult().getStatus() == EventStatusResult.OK)
-            JmsWorkerTask.processWithoutReply(worker::processMessage, result);
+        if(result.isResultOk())
+            getMessageProcessor().processMessage(result);
 
     }
 
@@ -51,20 +40,13 @@ public class PatientListener implements EntityListener {
     @Override
     public void receiveAndReplyMessage(Message msg) {
 
-        Event<Patient> result = JmsMessage2Event.convertMsg2Event(msg, PatientEvent.class);
-        Object messageToSend = new Object();
-
-        if(result.isResultOk())
-            messageToSend = JmsWorkerTask.processWithReply(worker::processMessageWithReply, result);
-
-
+        EntityEvent<Patient> result = (EntityEvent<Patient>) JmsMessage2Event.convertMsg2Event(msg, PatientEvent.class);
 
         try {
-            jmsTemplate.convertAndSend(msg.getJMSReplyTo(), messageToSend);
-        } catch (JMSException e) {
-            throw new RuntimeException(e);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            if (result.isResultOk())
+                getMessageProcessor().processMessageAndReply(result, msg.getJMSReplyTo());
+        } catch (JMSException e){
+            log.error("JMS exception", e);
         }
     }
 
