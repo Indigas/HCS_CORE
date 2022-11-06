@@ -10,6 +10,7 @@ jobs:
           MYSQL_USER: springTest
           MYSQL_PASSWORD: test
           MYSQL_DATABASE: testdb
+      - image: vromero/activemq-artemis:latest
     steps:
       - checkout
       - run:
