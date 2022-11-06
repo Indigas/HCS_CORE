@@ -7,12 +7,12 @@ import sk.durovic.manager.EntityManager;
 import sk.durovic.manager.basic.EntityManagerBasic;
 
 @Component
-public class EntityManagerFactory {
+public class EntityManagerCreator {
 
     private final ApplicationContext context;
 
     @Autowired
-    public EntityManagerFactory(ApplicationContext context) {
+    public EntityManagerCreator(ApplicationContext context) {
         this.context = context;
     }
 

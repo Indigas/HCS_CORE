@@ -15,7 +15,7 @@ import sk.durovic.exception.EntityIntegrationException;
 import sk.durovic.manager.Container;
 import sk.durovic.manager.EntityContainer;
 import sk.durovic.manager.EntityManager;
-import sk.durovic.manager.factory.EntityManagerFactory;
+import sk.durovic.manager.factory.EntityManagerCreator;
 import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.Contact;
 import sk.durovic.model.Patient;
@@ -39,7 +39,7 @@ class EntityManagerBasicTest {
     private ApplicationContext context;
 
     @Autowired
-    private EntityManagerFactory factory;
+    private EntityManagerCreator factory;
 
     @Autowired
     private TestEntityManager testEntityManager;

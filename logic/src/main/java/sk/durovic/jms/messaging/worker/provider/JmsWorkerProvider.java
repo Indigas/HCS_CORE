@@ -2,8 +2,6 @@ package sk.durovic.jms.messaging.worker.provider;
 
 import sk.durovic.jms.messaging.worker.implementations.*;
 import sk.durovic.manager.EntityManager;
-import sk.durovic.manager.factory.EntityManagerFactory;
-import sk.durovic.manager.service.EntityServiceManager;
 
 public interface JmsWorkerProvider {
 
