@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import sk.durovic.manager.ServiceContainer;
 
 @Service
-public class EntityServiceManagerImpl implements EntityServiceManager{
+class EntityServiceManagerImpl implements EntityServiceManager{
 
     private final ApplicationContext context;
 
-    public EntityServiceManagerImpl(ApplicationContext context) {
+    EntityServiceManagerImpl(ApplicationContext context) {
         this.context = context;
     }
 

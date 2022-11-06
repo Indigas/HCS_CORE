@@ -21,7 +21,7 @@ public class EntityServiceContainer implements ServiceContainer {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends BaseEntityAbstractClass<?>, R> Optional<R> getService(Class<T> clazz) {
+    public <T extends BaseEntityAbstractClass<?>,R> Optional<R> getService(Class<T> clazz) {
         return Optional.of((R)context.getBean(servicesMap.get(clazz)));
     }
 
