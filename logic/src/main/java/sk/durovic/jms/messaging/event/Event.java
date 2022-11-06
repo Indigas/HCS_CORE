@@ -1,5 +1,6 @@
 package sk.durovic.jms.messaging.event;
 
+import sk.durovic.jms.messaging.actions.JmsAction;
 import sk.durovic.jms.messaging.event.result.EventMessageResult;
 
 public interface Event<T> {
@@ -9,4 +10,5 @@ public interface Event<T> {
     void setResult(EventMessageResult result);
     EventMessageResult getResult();
     boolean isResultOk();
+    JmsAction getAction();
 }

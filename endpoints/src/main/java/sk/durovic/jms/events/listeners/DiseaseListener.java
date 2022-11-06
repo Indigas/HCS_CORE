@@ -9,6 +9,8 @@ import sk.durovic.jms.events.EntityListener;
 import sk.durovic.jms.messaging.worker.JmsMessageWorker;
 import sk.durovic.jms.messaging.worker.implementations.JmsDiseaseWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
+import sk.durovic.manager.factory.EntityManagerFactory;
+import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Disease;
 
 import javax.jms.Message;
@@ -17,8 +19,8 @@ import javax.jms.Message;
 @Slf4j
 public class DiseaseListener extends EntityListener<Disease> {
 
-    public DiseaseListener(JmsTemplate jmsTemplate) {
-        super(jmsTemplate, JmsWorker.provider().createJmsDiseaseWorker());
+    public DiseaseListener(JmsTemplate jmsTemplate, EntityManagerFactory factory) {
+        super(jmsTemplate, JmsWorker.provider().createJmsDiseaseWorker(factory.getBasicEntityManager()));
     }
 
     @JmsListener(destination = JmsDiseaseWorker.DISEASE_QUEUE)

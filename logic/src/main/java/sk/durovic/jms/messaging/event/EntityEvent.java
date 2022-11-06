@@ -2,6 +2,7 @@ package sk.durovic.jms.messaging.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import sk.durovic.jms.messaging.actions.JmsAction;
 import sk.durovic.jms.messaging.actions.JmsEntityAction;
 import sk.durovic.jms.messaging.event.result.EventMessageResult;
 import sk.durovic.jms.messaging.event.result.EventStatusResult;
@@ -30,10 +31,10 @@ public abstract class EntityEvent<T> implements Serializable, Event<T> {
     }
 
 
-    public JmsEntityAction getAction() {
+    @Override
+    public JmsAction getAction() {
         return action;
     }
-
 
     protected void setAction(JmsEntityAction action) {
         this.action = action;

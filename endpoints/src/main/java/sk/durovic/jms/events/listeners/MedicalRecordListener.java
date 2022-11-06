@@ -9,6 +9,8 @@ import sk.durovic.jms.events.EntityListener;
 import sk.durovic.jms.messaging.worker.JmsMessageWorker;
 import sk.durovic.jms.messaging.worker.implementations.JmsMedicalRecordWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
+import sk.durovic.manager.factory.EntityManagerFactory;
+import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.MedicalRecord;
 
 import javax.jms.Message;
@@ -17,8 +19,8 @@ import javax.jms.Message;
 @Slf4j
 public class MedicalRecordListener extends EntityListener<MedicalRecord> {
 
-    public MedicalRecordListener(JmsTemplate jmsTemplate) {
-        super(jmsTemplate, JmsWorker.provider().createJmsMedicalRecordWorker());
+    public MedicalRecordListener(JmsTemplate jmsTemplate, EntityManagerFactory factory) {
+        super(jmsTemplate, JmsWorker.provider().createJmsMedicalRecordWorker(factory.getBasicEntityManager()));
     }
 
     @JmsListener(destination = JmsMedicalRecordWorker.MEDIACAL_RECORD_QUEUE)

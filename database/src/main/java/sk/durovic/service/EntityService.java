@@ -30,5 +30,4 @@ public abstract class EntityService<T, ID, R extends CrudRepository<T, ID>> {
         return repo.findById(id);
     }
 
-
 }

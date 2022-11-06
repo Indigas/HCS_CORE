@@ -12,6 +12,9 @@ import sk.durovic.jms.messaging.event.Event;
 import sk.durovic.jms.messaging.event.entity.PatientEvent;
 import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
+import sk.durovic.manager.EntityManager;
+import sk.durovic.manager.factory.EntityManagerFactory;
+import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Patient;
 
 import javax.jms.JMSException;
@@ -22,8 +25,8 @@ import javax.jms.Message;
 @Slf4j
 public class PatientListener extends EntityListener<Patient> {
 
-    public PatientListener(JmsTemplate jmsTemplate) {
-        super(jmsTemplate, JmsWorker.provider().createJmsPatientWorker());
+    public PatientListener(JmsTemplate jmsTemplate, EntityManagerFactory factory) {
+        super(jmsTemplate, JmsWorker.provider().createJmsPatientWorker(factory.getBasicEntityManager()));
     }
 
     @JmsListener(destination = JmsPatientWorker.PATIENT_QUEUE)
