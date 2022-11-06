@@ -28,6 +28,7 @@ public class EntityWorkerResult<T> implements WorkerResult<T>{
         this.entity = entity;
     }
 
+    @JsonIgnore
     @Override
     public boolean isResultOk() {
         return result == WorkerStatusResult.OK;

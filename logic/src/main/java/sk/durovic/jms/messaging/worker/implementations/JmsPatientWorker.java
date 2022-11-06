@@ -57,13 +57,16 @@ public class JmsPatientWorker implements JmsMessageWorker<Patient> {
                 if(loadedPatient.isPresent()){
                     result.setEntity(loadedPatient.get());
                     result.setStatus(WorkerStatusResult.OK);
-                }
+                } else
+                    result.setStatus(WorkerStatusResult.ENTITY_NOT_EXISTS);
+
                 break;
             case CREATE:
                 //em.save(patient);
                 //em.commit();
-                service.save(patient);
+                patient = service.save(patient);
 
+                result.setEntity(patient);
                 result.setStatus(WorkerStatusResult.OK);
                 break;
             case UPDATE:

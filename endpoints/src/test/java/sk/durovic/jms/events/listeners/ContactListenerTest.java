@@ -31,7 +31,6 @@ class ContactListenerTest {
     private static final String json = "{\"contact\":{\"id\":\"13568\",\"fullName\":\"Marek\",\"telephone\":\"0908\",\"notes\":\"dad\"}}";
 
     @Test
-    @Disabled
     void receiveMessage() {
 
         MessageCreator msg = new MessageCreator() {

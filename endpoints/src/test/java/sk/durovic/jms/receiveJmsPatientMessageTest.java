@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
+import org.springframework.transaction.annotation.Transactional;
 import sk.durovic.jms.events.listeners.PatientListener;
 import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
 
@@ -33,7 +34,6 @@ public class receiveJmsPatientMessageTest {
     private static final String json = "{\"patient\":{\"id\":\"D\",\"firstName\":\"Marek\",\"lastName\":\"Durovic\",\"email\":\"marek@gmail\"},\"action\":\"GET\"}";
 
     @Test
-    @Disabled
     void receivePatientEvent() throws JMSException {
 
         MessageCreator msg = new MessageCreator() {
@@ -54,12 +54,26 @@ public class receiveJmsPatientMessageTest {
     }
 
     @Test
-    @Disabled
     void receiveAndReplyTest() throws JMSException {
         MessageCreator msg = new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
                 return session.createTextMessage(json);
+            }
+        };
+
+        Message receivedMsg = jmsTemplate.sendAndReceive(JmsPatientWorker.PATIENT_WITH_REPLY_QUEUE, msg);
+
+        System.out.println(receivedMsg.getBody(String.class).toString());
+    }
+
+    @Test
+    void createEntityAndReplyTest() throws JMSException {
+        String jsonCreate = "{\"patient\":{\"id\":\"D\",\"firstName\":\"Marek\",\"lastName\":\"Durovic\",\"email\":\"marek@gmail\"},\"action\":\"CREATE\"}";
+        MessageCreator msg = new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                return session.createTextMessage(jsonCreate);
             }
         };
 
