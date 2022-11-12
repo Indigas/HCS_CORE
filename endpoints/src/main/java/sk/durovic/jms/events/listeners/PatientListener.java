@@ -10,7 +10,6 @@ import sk.durovic.jms.messaging.event.Event;
 import sk.durovic.jms.messaging.event.entity.PatientEvent;
 import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
-import sk.durovic.manager.factory.EntityManagerCreator;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Patient;
 

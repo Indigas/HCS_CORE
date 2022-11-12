@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class EntityServiceContainer implements ServiceContainer {
+class EntityServiceContainer implements ServiceContainer {
 
     private final Map<Class<?>, Class<?>> servicesMap = new HashMap<>();
     private final ApplicationContext context;

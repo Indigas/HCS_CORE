@@ -1,7 +1,6 @@
 package sk.durovic.jms;
 
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -11,7 +10,6 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
-import org.springframework.transaction.annotation.Transactional;
 import sk.durovic.jms.events.listeners.PatientListener;
 import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
 

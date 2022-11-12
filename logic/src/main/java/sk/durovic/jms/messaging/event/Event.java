@@ -11,4 +11,5 @@ public interface Event<T> {
     EventMessageResult getResult();
     boolean isResultOk();
     JmsAction getAction();
+    void setAction(JmsAction action);
 }

@@ -9,9 +9,6 @@ import sk.durovic.jms.messaging.event.result.EventStatusResult;
 import sk.durovic.jms.messaging.exception.OperationNotSupported;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 public abstract class EntityEvent<T> implements Serializable, Event<T> {
 
@@ -34,6 +31,11 @@ public abstract class EntityEvent<T> implements Serializable, Event<T> {
     @Override
     public JmsAction getAction() {
         return action;
+    }
+
+    @Override
+    public void setAction(JmsAction action) {
+        this.action = (JmsEntityAction) action;
     }
 
     protected void setAction(JmsEntityAction action) {
@@ -76,6 +78,11 @@ public abstract class EntityEvent<T> implements Serializable, Event<T> {
 
         @Override
         public JmsEntityAction getAction() {
+            throw new OperationNotSupported("Not supported on default event!");
+        }
+
+        @Override
+        public void setAction(JmsAction action) {
             throw new OperationNotSupported("Not supported on default event!");
         }
 

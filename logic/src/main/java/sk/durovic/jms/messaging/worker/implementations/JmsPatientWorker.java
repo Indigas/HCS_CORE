@@ -7,7 +7,6 @@ import sk.durovic.jms.messaging.worker.JmsMessageWorker;
 import sk.durovic.jms.messaging.worker.result.EntityWorkerResult;
 import sk.durovic.jms.messaging.worker.result.WorkerResult;
 import sk.durovic.jms.messaging.worker.result.status.WorkerStatusResult;
-import sk.durovic.manager.EntityManager;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Patient;
 import sk.durovic.model.access.PatientEntity;

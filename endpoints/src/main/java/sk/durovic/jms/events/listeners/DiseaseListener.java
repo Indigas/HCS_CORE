@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import sk.durovic.jms.events.EntityListener;
 import sk.durovic.jms.messaging.worker.implementations.JmsDiseaseWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
-import sk.durovic.manager.factory.EntityManagerCreator;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Disease;
 

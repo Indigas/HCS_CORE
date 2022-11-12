@@ -1,6 +1,5 @@
 package sk.durovic.jms.events;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jms.core.JmsTemplate;
 import sk.durovic.jms.events.worker.JmsMessageProcessor;
 import sk.durovic.jms.messaging.worker.JmsMessageWorker;

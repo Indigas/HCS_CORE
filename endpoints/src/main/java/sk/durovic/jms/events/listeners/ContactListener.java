@@ -10,7 +10,6 @@ import sk.durovic.jms.messaging.event.Event;
 import sk.durovic.jms.messaging.event.entity.ContactEvent;
 import sk.durovic.jms.messaging.worker.implementations.JmsContactWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
-import sk.durovic.manager.factory.EntityManagerCreator;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Contact;
 
