@@ -68,7 +68,7 @@ class JmsPatientWorkerTest {
     void processMessageWithReply() {
         this.event = createEvent(JmsEntityAction.CREATE);
 
-        WorkerResult<Patient> result = worker.processMessageWithReply(event);
+        WorkerResult<Patient> result = (WorkerResult<Patient>) worker.processEvent(event);
 
         Patient returned = result.getEntity();
         WorkerStatusResult status = result.getStatus();

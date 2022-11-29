@@ -60,7 +60,7 @@ public class receiveJmsPatientMessageTest {
             }
         };
 
-        Message receivedMsg = jmsTemplate.sendAndReceive(JmsPatientWorker.PATIENT_WITH_REPLY_QUEUE, msg);
+        Message receivedMsg = jmsTemplate.sendAndReceive(JmsPatientWorker.PATIENT_QUEUE, msg);
 
         System.out.println(receivedMsg.getBody(String.class).toString());
     }
@@ -75,7 +75,7 @@ public class receiveJmsPatientMessageTest {
             }
         };
 
-        Message receivedMsg = jmsTemplate.sendAndReceive(JmsPatientWorker.PATIENT_WITH_REPLY_QUEUE, msg);
+        Message receivedMsg = jmsTemplate.sendAndReceive(JmsPatientWorker.PATIENT_QUEUE, msg);
 
         System.out.println(receivedMsg.getBody(String.class).toString());
     }

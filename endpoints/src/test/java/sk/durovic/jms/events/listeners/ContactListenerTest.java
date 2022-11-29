@@ -39,11 +39,11 @@ class ContactListenerTest {
             }
         };
 
-        jmsTemplate.send(JmsContactWorker.CONTACT_WITH_REPLY_QUEUE, msg);
+        jmsTemplate.send(JmsContactWorker.CONTACT_QUEUE, msg);
 
         ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(Message.class);
 
-        Mockito.verify(listener, Mockito.timeout(1000)).receiveAndReplyMessage(argumentCaptor.capture());
+        Mockito.verify(listener, Mockito.timeout(1000)).receiveMessage(argumentCaptor.capture());
 
         Message receivedMsg = argumentCaptor.getValue();
         MatcherAssert.assertThat(receivedMsg, Matchers.notNullValue());

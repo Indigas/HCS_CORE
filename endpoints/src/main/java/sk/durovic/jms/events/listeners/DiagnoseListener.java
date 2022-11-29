@@ -5,6 +5,7 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import sk.durovic.jms.events.EntityListener;
+import sk.durovic.jms.messaging.event.entity.DiagnoseEvent;
 import sk.durovic.jms.messaging.worker.implementations.JmsDiagnoseWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
 import sk.durovic.manager.service.EntityServiceManager;
@@ -20,14 +21,12 @@ public class DiagnoseListener extends EntityListener<Diagnose> {
         super(jmsTemplate, JmsWorker.provider().createJmsDiagnoseWorker(ems));
     }
 
-    @JmsListener(destination = JmsDiagnoseWorker.DIAGNOSE_QUEUE)
+    @JmsListener(destination = JmsDiagnoseWorker.DIAGNOSE_QUEUE, concurrency = "3-10")
     @Override
     public void receiveMessage(Message msg) {
+        log.info("Received JMS message for DIAGNOSE_QUEUE");
+
+        defaultMessageProcessing(msg, DiagnoseEvent.class);
     }
 
-    @JmsListener(destination = JmsDiagnoseWorker.DIAGNOSE_WITH_REPLY_QUEUE)
-    @Override
-    public void receiveAndReplyMessage(Message msg) {
-
-    }
 }

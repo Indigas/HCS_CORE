@@ -8,31 +8,24 @@ import sk.durovic.jms.messaging.worker.JmsMessageWorker;
 import sk.durovic.jms.messaging.worker.result.WorkerResult;
 import sk.durovic.worker.JmsWorkerService;
 
-import javax.jms.Destination;
-
 @Slf4j
 @Setter
 public class JmsMessageProcessor<T> {
 
     private JmsTemplate jmsTemplate;
     private JmsWorkerService workerService;
-    private JmsMessageWorker<T> worker;
+    private JmsMessageWorker worker;
 
     public JmsMessageProcessor() {
     }
 
-    public void processMessage(Event<T> event){
-        JmsProcessMessageExecutor executor = new JmsProcessMessageExecutor(event);
-        workerService.processMessage(executor);
+    public WorkerResult<?> processMessage(Event<T> event){
+        //JmsProcessMessageExecutor executor = new JmsProcessMessageExecutor(event);
+        //workerService.processMessage(executor);
+        return worker.processEvent(event);
     }
 
-    public void processMessageAndReply(Event<T> event, Destination destination){
-        JmsProcessMessageExecutor executor = new JmsProcessMessageExecutor(event);
-        executor.setDestination(destination);
-        workerService.processMessage(executor);
-    }
-
-    private class JmsProcessMessageExecutor implements Runnable{
+    /*private class JmsProcessMessageExecutor implements Runnable{
         private final Event<T> event;
         private Destination destination;
 
@@ -52,7 +45,7 @@ public class JmsMessageProcessor<T> {
             if(destination==null) {
                 worker.processMessage(event);
             } else {
-                WorkerResult<T> result = worker.processMessageWithReply(event);
+                WorkerResult<T> result = worker.processMessage(event);
 
                 // create message and send if needed
                 jmsTemplate.convertAndSend(destination, result);
@@ -63,6 +56,6 @@ public class JmsMessageProcessor<T> {
 
 
         }
-    }
+    }*/
 
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class PatientDiagnoseServiceImpl
-        extends PatientDiagnoseService<PatientDiagnoseRepository> {
+        extends PatientDiagnoseService {
 
     @Autowired
     public PatientDiagnoseServiceImpl(PatientDiagnoseRepository repo) {

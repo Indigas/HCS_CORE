@@ -6,5 +6,6 @@ public enum JmsEntityAction implements Serializable, JmsAction {
     GET,
     CREATE,
     UPDATE,
-    DELETE;
+    DELETE,
+    GET_ALL;
 }
