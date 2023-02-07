@@ -48,7 +48,7 @@ public abstract class EntityListener<T> {
         WorkerResult<?> result = messageProcessor.processMessage(event);
 
         try {
-            if (event.isResultOk())
+            if (event.isResultOk() && msg.getJMSReplyTo() != null)
                 getJmsTemplate().convertAndSend(msg.getJMSReplyTo(), result);
 
         } catch (JMSException e){

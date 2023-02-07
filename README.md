@@ -2,18 +2,18 @@
 
 # Health care system
 
-This is the core of Health care system. Most of the logic of the application is happening here.
+This is the core of Health Care System. Most of the application logic happens here.
 
-Core module is built with Spring Framework 5.
+Core module is built on Spring Framework 5.
 
-###In this module you can find:
-* Repositories build on Spring Crud repositories
-* Annotation processor, which create generated classes to work with immutable entities
-* Own Entity manager, which use Entity container and Service container - everything written by myself
+### In this module you can find:
+* Repositories build on Spring Crud repositories and connected Services
+* Annotation processor, which creates generated classes to work with immutable entities
+* Service manager as layer between repositories and entities
 * Implemented Flyway database migration plugin to maven
-* Workers, which are used together with services/repositories to communicate with DB concurrently
+* JMS entity listeners to communicate between microservices and process messages
 
-###Testing
+### Testing
 * DB layer - actually tested 92% of classes with 56% line covered
 * Tested DB layer
 
@@ -21,5 +21,6 @@ Core module is built with Spring Framework 5.
 CircleCi is used for integration tests and simulate real world environment.
 Used in CircleCi
 * Docker with maven and mysql image
+
 Issues
 * Maven and Mysql image is running with root privileges. It means that it does not simulate real world environment at 100%

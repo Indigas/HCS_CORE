@@ -2,6 +2,8 @@ package sk.durovic.jms.messaging.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import sk.durovic.jms.messaging.actions.JmsAction;
 import sk.durovic.jms.messaging.actions.JmsEntityAction;
 import sk.durovic.jms.messaging.event.result.EventMessageResult;
@@ -34,12 +36,11 @@ public abstract class EntityEvent<T> implements Serializable, Event<T> {
     }
 
     @Override
+    @JsonTypeInfo(use= JsonTypeInfo.Id.CLASS, defaultImpl = sk.durovic.jms.messaging.actions.JmsEntityAction.class)
+    @JsonSubTypes({
+            @JsonSubTypes.Type(value=sk.durovic.jms.messaging.actions.JmsEntityAction.class, name="JmsEntityAction")})
     public void setAction(JmsAction action) {
         this.action = (JmsEntityAction) action;
-    }
-
-    protected void setAction(JmsEntityAction action) {
-        this.action = action;
     }
 
     @Override
@@ -86,9 +87,5 @@ public abstract class EntityEvent<T> implements Serializable, Event<T> {
             throw new OperationNotSupported("Not supported on default event!");
         }
 
-        @Override
-        protected void setAction(JmsEntityAction action) {
-            throw new OperationNotSupported("Not supported on default event!");
-        }
     }
 }

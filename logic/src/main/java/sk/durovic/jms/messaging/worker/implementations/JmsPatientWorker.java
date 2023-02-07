@@ -26,8 +26,7 @@ public class JmsPatientWorker extends JmsMessageWorkerService<Patient> {
     }
 
     @Override
-    public WorkerResult<?> processEvent(Event<?> event) {
-
+    public WorkerResult<Patient> processEvent(Event<?> event) {
         log.info("Started processing JMS message");
         WorkerResult<Patient> result = new EntityWorkerResult<>();
 
