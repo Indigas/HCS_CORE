@@ -24,7 +24,6 @@ public class ContactListener extends EntityListener<Contact> {
     @JmsListener(destination = JmsContactWorker.CONTACT_QUEUE, concurrency = "3-10")
     @Override
     public void receiveMessage(Message msg) {
-        log.info("Received JMS message for CONTACT_QUEUE");
 
         defaultMessageProcessing(msg, ContactEvent.class);
     }
