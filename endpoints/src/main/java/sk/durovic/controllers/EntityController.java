@@ -5,46 +5,50 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sk.durovic.model.Patient;
-import sk.durovic.model.access.PatientEntity;
 import sk.durovic.worker.EntityWorker;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
-@RestController("/patient")
-public class PatientController {
+public abstract class EntityController<T, ID> {
+
+    protected final EntityWorker<T, ID> worker;
+
+    public EntityController(EntityWorker<T, ID> worker) {
+        this.worker = worker;
+    }
 
     @GetMapping(value={ "","/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<Patient>> getPatients(@PathVariable(required = false) String id){
-        return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.OK);
+    public ResponseEntity<Collection<T>> getEntities(@PathVariable(required = false) ID id){
+
+        return new ResponseEntity<>(List.of(worker.loadById(id)), HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<Patient>> createPatients(@RequestBody Collection<Patient> patients){
+    public ResponseEntity<Collection<T>> createEntities(@RequestBody Collection<T> entities){
         return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value={"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updatePatient(@PathVariable String id, @RequestBody String patient){
+    public void updateEntity(@PathVariable ID id, @RequestBody String entity){
 
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updatePatients(@RequestBody Collection<String> patients){
+    public void updateEntities(@RequestBody Collection<String> entities){
 
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = {"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deletePatient(@PathVariable String id){
+    public void deleteEntity(@PathVariable ID id){
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deletePatients(@RequestBody Collection<String> patientIds){
+    public void deleteEntities(@RequestBody Collection<String> entitiesId){
     }
-
-
 }
