@@ -20,7 +20,7 @@ import java.util.List;
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
-public class Diagnose extends BaseEntity implements Serializable {
+public class Diagnose extends BaseEntity {
 
     @Column
     private String tag;

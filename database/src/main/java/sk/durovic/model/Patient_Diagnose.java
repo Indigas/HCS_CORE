@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Table(name = "patient_diagnose")
 @Subselect("SELECT uuid() as id, p.* FROM patient_diagnose p")
 @Getter
-public class Patient_Diagnose extends BaseEntityAbstractClass<String> implements Serializable {
+public class Patient_Diagnose extends BaseEntityAbstractClass<String> {
 
     @Id
     private String id;

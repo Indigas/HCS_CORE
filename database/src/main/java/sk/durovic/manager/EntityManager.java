@@ -9,8 +9,8 @@ import java.util.Optional;
 public interface EntityManager extends Closeable {
 
     <T extends BaseEntityAbstractClass<?>> void save(T object);
-    <T extends BaseEntityAbstractClass<ID>, ID extends Serializable> Optional<T> load(Class<T> clazz, ID id);
-    <T extends BaseEntityAbstractClass<ID>, ID extends Serializable> T getReference(Class<T> clazz, ID id);
+    <T extends BaseEntityAbstractClass<ID>, ID> Optional<T> load(Class<T> clazz, ID id);
+    <T extends BaseEntityAbstractClass<ID>, ID> T getReference(Class<T> clazz, ID id);
     <T extends BaseEntityAbstractClass<?>> boolean contains(T entity);
     <T extends BaseEntityAbstractClass<?>> void lock(T entity);
     <T extends BaseEntityAbstractClass<?>> void release(T entity);

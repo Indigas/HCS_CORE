@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
-public class Disease extends BaseEntity implements Serializable {
+public class Disease extends BaseEntity {
 
     @Column
     private String name;

@@ -1,5 +1,6 @@
 package sk.durovic.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +33,13 @@ public abstract class EntityController<T, ID> {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value={"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateEntity(@PathVariable ID id, @RequestBody String entity){
-
+    public void updateEntity(@PathVariable ID id, @RequestBody T entity){
+        worker.updateEntity(id, entity);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateEntities(@RequestBody Collection<String> entities){
+    public void updateEntities(@RequestBody Collection<T> entities){
 
     }
 
@@ -49,6 +50,6 @@ public abstract class EntityController<T, ID> {
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteEntities(@RequestBody Collection<String> entitiesId){
+    public void deleteEntities(@RequestBody Collection<ID> entitiesId){
     }
 }

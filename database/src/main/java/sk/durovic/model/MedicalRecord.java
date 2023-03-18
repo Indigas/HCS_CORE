@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
-public class MedicalRecord extends BaseEntity implements Serializable {
+public class MedicalRecord extends BaseEntity {
 
     @Column
     private String date;

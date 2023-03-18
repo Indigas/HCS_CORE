@@ -21,7 +21,7 @@ public class JpaPersistWorker extends JpaProcessWorker {
     }
 
     @Override
-    public <T extends BaseEntityAbstractClass<ID>, ID extends Serializable> void execute(T entity) {
+    public <T extends BaseEntityAbstractClass<ID>, ID> void execute(T entity) {
         Optional<EntityService<T,ID,?>> service = getServiceContainer().getService(entity.getClass());
         service.ifPresent(serv -> serv.save(entity));
     }

@@ -1,19 +1,23 @@
 package sk.durovic.worker.entity;
 
+import sk.durovic.manager.EntityManager;
+import sk.durovic.manager.factory.EntityManagerCreator;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Contact;
-import sk.durovic.model.access.ContactEntity;
 import sk.durovic.service.ContactEntityService;
 import sk.durovic.worker.EntityWorker;
 
+import java.io.IOException;
 import java.util.Collection;
 
 public class ContactWorker implements EntityWorker<Contact, Long> {
 
     private final ContactEntityService service;
+    private final EntityManagerCreator creator;
 
-    public ContactWorker(EntityServiceManager esm) {
+    public ContactWorker(EntityServiceManager esm, EntityManagerCreator creator) {
         this.service = (ContactEntityService) esm.getServiceContainer().getService(Contact.class).get();
+        this.creator = creator;
     }
 
 
@@ -29,11 +33,23 @@ public class ContactWorker implements EntityWorker<Contact, Long> {
 
     @Override
     public void deleteById(Long aLong) {
+        try(EntityManager em = creator.getBasicEntityManager()){
+            em.remove(em.getReference(Contact.class, aLong));
+
+            em.commit();
+        } catch (IOException e){
+
+        }
         service.deleteById(aLong);
     }
 
     @Override
     public void update(Collection<Contact> entity) {
+
+    }
+
+    @Override
+    public void updateEntity(Long aLong, Contact entity) {
 
     }
 

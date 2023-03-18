@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
-public class Contact extends BaseEntity implements Serializable {
+public class Contact extends BaseEntity {
 
     @Column
     private String fullName;

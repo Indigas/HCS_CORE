@@ -1,5 +1,7 @@
 package sk.durovic.model;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,9 +22,13 @@ public abstract class BaseEntity extends BaseEntityAbstractClass<Long> implement
 
     @Override
     public boolean equals(Object obj) {
+        if(obj == null)
+            return false;
+
         if(obj instanceof BaseEntity)
             return ((BaseEntity)obj).getId().equals(this.id);
 
-        throw new IllegalArgumentException("Object is not instance of BaseEntity");
+        //throw new IllegalArgumentException("Object is not instance of BaseEntity");
+        return false;
     }
 }

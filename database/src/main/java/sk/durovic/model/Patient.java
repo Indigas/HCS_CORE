@@ -19,7 +19,7 @@ import java.util.List;
 @EntityProcessor
 @Entity
 @Table(name = "Patient")
-public class Patient extends BaseEntityAbstractClass<String> implements Serializable {
+public class Patient extends BaseEntityAbstractClass<String> {
 
     @Id
     @GeneratedValue(generator = "generator")
@@ -41,17 +41,17 @@ public class Patient extends BaseEntityAbstractClass<String> implements Serializ
     @JsonIgnore
     @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
-    private transient final List<Contact> contacts = new LinkedList<>();
+    private final List<Contact> contacts = new LinkedList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
-    private transient final List<Disease> diseases = new LinkedList<>();
+    private final List<Disease> diseases = new LinkedList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "patient")
     @Setter(AccessLevel.NONE)
-    private transient final List<MedicalRecord> medicalRecords = new LinkedList<>();
+    private final List<MedicalRecord> medicalRecords = new LinkedList<>();
 
 
 }

@@ -2,7 +2,7 @@ package sk.durovic.model;
 
 import java.io.Serializable;
 
-public enum BloodGroup implements Serializable {
+public enum BloodGroup {
     AA("AA");
 
     private BloodGroup(String bloodGroup) {
