@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @WebMvcTest(ContactController.class)
 @Import(EntityServiceManagerConfiguration.class)
+
 class ContactControllerTest {
 
     @Autowired

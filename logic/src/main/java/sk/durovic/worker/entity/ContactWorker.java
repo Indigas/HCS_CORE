@@ -2,7 +2,6 @@ package sk.durovic.worker.entity;
 
 import sk.durovic.manager.EntityManager;
 import sk.durovic.manager.factory.EntityManagerCreator;
-import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Contact;
 import sk.durovic.service.ContactEntityService;
 import sk.durovic.worker.EntityWorker;
@@ -12,11 +11,11 @@ import java.util.Collection;
 
 public class ContactWorker implements EntityWorker<Contact, Long> {
 
-    private final ContactEntityService service;
+    //private final ContactEntityService service;
     private final EntityManagerCreator creator;
 
-    public ContactWorker(EntityServiceManager esm, EntityManagerCreator creator) {
-        this.service = (ContactEntityService) esm.getServiceContainer().getService(Contact.class).get();
+    public ContactWorker(EntityManagerCreator creator) {
+        //this.service = (ContactEntityService) esm.getServiceContainer().getService(Contact.class).get();
         this.creator = creator;
     }
 
@@ -60,6 +59,7 @@ public class ContactWorker implements EntityWorker<Contact, Long> {
 
     @Override
     public Contact loadById(Long aLong) {
-        return service.load(aLong).orElse(null);
+        return creator.getBasicEntityManager().load(Contact.class, aLong).orElse(null);
+        //return service.load(aLong).orElse(null);
     }
 }

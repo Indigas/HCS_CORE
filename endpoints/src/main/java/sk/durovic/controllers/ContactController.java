@@ -12,7 +12,7 @@ import sk.durovic.worker.entity.ContactWorker;
 public class ContactController extends EntityController<Contact, Long> {
 
 
-    public ContactController(EntityServiceManager esm, EntityManagerCreator creator) {
-        super(new ContactWorker(esm, creator));
+    public ContactController(EntityManagerCreator creator) {
+        super(new ContactWorker(creator));
     }
 }
