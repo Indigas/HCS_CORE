@@ -25,6 +25,6 @@ public class ContactListener extends EntityListener<Contact> {
     @Override
     public void receiveMessage(Message msg) {
 
-        defaultMessageProcessing(msg, ContactEvent.class);
+        processMessage(msg, ContactEvent.class);
     }
 }

@@ -26,7 +26,7 @@ public class MedicalRecordListener extends EntityListener<MedicalRecord> {
     public void receiveMessage(Message msg) {
         log.info("Received JMS message for MEDIACAL_RECORD_QUEUE");
 
-        defaultMessageProcessing(msg, MediacalRecordEvent.class);
+        processMessage(msg, MediacalRecordEvent.class);
     }
 
 }

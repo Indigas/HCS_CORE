@@ -12,7 +12,6 @@ import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Patient_Diagnose;
 
 import javax.jms.Message;
-import java.util.List;
 
 @Service
 @Slf4j
@@ -27,7 +26,7 @@ public class Patient_DiagnoseListener extends EntityListener<Patient_Diagnose> {
     public void receiveMessage(Message msg) {
         log.info("Received JMS message for Patient_Diagnose_QUEUE");
 
-        defaultMessageProcessing(msg, Patient_DiagnoseEvent.class);
+        processMessage(msg, Patient_DiagnoseEvent.class);
     }
 
 }

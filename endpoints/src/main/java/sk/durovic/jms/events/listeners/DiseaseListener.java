@@ -26,7 +26,7 @@ public class DiseaseListener extends EntityListener<Disease> {
     public void receiveMessage(Message msg) {
         log.info("Received JMS message for DISEASE_QUEUE");
 
-        defaultMessageProcessing(msg, DiseaseEvent.class);
+        processMessage(msg, DiseaseEvent.class);
     }
 
 }

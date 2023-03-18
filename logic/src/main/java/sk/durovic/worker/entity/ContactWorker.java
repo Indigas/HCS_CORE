@@ -40,7 +40,7 @@ public class ContactWorker implements EntityWorker<Contact, Long> {
         } catch (IOException e){
 
         }
-        service.deleteById(aLong);
+        //service.deleteById(aLong);
     }
 
     @Override

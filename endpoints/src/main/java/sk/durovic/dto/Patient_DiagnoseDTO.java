@@ -1,4 +1,4 @@
-package sk.durovic.jms;
+package sk.durovic.dto;
 
 import sk.durovic.model.Patient_Diagnose;
 

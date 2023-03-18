@@ -26,7 +26,7 @@ public class PatientListener extends EntityListener<Patient> {
     @Override
     public void receiveMessage(Message msg){
 
-        defaultMessageProcessing(msg, PatientEvent.class);
+        processMessage(msg, PatientEvent.class);
 
     }
 
