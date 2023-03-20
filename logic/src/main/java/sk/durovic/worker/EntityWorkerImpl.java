@@ -1,11 +1,11 @@
 package sk.durovic.worker;
 
 import sk.durovic.manager.factory.EntityManagerCreator;
+import sk.durovic.model.BaseEntityAbstractClass;
 
-import java.io.Serializable;
 import java.util.Collection;
 
-class EntityWorkerImpl<T extends Serializable, ID> implements EntityWorker<T, ID> {
+class EntityWorkerImpl<T extends BaseEntityAbstractClass<ID>, ID> implements EntityWorker<T, ID> {
 
     private final EntityManagerCreator creator;
 
@@ -44,7 +44,7 @@ class EntityWorkerImpl<T extends Serializable, ID> implements EntityWorker<T, ID
     }
 
     @Override
-    public T loadById(ID id) {
-        return null;
+    public T loadById(Class<T> clazz, ID id) {
+        return creator.getBasicEntityManager().load(clazz, id).orElse(null);
     }
 }

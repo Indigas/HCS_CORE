@@ -11,18 +11,19 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class EntityController<T extends Serializable, ID> {
+public abstract class EntityController<T extends Serializable, R, ID> {
 
-    protected final EntityWorker<T, ID> worker;
+    protected final EntityWorker<R, ID> worker;
 
-    public EntityController(EntityWorker<T, ID> worker) {
+    public EntityController(EntityWorker<R, ID> worker) {
         this.worker = worker;
     }
 
     @GetMapping(value={ "","/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<T>> getEntities(@PathVariable(required = false) ID id){
-
-        return new ResponseEntity<>(List.of(worker.loadById(id)), HttpStatus.OK);
+        //load and convert to dto
+//        return new ResponseEntity<>(List.of(worker.loadById(id)), HttpStatus.OK);
+        return null;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,7 +34,7 @@ public abstract class EntityController<T extends Serializable, ID> {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value={"/{id}"}, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateEntity(@PathVariable ID id, @RequestBody T entity){
-        worker.updateEntity(id, entity);
+
     }
 
     @ResponseStatus(HttpStatus.OK)
