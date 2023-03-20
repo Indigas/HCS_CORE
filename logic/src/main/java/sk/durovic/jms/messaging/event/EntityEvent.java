@@ -12,7 +12,7 @@ import sk.durovic.jms.messaging.exception.OperationNotSupported;
 
 import java.io.Serializable;
 
-public abstract class EntityEvent<T> implements Serializable, Event<T> {
+public abstract class EntityEvent<T extends Serializable> implements Serializable, Event<T> {
 
     protected T entity;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -59,11 +59,11 @@ public abstract class EntityEvent<T> implements Serializable, Event<T> {
         return getResult().getStatus() == EventStatusResult.OK;
     }
 
-    public static <R> Event<R> createDefaultEvent(){
+    public static <R extends Serializable> Event<R> createDefaultEvent(){
         return new DefaultEvent<>();
     }
 
-    public static class DefaultEvent<R> extends EntityEvent<R> {
+    public static class DefaultEvent<R extends Serializable> extends EntityEvent<R> {
         private DefaultEvent() {
         }
 

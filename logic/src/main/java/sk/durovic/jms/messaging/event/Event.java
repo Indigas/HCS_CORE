@@ -3,7 +3,9 @@ package sk.durovic.jms.messaging.event;
 import sk.durovic.jms.messaging.actions.JmsAction;
 import sk.durovic.jms.messaging.event.result.EventMessageResult;
 
-public interface Event<T> {
+import java.io.Serializable;
+
+public interface Event<T extends Serializable> {
 
     void setEntity(T entity);
     T getEntity();

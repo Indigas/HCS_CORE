@@ -5,10 +5,11 @@ import sk.durovic.model.Patient;
 import sk.durovic.service.EntityService;
 import sk.durovic.service.PatientEntityService;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class JmsMessageWorkerService<T> implements JmsMessageWorker{
+public abstract class JmsMessageWorkerService<T, R extends Serializable> implements JmsMessageWorker<R>{
     private final EntityServiceManager ems;
     private final EntityService<T,?,?> service;
 

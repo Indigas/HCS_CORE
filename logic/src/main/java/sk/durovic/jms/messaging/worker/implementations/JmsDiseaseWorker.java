@@ -7,8 +7,10 @@ import sk.durovic.jms.messaging.worker.result.WorkerResult;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Disease;
 
+import java.io.Serializable;
+
 @Slf4j
-public class JmsDiseaseWorker extends JmsMessageWorkerService<Disease> {
+public class JmsDiseaseWorker<T extends Serializable> extends JmsMessageWorkerService<Disease,T> {
 
     public static final String DISEASE_QUEUE = "DISEASE_QUEUE";
 
@@ -18,7 +20,7 @@ public class JmsDiseaseWorker extends JmsMessageWorkerService<Disease> {
     }
 
     @Override
-    public WorkerResult<?> processEvent(Event<?> event) {
+    public WorkerResult<T> processEvent(Event<T> event) {
         return null;
     }
 }

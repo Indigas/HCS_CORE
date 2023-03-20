@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
+import sk.durovic.jms.listeners.ContactListener;
 import sk.durovic.jms.messaging.worker.implementations.JmsContactWorker;
 
 import javax.jms.JMSException;

@@ -12,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Transactional;
 import sk.durovic.jms.messaging.actions.JmsEntityAction;
 import sk.durovic.jms.messaging.event.Event;
-import sk.durovic.jms.messaging.event.entity.PatientEvent;
+import sk.durovic.jms.events.entity.PatientEvent;
 import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
 import sk.durovic.jms.messaging.worker.result.WorkerResult;
 import sk.durovic.jms.messaging.worker.result.status.WorkerStatusResult;

@@ -1,11 +1,10 @@
-package sk.durovic.jms.events.listeners;
+package sk.durovic.jms.listeners;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
-import sk.durovic.jms.events.EntityListener;
-import sk.durovic.jms.messaging.event.entity.Patient_DiagnoseEvent;
+import sk.durovic.jms.events.entity.Patient_DiagnoseEvent;
 import sk.durovic.jms.messaging.worker.implementations.JmsPatient_DiagnoseWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
 import sk.durovic.manager.service.EntityServiceManager;

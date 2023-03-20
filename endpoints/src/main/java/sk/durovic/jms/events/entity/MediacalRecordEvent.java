@@ -1,4 +1,4 @@
-package sk.durovic.jms.messaging.event.entity;
+package sk.durovic.jms.events.entity;
 
 import sk.durovic.jms.messaging.event.EntityEvent;
 import sk.durovic.model.MedicalRecord;

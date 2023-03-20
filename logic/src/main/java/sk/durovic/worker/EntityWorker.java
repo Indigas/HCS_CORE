@@ -1,8 +1,9 @@
 package sk.durovic.worker;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public interface EntityWorker<T, ID> {
+public interface EntityWorker<T extends Serializable, ID> {
 
     Collection<T> save(Collection<T> entities);
     void delete(Collection<T> entities);

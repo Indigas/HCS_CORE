@@ -1,16 +1,17 @@
-package sk.durovic.jms.events;
+package sk.durovic.jms.listeners;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
-import sk.durovic.jms.events.processor.JmsMessageProcessor;
+import sk.durovic.jms.processor.JmsMessageProcessor;
 import sk.durovic.jms.messaging.event.EntityEvent;
 import sk.durovic.jms.messaging.worker.JmsMessageWorker;
 import sk.durovic.worker.JmsWorkerService;
 
 import javax.jms.Message;
+import java.io.Serializable;
 
 @Slf4j
-public abstract class EntityListener<T> {
+public abstract class EntityListener<T extends Serializable> {
 
     private final JmsTemplate jmsTemplate;
     private final JmsMessageProcessor<T> messageProcessor;

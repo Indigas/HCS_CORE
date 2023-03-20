@@ -1,4 +1,4 @@
-package sk.durovic.jms.events.processor;
+package sk.durovic.jms.processor;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -12,10 +12,11 @@ import sk.durovic.worker.JmsWorkerService;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+import java.io.Serializable;
 
 @Slf4j
 @Setter
-public class JmsMessageProcessor<T> {
+public class JmsMessageProcessor<T extends Serializable> {
 
     private JmsTemplate jmsTemplate;
     private JmsWorkerService workerService;

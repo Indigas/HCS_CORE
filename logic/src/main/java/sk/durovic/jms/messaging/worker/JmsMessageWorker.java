@@ -3,8 +3,10 @@ package sk.durovic.jms.messaging.worker;
 import sk.durovic.jms.messaging.event.Event;
 import sk.durovic.jms.messaging.worker.result.WorkerResult;
 
-public interface JmsMessageWorker {
+import java.io.Serializable;
 
-     WorkerResult<?> processEvent(Event<?> event);
+public interface JmsMessageWorker<R extends Serializable> {
+
+     WorkerResult<R> processEvent(Event<R> event);
 
 }
