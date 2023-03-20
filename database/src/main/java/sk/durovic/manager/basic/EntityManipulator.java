@@ -4,7 +4,6 @@ import sk.durovic.exception.ObjectIsNotEntityException;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import javax.persistence.Entity;
-import java.io.Serializable;
 import java.lang.reflect.Field;
 
 /**

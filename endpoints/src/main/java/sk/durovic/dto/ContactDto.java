@@ -1,6 +1,5 @@
 package sk.durovic.dto;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

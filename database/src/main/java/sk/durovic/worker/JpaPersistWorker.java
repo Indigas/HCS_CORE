@@ -5,7 +5,6 @@ import org.springframework.context.ApplicationContext;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.service.EntityService;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 

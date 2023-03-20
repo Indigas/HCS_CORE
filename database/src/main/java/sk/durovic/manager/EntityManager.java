@@ -3,7 +3,6 @@ package sk.durovic.manager;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import java.io.Closeable;
-import java.io.Serializable;
 import java.util.Optional;
 
 public interface EntityManager extends Closeable {

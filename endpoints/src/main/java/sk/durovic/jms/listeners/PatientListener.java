@@ -6,8 +6,8 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import sk.durovic.dto.PatientDto;
 import sk.durovic.jms.events.entity.PatientEvent;
-import sk.durovic.jms.messaging.worker.service.JmsPatientWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
+import sk.durovic.jms.messaging.worker.service.JmsPatientWorker;
 import sk.durovic.manager.service.EntityServiceManager;
 
 import javax.jms.Message;

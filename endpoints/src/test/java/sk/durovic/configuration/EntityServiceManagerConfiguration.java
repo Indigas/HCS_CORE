@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import sk.durovic.manager.ServiceContainer;
 import sk.durovic.manager.factory.EntityManagerCreator;
 import sk.durovic.manager.service.EntityServiceManager;
-import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.service.ContactEntityService;
 
 import java.util.Optional;

@@ -9,7 +9,6 @@ import org.hibernate.annotations.GenericGenerator;
 import sk.durovic.annotations.EntityProcessor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 

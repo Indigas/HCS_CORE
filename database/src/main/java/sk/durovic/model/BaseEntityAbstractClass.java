@@ -4,8 +4,6 @@ package sk.durovic.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import sk.durovic.manager.basic.Version;
 
-import java.io.Serializable;
-
 public abstract class BaseEntityAbstractClass<ID> {
 
     @JsonIgnore

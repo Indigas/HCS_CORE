@@ -1,11 +1,9 @@
 package sk.durovic.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sk.durovic.model.Patient;
 import sk.durovic.worker.EntityWorker;
 
 import java.io.Serializable;

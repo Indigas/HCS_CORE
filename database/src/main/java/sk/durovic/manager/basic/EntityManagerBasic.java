@@ -10,7 +10,6 @@ import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.service.EntityService;
 import sk.durovic.worker.JpaWorkers;
 
-import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.util.Optional;
 

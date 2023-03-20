@@ -9,7 +9,6 @@ import sk.durovic.manager.basic.ServiceContainerBasic;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import javax.validation.ConstraintViolationException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;

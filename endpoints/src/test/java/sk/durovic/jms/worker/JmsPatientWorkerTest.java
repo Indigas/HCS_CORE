@@ -12,12 +12,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.transaction.annotation.Transactional;
 import sk.durovic.dto.PatientDto;
+import sk.durovic.jms.events.entity.PatientEvent;
 import sk.durovic.jms.messaging.actions.JmsEntityAction;
 import sk.durovic.jms.messaging.event.Event;
-import sk.durovic.jms.events.entity.PatientEvent;
-import sk.durovic.jms.messaging.worker.service.JmsPatientWorker;
 import sk.durovic.jms.messaging.worker.result.WorkerResult;
 import sk.durovic.jms.messaging.worker.result.status.WorkerStatusResult;
+import sk.durovic.jms.messaging.worker.service.JmsPatientWorker;
 import sk.durovic.manager.ServiceContainer;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.BloodGroup;

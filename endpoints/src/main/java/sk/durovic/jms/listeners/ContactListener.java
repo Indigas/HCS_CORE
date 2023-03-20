@@ -6,10 +6,9 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import sk.durovic.dto.ContactDto;
 import sk.durovic.jms.events.entity.ContactEvent;
-import sk.durovic.jms.messaging.worker.service.JmsContactWorker;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
+import sk.durovic.jms.messaging.worker.service.JmsContactWorker;
 import sk.durovic.manager.factory.EntityManagerCreator;
-import sk.durovic.manager.service.EntityServiceManager;
 
 import javax.jms.Message;
 

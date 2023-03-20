@@ -2,9 +2,9 @@ package sk.durovic.jms.listeners;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
-import sk.durovic.jms.processor.JmsMessageProcessor;
 import sk.durovic.jms.messaging.event.EntityEvent;
 import sk.durovic.jms.messaging.worker.JmsMessageWorker;
+import sk.durovic.jms.processor.JmsMessageProcessor;
 import sk.durovic.worker.JmsWorkerExecutorService;
 
 import javax.jms.Message;

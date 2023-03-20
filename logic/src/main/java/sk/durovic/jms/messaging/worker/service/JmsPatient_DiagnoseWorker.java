@@ -3,20 +3,11 @@ package sk.durovic.jms.messaging.worker.service;
 import lombok.extern.slf4j.Slf4j;
 import sk.durovic.jms.messaging.event.Event;
 import sk.durovic.jms.messaging.worker.JmsMessageWorkerService;
-import sk.durovic.jms.messaging.worker.result.EntityWorkerResult;
 import sk.durovic.jms.messaging.worker.result.WorkerResult;
-import sk.durovic.jms.messaging.worker.result.status.WorkerStatusResult;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Patient_Diagnose;
-import sk.durovic.service.PatientDiagnoseService;
-import sk.durovic.jms.messaging.actions.JmsEntityAction;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static sk.durovic.jms.messaging.actions.JmsEntityAction.GET;
 
 
 @Slf4j

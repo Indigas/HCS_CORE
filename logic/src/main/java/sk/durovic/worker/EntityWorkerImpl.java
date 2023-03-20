@@ -1,7 +1,6 @@
 package sk.durovic.worker;
 
 import sk.durovic.manager.factory.EntityManagerCreator;
-import sk.durovic.worker.EntityWorker;
 
 import java.io.Serializable;
 import java.util.Collection;

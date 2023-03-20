@@ -1,7 +1,5 @@
 package sk.durovic.model;
 
-import java.io.Serializable;
-
 public enum BloodGroup {
     AA("AA");
 

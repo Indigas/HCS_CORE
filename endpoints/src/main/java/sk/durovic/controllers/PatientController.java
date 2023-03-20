@@ -1,9 +1,9 @@
 package sk.durovic.controllers;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import sk.durovic.dto.PatientDto;
 import sk.durovic.manager.factory.EntityManagerCreator;
-import sk.durovic.model.Patient;
 import sk.durovic.worker.EntityWorkerFactory;
 
 @RestController
