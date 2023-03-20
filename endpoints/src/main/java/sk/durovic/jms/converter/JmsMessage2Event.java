@@ -10,11 +10,12 @@ import sk.durovic.jms.messaging.event.result.EventStatusResult;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+import java.io.Serializable;
 
 @Slf4j
 public class JmsMessage2Event {
 
-    public static <T, R extends Event<T>>
+    public static <T extends Serializable, R extends Event<T>>
     Event<T> convertMsg2Event(Message message, Class<R> eventClazz){
         ObjectMapper objectMapper = new ObjectMapper();
         Event<T> event = EntityEvent.createDefaultEvent();;

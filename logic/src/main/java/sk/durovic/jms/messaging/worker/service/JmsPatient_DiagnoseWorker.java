@@ -1,4 +1,4 @@
-package sk.durovic.jms.messaging.worker.implementations;
+package sk.durovic.jms.messaging.worker.service;
 
 import lombok.extern.slf4j.Slf4j;
 import sk.durovic.jms.messaging.event.Event;

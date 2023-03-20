@@ -5,8 +5,8 @@ import sk.durovic.jms.messaging.worker.result.WorkerResult;
 
 import java.io.Serializable;
 
-public interface JmsMessageWorker<R extends Serializable> {
+public interface JmsMessageWorker<T extends Serializable> {
 
-     WorkerResult<R> processEvent(Event<R> event);
+     WorkerResult<T> processEvent(Event<T> event);
 
 }

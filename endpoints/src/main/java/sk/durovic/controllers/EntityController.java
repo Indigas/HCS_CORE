@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import sk.durovic.model.Patient;
 import sk.durovic.worker.EntityWorker;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class EntityController<T, ID> {
+public abstract class EntityController<T extends Serializable, ID> {
 
     protected final EntityWorker<T, ID> worker;
 

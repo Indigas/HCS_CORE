@@ -5,7 +5,7 @@ import org.springframework.jms.core.JmsTemplate;
 import sk.durovic.jms.processor.JmsMessageProcessor;
 import sk.durovic.jms.messaging.event.EntityEvent;
 import sk.durovic.jms.messaging.worker.JmsMessageWorker;
-import sk.durovic.worker.JmsWorkerService;
+import sk.durovic.worker.JmsWorkerExecutorService;
 
 import javax.jms.Message;
 import java.io.Serializable;
@@ -25,7 +25,7 @@ public abstract class EntityListener<T extends Serializable> {
         JmsMessageProcessor<T> jmsMessageProcessor = new JmsMessageProcessor<>();
         jmsMessageProcessor.setWorker(worker);
         jmsMessageProcessor.setJmsTemplate(jmsTemplate);
-        jmsMessageProcessor.setWorkerService(new JmsWorkerService());
+        jmsMessageProcessor.setWorkerService(new JmsWorkerExecutorService());
 
         return jmsMessageProcessor;
     }

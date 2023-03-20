@@ -8,7 +8,7 @@ import sk.durovic.jms.messaging.event.EntityEvent;
 import sk.durovic.jms.messaging.event.Event;
 import sk.durovic.jms.messaging.worker.JmsMessageWorker;
 import sk.durovic.jms.messaging.worker.result.WorkerResult;
-import sk.durovic.worker.JmsWorkerService;
+import sk.durovic.worker.JmsWorkerExecutorService;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -19,15 +19,15 @@ import java.io.Serializable;
 public class JmsMessageProcessor<T extends Serializable> {
 
     private JmsTemplate jmsTemplate;
-    private JmsWorkerService workerService;
-    private JmsMessageWorker worker;
+    private JmsWorkerExecutorService workerService;
+    private JmsMessageWorker<T> worker;
 
     public JmsMessageProcessor() {
     }
 
     public void processMessage(Message msg, Class<? extends EntityEvent<T>> clazz){
         Event<T> event = JmsMessage2Event.convertMsg2Event(msg, clazz);
-        WorkerResult<?> result = worker.processEvent(event);
+        WorkerResult<T> result = worker.processEvent(event);
 
         try {
             if (event.isResultOk() && msg.getJMSReplyTo() != null)

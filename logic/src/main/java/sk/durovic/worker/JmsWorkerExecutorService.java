@@ -6,10 +6,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Slf4j
-public class JmsWorkerService {
+public class JmsWorkerExecutorService {
 
     private final ExecutorService executorService;
-    public JmsWorkerService(){
+    public JmsWorkerExecutorService(){
         this.executorService = createService();
     }
 

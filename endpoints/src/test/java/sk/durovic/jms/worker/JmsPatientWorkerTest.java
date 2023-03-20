@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sk.durovic.jms.messaging.actions.JmsEntityAction;
 import sk.durovic.jms.messaging.event.Event;
 import sk.durovic.jms.events.entity.PatientEvent;
-import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
+import sk.durovic.jms.messaging.worker.service.JmsPatientWorker;
 import sk.durovic.jms.messaging.worker.result.WorkerResult;
 import sk.durovic.jms.messaging.worker.result.status.WorkerStatusResult;
 import sk.durovic.manager.ServiceContainer;
