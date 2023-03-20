@@ -2,16 +2,16 @@ package sk.durovic.jms.messaging.worker.service;
 
 import lombok.extern.slf4j.Slf4j;
 import sk.durovic.jms.messaging.event.Event;
-import sk.durovic.jms.messaging.worker.JmsMessageWorkerService;
 import sk.durovic.jms.messaging.worker.result.WorkerResult;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Patient;
 import sk.durovic.model.access.PatientEntity;
+import sk.durovic.service.PatientEntityService;
 
 import java.io.Serializable;
 
 @Slf4j
-public class JmsPatientWorker<T extends Serializable> extends JmsMessageWorkerService<Patient,T> {
+public class JmsPatientWorker<T extends Serializable> extends JmsEntityServiceWorker<Patient, PatientEntityService,T> {
 
     public static final String PATIENT_QUEUE = "PATIENT_QUEUE";
 
@@ -74,6 +74,11 @@ public class JmsPatientWorker<T extends Serializable> extends JmsMessageWorkerSe
 //        }
 //
 //        return result;
+    }
+
+    @Override
+    Patient updateEntity(Patient source, Patient dest) {
+        return null;
     }
 
     private Patient updatePatient(Patient source, Patient dest){

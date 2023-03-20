@@ -9,7 +9,7 @@ import sk.durovic.service.MedicalRecordEntityService;
 import java.io.Serializable;
 
 @Slf4j
-public class JmsMedicalRecordWorker<T extends Serializable> extends JmsEntityWorker<MedicalRecord, MedicalRecordEntityService, T> {
+public class JmsMedicalRecordWorker<T extends Serializable> extends JmsEntityServiceWorker<MedicalRecord, MedicalRecordEntityService, T> {
 
     public static final String MEDIACAL_RECORD_QUEUE = "MEDIACAL_RECORD_QUEUE";
 

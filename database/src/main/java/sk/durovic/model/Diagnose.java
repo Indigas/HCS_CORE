@@ -30,5 +30,5 @@ public class Diagnose extends BaseEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "diagnose", fetch = FetchType.LAZY)
-    private transient List<MedicalRecord> medicalRecords;
+    private List<MedicalRecord> medicalRecords;
 }

@@ -5,16 +5,16 @@ import sk.durovic.jms.messaging.event.Event;
 import sk.durovic.jms.messaging.worker.JmsMessageWorkerService;
 import sk.durovic.jms.messaging.worker.result.WorkerResult;
 import sk.durovic.manager.service.EntityServiceManager;
-import sk.durovic.model.BaseEntity;
+import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.service.EntityService;
 
 import java.io.Serializable;
 
 @Slf4j
-public abstract class JmsEntityWorker<T extends BaseEntity, R extends EntityService<T, Long, ?>, S extends Serializable>
+public abstract class JmsEntityServiceWorker<T extends BaseEntityAbstractClass<?>, R extends EntityService<T, ?, ?>, S extends Serializable>
         extends JmsMessageWorkerService<T, S> {
 
-    protected JmsEntityWorker(EntityServiceManager ems){
+    protected JmsEntityServiceWorker(EntityServiceManager ems){
         super(ems);
     }
 
