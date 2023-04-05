@@ -9,12 +9,13 @@ import sk.durovic.jms.events.entity.ContactEvent;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
 import sk.durovic.jms.messaging.worker.service.JmsContactWorker;
 import sk.durovic.manager.factory.EntityManagerCreator;
+import sk.durovic.model.Contact;
 
 import javax.jms.Message;
 
 @Service
 @Slf4j
-public class ContactListener extends EntityListener<ContactDto> {
+public class ContactListener extends EntityListener<ContactDto, Contact, Long> {
 
     public ContactListener(JmsTemplate jmsTemplate, EntityManagerCreator creator) {
         super(jmsTemplate, JmsWorker.managerProvider().createEntityWorker(creator));

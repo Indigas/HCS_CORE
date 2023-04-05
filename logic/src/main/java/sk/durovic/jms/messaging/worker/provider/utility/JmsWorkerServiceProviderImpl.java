@@ -1,40 +1,45 @@
 package sk.durovic.jms.messaging.worker.provider.utility;
 
+import sk.durovic.jms.messaging.worker.JmsMessageWorkerService;
 import sk.durovic.jms.messaging.worker.provider.JmsWorkerServiceProvider;
 import sk.durovic.jms.messaging.worker.service.*;
 import sk.durovic.manager.service.EntityServiceManager;
 
-import java.io.Serializable;
 
-public class JmsWorkerServiceProviderImpl<T extends Serializable> implements JmsWorkerServiceProvider<T> {
+public class JmsWorkerServiceProviderImpl implements JmsWorkerServiceProvider {
 
     @Override
-    public JmsPatientWorker<T> createJmsPatientWorker(EntityServiceManager esm) {
-        return new JmsPatientWorker<>(esm);
+    public <T, ID> JmsMessageWorkerService<T, ID> createServiceWorker(EntityServiceManager esm) {
+        return new JmsMessageWorkerService<>(esm);
     }
 
     @Override
-    public JmsDiseaseWorker<T> createJmsDiseaseWorker(EntityServiceManager esm) {
-        return new JmsDiseaseWorker<>(esm);
+    public JmsPatientWorker createJmsPatientWorker(EntityServiceManager esm) {
+        return new JmsPatientWorker(esm);
     }
 
     @Override
-    public JmsContactWorker<T> createJmsContactWorker(EntityServiceManager esm) {
-        return new JmsContactWorker<>(esm);
+    public JmsDiseaseWorker createJmsDiseaseWorker(EntityServiceManager esm) {
+        return new JmsDiseaseWorker(esm);
     }
 
     @Override
-    public JmsDiagnoseWorker<T> createJmsDiagnoseWorker(EntityServiceManager esm) {
-        return new JmsDiagnoseWorker<>(esm);
+    public JmsContactWorker createJmsContactWorker(EntityServiceManager esm) {
+        return new JmsContactWorker(esm);
     }
 
     @Override
-    public JmsMedicalRecordWorker<T> createJmsMedicalRecordWorker(EntityServiceManager esm) {
-        return new JmsMedicalRecordWorker<>(esm);
+    public JmsDiagnoseWorker createJmsDiagnoseWorker(EntityServiceManager esm) {
+        return new JmsDiagnoseWorker(esm);
     }
 
     @Override
-    public JmsPatient_DiagnoseWorker<T> createJmsPatient_DiagnoseWorker(EntityServiceManager esm) {
-        return new JmsPatient_DiagnoseWorker<>(esm);
+    public  JmsMedicalRecordWorker createJmsMedicalRecordWorker(EntityServiceManager esm) {
+        return new JmsMedicalRecordWorker(esm);
+    }
+
+    @Override
+    public JmsPatient_DiagnoseWorker createJmsPatient_DiagnoseWorker(EntityServiceManager esm) {
+        return new JmsPatient_DiagnoseWorker(esm);
     }
 }

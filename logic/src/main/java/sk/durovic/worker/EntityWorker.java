@@ -1,6 +1,5 @@
 package sk.durovic.worker;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 public interface EntityWorker<T, ID> {

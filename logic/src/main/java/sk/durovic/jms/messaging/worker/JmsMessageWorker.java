@@ -1,12 +1,10 @@
 package sk.durovic.jms.messaging.worker;
 
-import sk.durovic.jms.messaging.event.Event;
-import sk.durovic.jms.messaging.worker.result.WorkerResult;
+import sk.durovic.jms.messaging.actions.JmsAction;
 
-import java.io.Serializable;
+public interface JmsMessageWorker<T, ID> {
 
-public interface JmsMessageWorker<T extends Serializable> {
-
-     WorkerResult<T> processEvent(Event<T> event);
+     //WorkerResult<T> processEvent(Event<T> event);
+     void processActionOnEntity(T entity, JmsAction action);
 
 }

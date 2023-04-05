@@ -1,16 +1,11 @@
 package sk.durovic.jms.messaging.worker.service;
 
 import lombok.extern.slf4j.Slf4j;
-import sk.durovic.jms.messaging.event.Event;
-import sk.durovic.jms.messaging.worker.result.WorkerResult;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Contact;
-import sk.durovic.service.ContactEntityService;
-
-import java.io.Serializable;
 
 @Slf4j
-public class JmsContactWorker<T extends Serializable> extends JmsEntityServiceWorker<Contact, ContactEntityService, T> {
+public class JmsContactWorker extends JmsEntityServiceWorker<Contact, Long> {
 
     public static final String CONTACT_QUEUE = "CONTACT_QUEUE";
 
@@ -18,11 +13,6 @@ public class JmsContactWorker<T extends Serializable> extends JmsEntityServiceWo
         super(ems);
     }
 
-
-    @Override
-    public WorkerResult<T> processEvent(Event<T> event) {
-        return null;
-    }
 
     @Override
     Contact updateEntity(Contact source, Contact dest) {

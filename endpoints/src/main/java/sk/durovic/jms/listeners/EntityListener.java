@@ -11,18 +11,18 @@ import javax.jms.Message;
 import java.io.Serializable;
 
 @Slf4j
-public abstract class EntityListener<T extends Serializable> {
+public abstract class EntityListener<T extends Serializable, R, ID> {
 
     private final JmsTemplate jmsTemplate;
-    private final JmsMessageProcessor<T> messageProcessor;
+    private final JmsMessageProcessor<T, R, ID> messageProcessor;
 
-    protected EntityListener(JmsTemplate jmsTemplate, JmsMessageWorker worker) {
+    protected EntityListener(JmsTemplate jmsTemplate, JmsMessageWorker<R, ID> worker) {
         this.jmsTemplate = jmsTemplate;
         this.messageProcessor = createJmsMessageProcessor(worker);
     }
 
-    protected JmsMessageProcessor<T> createJmsMessageProcessor(JmsMessageWorker worker){
-        JmsMessageProcessor<T> jmsMessageProcessor = new JmsMessageProcessor<>();
+    protected JmsMessageProcessor<T, R, ID> createJmsMessageProcessor(JmsMessageWorker<R, ID> worker){
+        JmsMessageProcessor<T, R, ID> jmsMessageProcessor = new JmsMessageProcessor<>();
         jmsMessageProcessor.setWorker(worker);
         jmsMessageProcessor.setJmsTemplate(jmsTemplate);
         jmsMessageProcessor.setWorkerService(new JmsWorkerExecutorService());
@@ -34,7 +34,7 @@ public abstract class EntityListener<T extends Serializable> {
         return jmsTemplate;
     }
 
-    public JmsMessageProcessor<T> getMessageProcessor() {
+    public JmsMessageProcessor<T, R, ID> getMessageProcessor() {
         return messageProcessor;
     }
 

@@ -1,21 +1,21 @@
 package sk.durovic.jms.messaging.worker;
 
 import lombok.extern.slf4j.Slf4j;
-import sk.durovic.jms.messaging.event.EntityEvent;
-import sk.durovic.jms.messaging.event.Event;
-import sk.durovic.jms.messaging.worker.result.EntityWorkerResult;
-import sk.durovic.jms.messaging.worker.result.WorkerResult;
+import sk.durovic.jms.messaging.actions.JmsAction;
 import sk.durovic.manager.factory.EntityManagerCreator;
-
-import java.io.Serializable;
+import sk.durovic.model.BaseEntityAbstractClass;
+import sk.durovic.worker.EntityWorker;
+import sk.durovic.worker.EntityWorkerFactory;
 
 @Slf4j
-public class JmsMessageWorkerEntity<T extends Serializable> implements JmsMessageWorker<T> {
+public class JmsMessageWorkerEntity<T extends BaseEntityAbstractClass<ID>, ID> implements JmsMessageWorker<T, ID> {
 
     private final EntityManagerCreator creator;
+    private final EntityWorker<T, ID> worker;
 
     public JmsMessageWorkerEntity(EntityManagerCreator creator) {
         this.creator = creator;
+        this.worker = EntityWorkerFactory.createEntityWorker(creator);
     }
 
     protected EntityManagerCreator getCreator() {
@@ -23,14 +23,7 @@ public class JmsMessageWorkerEntity<T extends Serializable> implements JmsMessag
     }
 
     @Override
-    public WorkerResult<T> processEvent(Event<T> event) {
-        log.info("Started processing JMS message");
-        WorkerResult<T> result = new EntityWorkerResult<>();
+    public void processActionOnEntity(T entity, JmsAction action) {
 
-        if(!(event instanceof EntityEvent)) {
-            return EntityWorkerResult.createBadEventResult(event);
-        }
-
-        return null;
     }
 }

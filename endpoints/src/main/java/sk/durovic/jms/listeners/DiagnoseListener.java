@@ -9,12 +9,13 @@ import sk.durovic.jms.events.entity.DiagnoseEvent;
 import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
 import sk.durovic.jms.messaging.worker.service.JmsDiagnoseWorker;
 import sk.durovic.manager.service.EntityServiceManager;
+import sk.durovic.model.Diagnose;
 
 import javax.jms.Message;
 
 @Service
 @Slf4j
-public class DiagnoseListener extends EntityListener<DiagnoseDto> {
+public class DiagnoseListener extends EntityListener<DiagnoseDto, Diagnose, Long> {
 
     public DiagnoseListener(JmsTemplate jmsTemplate, EntityServiceManager ems) {
         super(jmsTemplate, JmsWorker.serviceProvider().createJmsDiagnoseWorker(ems));

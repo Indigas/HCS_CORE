@@ -1,27 +1,22 @@
 package sk.durovic.jms.messaging.worker.service;
 
 import lombok.extern.slf4j.Slf4j;
-import sk.durovic.jms.messaging.event.Event;
 import sk.durovic.jms.messaging.worker.JmsMessageWorkerService;
-import sk.durovic.jms.messaging.worker.result.WorkerResult;
 import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.BaseEntityAbstractClass;
-import sk.durovic.service.EntityService;
-
-import java.io.Serializable;
 
 @Slf4j
-public abstract class JmsEntityServiceWorker<T extends BaseEntityAbstractClass<?>, R extends EntityService<T, ?, ?>, S extends Serializable>
-        extends JmsMessageWorkerService<T, S> {
+public abstract class JmsEntityServiceWorker<T extends BaseEntityAbstractClass<?>, ID>
+        extends JmsMessageWorkerService<T, ID> {
 
     protected JmsEntityServiceWorker(EntityServiceManager ems){
         super(ems);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public WorkerResult<S> processEvent(Event<S> event) {
-        return null;
+
+    //    @Override
+//    public WorkerResult<S> processEvent(Event<S> event) {
+//        return null;
 //        log.info("Started processing JMS message");
 //        WorkerResult<S> result = new EntityWorkerResult<>();
 //
@@ -68,7 +63,7 @@ public abstract class JmsEntityServiceWorker<T extends BaseEntityAbstractClass<?
 //        }
 //
 //        return result;
-    }
+//    }
 
     abstract T updateEntity(T source, T dest);
 }

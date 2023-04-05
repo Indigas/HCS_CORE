@@ -2,10 +2,9 @@ package sk.durovic.jms.messaging.worker.provider;
 
 import sk.durovic.jms.messaging.worker.JmsMessageWorkerEntity;
 import sk.durovic.manager.factory.EntityManagerCreator;
-
-import java.io.Serializable;
+import sk.durovic.model.BaseEntityAbstractClass;
 
 public interface JmsWorkerManagerProvider {
 
-    public <T extends Serializable> JmsMessageWorkerEntity<T> createEntityWorker(EntityManagerCreator creator);
+    public <T extends BaseEntityAbstractClass<ID>, ID> JmsMessageWorkerEntity<T, ID> createEntityWorker(EntityManagerCreator creator);
 }

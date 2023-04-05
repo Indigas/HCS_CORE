@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
@@ -15,13 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import sk.durovic.configuration.EntityServiceManagerConfiguration;
 import sk.durovic.dto.ContactDto;
-import sk.durovic.manager.EntityManager;
 import sk.durovic.manager.factory.EntityManagerCreator;
-import sk.durovic.model.Contact;
-import sk.durovic.model.access.ContactEntity;
-import sk.durovic.service.ContactEntityService;
-
-import java.util.Optional;
 
 @WebMvcTest(ContactController.class)
 @Import(EntityServiceManagerConfiguration.class)

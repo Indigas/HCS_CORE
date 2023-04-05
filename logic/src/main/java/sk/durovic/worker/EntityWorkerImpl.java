@@ -20,7 +20,6 @@ class EntityWorkerImpl<T extends BaseEntityAbstractClass<ID>, ID> implements Ent
 
     @Override
     public void delete(Collection<T> entities) {
-
     }
 
     @Override
