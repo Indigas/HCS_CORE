@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import sk.durovic.repository.PatientRepository;
 import sk.durovic.service.PatientEntityService;
 @Service
-public class PatientEntityServiceImpl extends PatientEntityService {
+class PatientEntityServiceImpl extends PatientEntityService {
 
     @Autowired
     public PatientEntityServiceImpl(PatientRepository repository) {

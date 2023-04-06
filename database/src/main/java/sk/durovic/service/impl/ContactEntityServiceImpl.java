@@ -6,7 +6,7 @@ import sk.durovic.repository.ContactRepository;
 import sk.durovic.service.ContactEntityService;
 
 @Service
-public class ContactEntityServiceImpl extends ContactEntityService {
+class ContactEntityServiceImpl extends ContactEntityService {
 
     @Autowired
     public ContactEntityServiceImpl(ContactRepository repository) {

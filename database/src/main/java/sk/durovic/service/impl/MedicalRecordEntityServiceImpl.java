@@ -6,7 +6,7 @@ import sk.durovic.repository.MedicalRecordRepository;
 import sk.durovic.service.MedicalRecordEntityService;
 
 @Service
-public class MedicalRecordEntityServiceImpl extends MedicalRecordEntityService {
+class MedicalRecordEntityServiceImpl extends MedicalRecordEntityService {
 
     @Autowired
     public MedicalRecordEntityServiceImpl(MedicalRecordRepository repo) {

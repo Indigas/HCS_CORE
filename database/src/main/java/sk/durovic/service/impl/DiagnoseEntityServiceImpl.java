@@ -6,7 +6,7 @@ import sk.durovic.repository.DiagnoseRepository;
 import sk.durovic.service.DiagnoseEntityService;
 
 @Service
-public class DiagnoseEntityServiceImpl extends DiagnoseEntityService {
+class DiagnoseEntityServiceImpl extends DiagnoseEntityService {
 
     @Autowired
     public DiagnoseEntityServiceImpl(DiagnoseRepository repo) {

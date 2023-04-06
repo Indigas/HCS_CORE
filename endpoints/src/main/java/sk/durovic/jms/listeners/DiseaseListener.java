@@ -1,11 +1,12 @@
-package sk.durovic.jms.events.listeners;
+package sk.durovic.jms.listeners;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
-import sk.durovic.jms.events.EntityListener;
 import sk.durovic.model.Disease;
+import sk.durovic.processor.JmsRequestProcessor;
+import sk.durovic.service.DiseaseEntityService;
 
 import javax.jms.Message;
 
@@ -14,8 +15,8 @@ import javax.jms.Message;
 public class DiseaseListener extends EntityListener<Disease> {
 
     public static final String DISEASE_QUEUE="DISEASE_QUEUE";
-    public DiseaseListener(JmsTemplate jmsTemplate) {
-        super(jmsTemplate);
+    public DiseaseListener(JmsTemplate jmsTemplate, DiseaseEntityService service) {
+        super(jmsTemplate, new JmsRequestProcessor<>(service));
     }
 
     @JmsListener(destination = DISEASE_QUEUE, concurrency = "3-10")

@@ -1,18 +1,21 @@
 package sk.durovic.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sk.durovic.processor.RequestProcessor;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public abstract class EntityController<T, ID> {
 
+    private final RequestProcessor processor;
 
+    protected EntityController(RequestProcessor processor) {
+        this.processor = processor;
+    }
 
     @GetMapping(value={ "","/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<T>> getEntities(@PathVariable(required = false) ID id){
