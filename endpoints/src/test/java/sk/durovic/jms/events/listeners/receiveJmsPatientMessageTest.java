@@ -11,8 +11,6 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
-import sk.durovic.jms.events.listeners.PatientListener;
-import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -43,7 +41,7 @@ public class receiveJmsPatientMessageTest {
             }
         };
 
-        jmsTemplate.send(JmsPatientWorker.PATIENT_QUEUE, msg);
+        jmsTemplate.send(PatientListener.PATIENT_QUEUE, msg);
 
         ArgumentCaptor<Message> messageCaptor = ArgumentCaptor.forClass(Message.class);
 
@@ -62,7 +60,7 @@ public class receiveJmsPatientMessageTest {
             }
         };
 
-        Message receivedMsg = jmsTemplate.sendAndReceive(JmsPatientWorker.PATIENT_QUEUE, msg);
+        Message receivedMsg = jmsTemplate.sendAndReceive(PatientListener.PATIENT_QUEUE, msg);
 
         System.out.println(receivedMsg.getBody(String.class).toString());
     }
@@ -77,7 +75,7 @@ public class receiveJmsPatientMessageTest {
             }
         };
 
-        Message receivedMsg = jmsTemplate.sendAndReceive(JmsPatientWorker.PATIENT_QUEUE, msg);
+        Message receivedMsg = jmsTemplate.sendAndReceive(PatientListener.PATIENT_QUEUE, msg);
 
         System.out.println(receivedMsg.getBody(String.class).toString());
     }

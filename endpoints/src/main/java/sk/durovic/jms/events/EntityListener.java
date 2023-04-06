@@ -3,9 +3,6 @@ package sk.durovic.jms.events;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
 import sk.durovic.jms.events.processor.JmsMessageProcessor;
-import sk.durovic.jms.messaging.event.EntityEvent;
-import sk.durovic.jms.messaging.worker.JmsMessageWorker;
-import sk.durovic.worker.JmsWorkerService;
 
 import javax.jms.Message;
 
@@ -15,16 +12,14 @@ public abstract class EntityListener<T> {
     private final JmsTemplate jmsTemplate;
     private final JmsMessageProcessor<T> messageProcessor;
 
-    protected EntityListener(JmsTemplate jmsTemplate, JmsMessageWorker worker) {
+    protected EntityListener(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
-        this.messageProcessor = createJmsMessageProcessor(worker);
+        this.messageProcessor = createJmsMessageProcessor();
     }
 
-    protected JmsMessageProcessor<T> createJmsMessageProcessor(JmsMessageWorker worker){
+    protected JmsMessageProcessor<T> createJmsMessageProcessor(){
         JmsMessageProcessor<T> jmsMessageProcessor = new JmsMessageProcessor<>();
-        jmsMessageProcessor.setWorker(worker);
         jmsMessageProcessor.setJmsTemplate(jmsTemplate);
-        jmsMessageProcessor.setWorkerService(new JmsWorkerService());
 
         return jmsMessageProcessor;
     }
@@ -39,8 +34,7 @@ public abstract class EntityListener<T> {
 
     public abstract void receiveMessage(Message msg);
 
-    protected void processMessage(Message msg, Class<? extends EntityEvent<T>> clazz){
-        messageProcessor.processMessage(msg, clazz);
+    protected void processMessage(Message msg){
     }
 
 }

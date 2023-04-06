@@ -5,10 +5,6 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import sk.durovic.jms.events.EntityListener;
-import sk.durovic.jms.messaging.event.entity.MediacalRecordEvent;
-import sk.durovic.jms.messaging.worker.implementations.JmsMedicalRecordWorker;
-import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
-import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.MedicalRecord;
 
 import javax.jms.Message;
@@ -17,16 +13,17 @@ import javax.jms.Message;
 @Slf4j
 public class MedicalRecordListener extends EntityListener<MedicalRecord> {
 
-    public MedicalRecordListener(JmsTemplate jmsTemplate, EntityServiceManager ems) {
-        super(jmsTemplate, JmsWorker.provider().createJmsMedicalRecordWorker(ems));
+    public static final String MEDIACAL_RECORD_QUEUE = "MEDIACAL_RECORD_QUEUE";
+    public MedicalRecordListener(JmsTemplate jmsTemplate) {
+        super(jmsTemplate);
     }
 
-    @JmsListener(destination = JmsMedicalRecordWorker.MEDIACAL_RECORD_QUEUE, concurrency = "3-10")
+    @JmsListener(destination = MEDIACAL_RECORD_QUEUE, concurrency = "3-10")
     @Override
     public void receiveMessage(Message msg) {
         log.info("Received JMS message for MEDIACAL_RECORD_QUEUE");
 
-        processMessage(msg, MediacalRecordEvent.class);
+//        processMessage(msg, MediacalRecordEvent.class);
     }
 
 }

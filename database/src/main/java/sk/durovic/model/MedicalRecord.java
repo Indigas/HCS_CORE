@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Setter(AccessLevel.PROTECTED)
+@Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor

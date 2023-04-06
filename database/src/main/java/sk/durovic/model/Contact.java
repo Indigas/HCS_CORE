@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 @Entity
 @Getter
-@Setter(AccessLevel.PROTECTED)
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
 public class Contact extends BaseEntity {

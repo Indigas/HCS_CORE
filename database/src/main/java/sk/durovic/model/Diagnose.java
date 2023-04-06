@@ -17,7 +17,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter(AccessLevel.PROTECTED)
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
 public class Diagnose extends BaseEntity {

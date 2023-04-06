@@ -12,7 +12,6 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
-import sk.durovic.jms.messaging.worker.implementations.JmsContactWorker;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -41,7 +40,7 @@ class ContactListenerTest {
             }
         };
 
-        jmsTemplate.send(JmsContactWorker.CONTACT_QUEUE, msg);
+        jmsTemplate.send(ContactListener.CONTACT_QUEUE, msg);
 
         ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(Message.class);
 
@@ -62,7 +61,7 @@ class ContactListenerTest {
             }
         };
 
-        jmsTemplate.send(JmsContactWorker.CONTACT_QUEUE, msg);
+        jmsTemplate.send(ContactListener.CONTACT_QUEUE, msg);
 
         ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(Message.class);
 

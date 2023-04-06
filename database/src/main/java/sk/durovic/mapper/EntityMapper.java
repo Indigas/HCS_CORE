@@ -1,7 +1,7 @@
 package sk.durovic.mapper;
 
 import lombok.extern.slf4j.Slf4j;
-import sk.durovic.manager.basic.EntityManipulator;
+import sk.durovic.helper.EntityManipulatorHelper;
 import sk.durovic.model.*;
 import sk.durovic.model.access.*;
 
@@ -38,7 +38,7 @@ public class EntityMapper {
     public static <T, R extends BaseEntityAbstractClass<?>> R mapEntityToPersist(T object)
             {
         //Class<?> clazz = object.getClass().getSuperclass();
-        Class<?> clazz = EntityManipulator.getEntityClass(object);
+        Class<?> clazz = EntityManipulatorHelper.getEntityClass(object);
         try {
             Constructor<R> constructor = (Constructor<R>) clazz.getDeclaredConstructor();
 

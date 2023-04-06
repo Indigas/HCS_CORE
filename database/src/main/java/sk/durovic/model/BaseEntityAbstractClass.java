@@ -1,22 +1,9 @@
 package sk.durovic.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import sk.durovic.manager.basic.Version;
-
-import java.io.Serializable;
-
 public abstract class BaseEntityAbstractClass<ID> {
 
-    @JsonIgnore
-    private Version version = new Version();
-
     abstract public ID getId();
-
-    public Version getVersion(){
-        return this.version;
-    }
-
 
     @SuppressWarnings("unchecked")
     @Override

@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Getter
-@Setter(AccessLevel.PROTECTED)
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityProcessor
 @Entity

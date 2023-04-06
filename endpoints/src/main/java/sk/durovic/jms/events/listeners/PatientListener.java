@@ -5,10 +5,6 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import sk.durovic.jms.events.EntityListener;
-import sk.durovic.jms.messaging.event.entity.PatientEvent;
-import sk.durovic.jms.messaging.worker.implementations.JmsPatientWorker;
-import sk.durovic.jms.messaging.worker.provider.utility.JmsWorker;
-import sk.durovic.manager.service.EntityServiceManager;
 import sk.durovic.model.Patient;
 
 import javax.jms.Message;
@@ -18,15 +14,17 @@ import javax.jms.Message;
 @Slf4j
 public class PatientListener extends EntityListener<Patient> {
 
-    public PatientListener(JmsTemplate jmsTemplate, EntityServiceManager ems) {
-        super(jmsTemplate, JmsWorker.provider().createJmsPatientWorker(ems));
+    public static final String PATIENT_QUEUE = "PATIENT_QUEUE";
+
+    public PatientListener(JmsTemplate jmsTemplate) {
+        super(jmsTemplate);
     }
 
-    @JmsListener(destination = JmsPatientWorker.PATIENT_QUEUE, concurrency = "3-10")
+    @JmsListener(destination = PATIENT_QUEUE, concurrency = "3-10")
     @Override
     public void receiveMessage(Message msg){
 
-        processMessage(msg, PatientEvent.class);
+//        processMessage(msg, PatientEvent.class);
 
     }
 

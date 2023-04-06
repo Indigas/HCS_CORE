@@ -1,7 +1,6 @@
 package sk.durovic.collection;
 
 
-import sk.durovic.manager.basic.Version;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import java.util.Objects;
@@ -39,16 +38,6 @@ public class Entry <K, V>{
     public void clear(){
         this.key = null;
         this.value = null;
-    }
-
-    public static <T extends BaseEntityAbstractClass<?>> Entry<T , Version> createEntryWithVersion(T entity, Version version) throws IllegalAccessException {
-        //Version newVersion = new Version();
-        //EntityMapper.mapToExistingObject(version, newVersion);
-        //newVersion.incrementVersion();
-
-        version.incrementVersion();
-
-        return new Entry<>(entity, version);
     }
 
     @Override
