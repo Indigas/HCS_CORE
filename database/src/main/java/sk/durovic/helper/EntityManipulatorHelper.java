@@ -4,7 +4,6 @@ import sk.durovic.exception.ObjectIsNotEntityException;
 import sk.durovic.model.BaseEntityAbstractClass;
 
 import javax.persistence.Entity;
-import java.lang.reflect.Field;
 
 /**
  * Helper methods to get entity class or setId of referenced entity

@@ -1,6 +1,5 @@
 package sk.durovic.processor;
 
-import sk.durovic.actions.DefaultAction;
 import sk.durovic.actions.RequestAction;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.service.EntityService;

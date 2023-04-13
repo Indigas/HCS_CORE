@@ -1,7 +1,5 @@
 package sk.durovic.events;
 
-import sk.durovic.result.Result;
-
 import java.util.Collection;
 
 public interface Event {

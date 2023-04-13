@@ -2,8 +2,7 @@ package sk.durovic.mapper;
 
 import lombok.extern.slf4j.Slf4j;
 import sk.durovic.helper.EntityManipulatorHelper;
-import sk.durovic.model.*;
-import sk.durovic.model.access.*;
+import sk.durovic.model.BaseEntityAbstractClass;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -20,11 +19,11 @@ public class EntityMapper {
     private static Map<Class<?>, Class<?>> entityMap = new HashMap<>();
 
     static {
-        entityMap.put(Patient.class, PatientEntity.class);
-        entityMap.put(MedicalRecord.class, MedicalRecordEntity.class);
-        entityMap.put(Disease.class, DiseaseEntity.class);
-        entityMap.put(Diagnose.class, DiagnoseEntity.class);
-        entityMap.put(Contact.class, ContactEntity.class);
+//        entityMap.put(Patient.class, PatientEntity.class);
+//        entityMap.put(MedicalRecord.class, MedicalRecordEntity.class);
+//        entityMap.put(Disease.class, DiseaseEntity.class);
+//        entityMap.put(Diagnose.class, DiagnoseEntity.class);
+//        entityMap.put(Contact.class, ContactEntity.class);
 
     }
 

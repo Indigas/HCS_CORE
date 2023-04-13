@@ -1,7 +1,5 @@
 package sk.durovic.model;
 
-import lombok.extern.slf4j.Slf4j;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;

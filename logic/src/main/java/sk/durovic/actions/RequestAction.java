@@ -1,7 +1,5 @@
 package sk.durovic.actions;
 
-import sk.durovic.model.BaseEntityAbstractClass;
-
 import java.util.Collection;
 
 public interface RequestAction<T, ID> {

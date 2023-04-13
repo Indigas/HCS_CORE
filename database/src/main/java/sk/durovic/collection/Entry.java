@@ -1,8 +1,6 @@
 package sk.durovic.collection;
 
 
-import sk.durovic.model.BaseEntityAbstractClass;
-
 import java.util.Objects;
 
 /**

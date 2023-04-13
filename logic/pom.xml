@@ -21,10 +21,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        <dependency>
-            <groupId>sk.durovic</groupId>
-            <artifactId>database</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
