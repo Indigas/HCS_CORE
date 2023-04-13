@@ -23,6 +23,6 @@ public class ContactListener extends EntityListener<Contact> {
     @Override
     public void receiveMessage(Message msg) {
 
-//        processMessage(msg, ContactEvent.class);
+        processMessage(msg);
     }
 }

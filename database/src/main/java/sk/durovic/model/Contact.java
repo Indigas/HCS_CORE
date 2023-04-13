@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -34,4 +35,17 @@ public class Contact extends BaseEntity {
     @NotNull
     private Patient patient;
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj) && obj instanceof Contact;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = fullName != null ? fullName.hashCode() : 0;
+        result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
+        result = 31 * result + (notes != null ? notes.hashCode() : 0);
+        result = 31 * result + (getId() != null ? getId().hashCode() : 0);
+        return result;
+    }
 }

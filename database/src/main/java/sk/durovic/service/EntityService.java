@@ -2,6 +2,7 @@ package sk.durovic.service;
 
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,6 +29,22 @@ public abstract class EntityService<T, ID, R extends CrudRepository<T, ID>> {
 
     public Optional<T> load(ID id){
         return repo.findById(id);
+    }
+
+    public Iterable<T> loadAll(Iterable<ID> ids){
+        return repo.findAllById(ids);
+    }
+
+    public Iterable<T> saveAll(Iterable<T> objects){
+        return repo.saveAll(objects);
+    }
+
+    public void deleteAll(Iterable<T> objects){
+        repo.deleteAll(objects);
+    }
+
+    public void deleteAllById(Iterable<ID> ids){
+        repo.deleteAllById(ids);
     }
 
 }

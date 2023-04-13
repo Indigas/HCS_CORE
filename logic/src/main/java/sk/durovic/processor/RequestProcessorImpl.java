@@ -4,12 +4,14 @@ import sk.durovic.actions.DefaultAction;
 import sk.durovic.actions.RequestAction;
 import sk.durovic.events.Event;
 import sk.durovic.events.EventAction;
+import sk.durovic.model.BaseEntityAbstractClass;
+import sk.durovic.result.EntityResult;
 import sk.durovic.result.Result;
 import sk.durovic.service.EntityService;
 
 import java.util.Collection;
 
-public abstract class RequestProcessorImpl<T,ID> implements RequestProcessor{
+public abstract class RequestProcessorImpl<T extends BaseEntityAbstractClass<ID>,ID> implements RequestProcessor{
 
     private final RequestAction<T,ID> requestAction;
 
@@ -21,35 +23,41 @@ public abstract class RequestProcessorImpl<T,ID> implements RequestProcessor{
     }
 
     @Override
-        public Result process(Event event) {
+        public Result<T> process(Event event) {
             EventAction action = event.getAction();
+            Result<T> result = new EntityResult<>();
+            Collection<T> entities = event.getEntities();
+
             switch (action){
                 case GET:
-                    getAction();
+                    result.setEntities(getAction(entities));
                     break;
                 case POST:
-                    postAction();
+                    result.setEntities(postAction(entities));
                     break;
                 case PUT:
-                    putAction();
+                    result.setEntities(putAction(entities));
                     break;
                 case DELETE:
-                    deleteAction();
+                    deleteAction(entities);
                     break;
             }
-            return null;
+            return result;
         }
 
-    protected Collection<T> getAction(){
-        requestAction.get();
-        return null;
+    protected Collection<T> getAction(Collection<T> entities){
+        return requestAction.get(entities);
     }
 
-    protected T postAction(){
-        return null;
+    protected Collection<T> postAction(Collection<T> entities){
+        return requestAction.post(entities);
     }
 
-    protected void putAction(){}
+    protected Collection<T> putAction(Collection<T> entities){
+        return requestAction.put(entities);
+    }
 
-    protected void deleteAction(){}
+    protected void deleteAction(Collection<T> entities){
+        requestAction.delete(entities);
+    }
 }

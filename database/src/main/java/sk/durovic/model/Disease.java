@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -33,4 +34,16 @@ public class Disease extends BaseEntity {
     @NotNull
     private Patient patient;
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj) && obj instanceof Disease;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (getId() != null ? getId().hashCode() : 0);
+        return result;
+    }
 }

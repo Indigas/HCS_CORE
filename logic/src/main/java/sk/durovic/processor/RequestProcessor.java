@@ -5,5 +5,5 @@ import sk.durovic.result.Result;
 
 public interface RequestProcessor {
 
-    Result process(Event event);
+    Result<?> process(Event event);
 }

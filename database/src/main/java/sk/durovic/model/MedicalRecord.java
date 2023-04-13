@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Setter
@@ -37,4 +38,18 @@ public class MedicalRecord extends BaseEntity {
     @JoinColumn(name = "patient_id")
     @NotNull
     private Patient patient;
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj) && obj instanceof MedicalRecord;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = date.hashCode();
+        result = 31 * result + diagnose.hashCode();
+        result = 31 * result + text.hashCode();
+        result = 31 * result + getId().hashCode();
+        return result;
+    }
 }

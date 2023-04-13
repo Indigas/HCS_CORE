@@ -12,6 +12,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -53,5 +54,18 @@ public class Patient extends BaseEntityAbstractClass<String> {
     @Setter(AccessLevel.NONE)
     private final List<MedicalRecord> medicalRecords = new LinkedList<>();
 
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj) && obj instanceof Patient;
+    }
 
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (bloodGroup != null ? bloodGroup.hashCode() : 0);
+        return result;
+    }
 }

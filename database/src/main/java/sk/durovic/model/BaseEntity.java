@@ -13,7 +13,7 @@ public abstract class BaseEntity extends BaseEntityAbstractClass<Long> implement
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id = -1L;
 
     @Override
     public Long getId() {
@@ -22,13 +22,15 @@ public abstract class BaseEntity extends BaseEntityAbstractClass<Long> implement
 
     @Override
     public boolean equals(Object obj) {
-        if(obj == null)
-            return false;
-
-        if(obj instanceof BaseEntity)
-            return ((BaseEntity)obj).getId().equals(this.id);
+//        if(obj == null)
+//            return false;
+//
+//        if(obj instanceof BaseEntity)
+//            return ((BaseEntity)obj).getId().equals(this.id);
 
         //throw new IllegalArgumentException("Object is not instance of BaseEntity");
-        return false;
+
+        return super.equals(obj) && !getId().equals(-1L);
+
     }
 }

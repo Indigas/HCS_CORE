@@ -1,8 +1,12 @@
 package sk.durovic.actions;
 
+import sk.durovic.model.BaseEntityAbstractClass;
+
+import java.util.Collection;
+
 public interface RequestAction<T, ID> {
-    void get();
-    void post();
-    void put();
-    void delete();
+    Collection<T> get(Collection<T> entities);
+    Collection<T> post(Collection<T> entities);
+    Collection<T> put(Collection<T> entities);
+    void delete(Collection<T> entities);
 }
