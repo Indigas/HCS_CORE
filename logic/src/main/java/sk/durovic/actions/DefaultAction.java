@@ -44,19 +44,14 @@ public class DefaultAction<T extends BaseEntityAbstractClass<ID>, ID> implements
 
         for(T entity : entities){
             T mergedEntity = mergeEntity(entity, loadedEntities.get(entity.getId()));
-            if(mergedEntity != null)
-                entitiesToSave.add(mergedEntity);
+            entitiesToSave.add(mergedEntity);
         }
 
         return StreamSupport.stream(service.saveAll(entitiesToSave).spliterator(), false).collect(Collectors.toList());
     }
 
-    private T mergeEntity(Object srcEntity, Object dstEntity) {
+    private T mergeEntity(T srcEntity, T dstEntity) {
         EntityMerger merger = EntityMergerHelper.getMergerForEntity(srcEntity.getClass());
-
-        if(merger == null)
-            return null;
-
         return merger.merge(srcEntity, dstEntity);
     }
 

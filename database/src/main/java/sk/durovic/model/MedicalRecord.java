@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Setter
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class MedicalRecord extends BaseEntity {
 
     @Column

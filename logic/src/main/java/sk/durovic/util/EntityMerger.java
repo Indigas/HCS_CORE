@@ -2,5 +2,5 @@ package sk.durovic.util;
 
 public interface EntityMerger {
 
-    <T> T merge(Object src, Object dst);
+    <T,R> R merge(T src, R dst);
 }

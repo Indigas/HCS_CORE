@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Contact extends BaseEntity {
 
     @Column
