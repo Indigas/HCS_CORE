@@ -1,11 +1,8 @@
 package sk.durovic.util;
 
 import org.mapstruct.factory.Mappers;
-import sk.durovic.mapper.ContactMapper;
-import sk.durovic.mapper.EntityMapper;
-import sk.durovic.mapper.PatientMapper;
-import sk.durovic.model.Contact;
-import sk.durovic.model.Patient;
+import sk.durovic.mapper.*;
+import sk.durovic.model.*;
 
 public class EntityMergerImpl implements EntityMerger{
 
@@ -22,7 +19,14 @@ public class EntityMergerImpl implements EntityMerger{
 
         if (aClass.isInstance(Patient.class))
             mapperClass = PatientMapper.class;
-
+        else if(aClass.isInstance(Diagnose.class))
+            mapperClass = DiagnoseMapper.class;
+        else if(aClass.isInstance(Disease.class))
+            mapperClass = DiagnoseMapper.class;
+        else if(aClass.isInstance(MedicalRecord.class))
+            mapperClass = MedicalRecordMapper.class;
+        else if(aClass.isInstance(Patient_Diagnose.class))
+            mapperClass = PatientDiagnoseMapper.class;
 
         return (EntityMapper<T, R>) Mappers.getMapper(mapperClass);
     }
