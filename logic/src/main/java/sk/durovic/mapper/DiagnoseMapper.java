@@ -8,7 +8,7 @@ import sk.durovic.dto.DiagnoseDto;
 import sk.durovic.model.Diagnose;
 
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface DiagnoseMapper extends EntityMapper<DiagnoseDto, Diagnose>, EntityConverter2Dto<DiagnoseDto, Diagnose> {
+public interface DiagnoseMapper extends EntityMapper<DiagnoseDto, Diagnose>, EntityConverter<DiagnoseDto, Diagnose> {
 
     @Mapping(target = "medicalRecords", ignore = true)
     @Override

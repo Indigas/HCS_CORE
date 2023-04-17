@@ -19,6 +19,11 @@ public abstract class BaseEntity extends BaseEntityAbstractClass<Long> implement
     }
 
     @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
     public boolean equals(Object obj) {
 //        if(obj == null)
 //            return false;

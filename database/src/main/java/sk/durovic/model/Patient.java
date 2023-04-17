@@ -22,7 +22,6 @@ public class Patient extends BaseEntityAbstractClass<String> {
     @GeneratedValue(generator = "generator")
     @GenericGenerator(name = "generator",
         strategy = "sk.durovic.generators.PatientIdGenerator")
-    @Setter(AccessLevel.NONE)
     private String id;
 
     @Column

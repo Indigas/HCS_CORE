@@ -3,10 +3,10 @@ package sk.durovic.result;
 import java.util.Collection;
 import java.util.List;
 
-public interface Result<T> {
+public interface Result {
     boolean isOk();
-    void setEntities(Collection<T> entities);
-    Collection<T> getEntities();
+    void setEntities(Collection<?> entities);
+    Collection<?> getEntities();
     void addMessage(String message);
     List<String> getMessages();
 }

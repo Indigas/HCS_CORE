@@ -35,6 +35,7 @@ public class MedicalRecord extends BaseEntity {
     @NotNull
     private Patient patient;
 
+
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj) && obj instanceof MedicalRecord;

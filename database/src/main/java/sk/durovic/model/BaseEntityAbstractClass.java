@@ -5,6 +5,8 @@ public abstract class BaseEntityAbstractClass<ID> {
 
     abstract public ID getId();
 
+    abstract public void setId(ID id);
+
     @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object obj) {

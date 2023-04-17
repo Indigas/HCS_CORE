@@ -13,7 +13,7 @@ import javax.jms.Message;
 
 @Service
 @Slf4j
-public class PatientListener extends EntityListener<Patient> {
+public class PatientListener extends EntityListener {
 
     public static final String PATIENT_QUEUE = "PATIENT_QUEUE";
 
@@ -25,7 +25,7 @@ public class PatientListener extends EntityListener<Patient> {
     @Override
     public void receiveMessage(Message msg){
 
-//        processMessage(msg, PatientEvent.class);
+        processMessage(msg, Patient.class);
 
     }
 

@@ -12,7 +12,7 @@ import javax.jms.Message;
 
 @Service
 @Slf4j
-public class MedicalRecordListener extends EntityListener<MedicalRecord> {
+public class MedicalRecordListener extends EntityListener {
 
     public static final String MEDIACAL_RECORD_QUEUE = "MEDIACAL_RECORD_QUEUE";
     public MedicalRecordListener(JmsTemplate jmsTemplate, MedicalRecordEntityService service) {
@@ -24,7 +24,7 @@ public class MedicalRecordListener extends EntityListener<MedicalRecord> {
     public void receiveMessage(Message msg) {
         log.info("Received JMS message for MEDIACAL_RECORD_QUEUE");
 
-//        processMessage(msg, MediacalRecordEvent.class);
+        processMessage(msg, MedicalRecord.class);
     }
 
 }

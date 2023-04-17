@@ -34,6 +34,11 @@ public class Patient_Diagnose extends BaseEntityAbstractClass<String> {
     private String description;
 
     @Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return super.equals(obj) && obj instanceof Patient_Diagnose;
     }

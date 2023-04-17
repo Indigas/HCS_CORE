@@ -1,5 +1,6 @@
 package sk.durovic.jms.listeners;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
 import sk.durovic.converter.EventConverter;
@@ -11,7 +12,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 
 @Slf4j
-public abstract class EntityListener<T> {
+public abstract class EntityListener {
 
     private final JmsTemplate jmsTemplate;
     private final RequestProcessor messageProcessor;
@@ -31,17 +32,20 @@ public abstract class EntityListener<T> {
 
     public abstract void receiveMessage(Message msg);
 
-    protected void processMessage(Message msg){
-        Event event = EventConverter.convertJms2Event(msg);
-
-        Result<?> result = messageProcessor.process(event);
+    protected void processMessage(Message msg, Class<?> clazz){
 
         try {
+            Event event = EventConverter.convertJms2Event(msg, clazz);
+
+            Result result = messageProcessor.process(event);
+
             if (result.isOk() && msg.getJMSReplyTo() != null) {
                 jmsTemplate.convertAndSend(msg.getJMSReplyTo(), result);
             }
         } catch (JMSException e){
             log.error("JMS exception", e);
+        } catch (JsonProcessingException e) {
+            log.error("Converting from json failed." , e);
         }
     }
 

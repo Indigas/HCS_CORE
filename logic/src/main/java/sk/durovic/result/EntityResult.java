@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class EntityResult<T> implements Result<T>{
+public class EntityResult implements Result{
 
-    private Collection<T> entities;
+    private Collection<?> entities;
     private final List<String> messages = new ArrayList<>();
 
     @Override
@@ -15,14 +15,15 @@ public class EntityResult<T> implements Result<T>{
     }
 
     @Override
-    public void setEntities(Collection<T> entities) {
+    public void setEntities(Collection<?> entities) {
         this.entities = entities;
     }
 
     @Override
-    public Collection<T> getEntities() {
+    public Collection<?> getEntities() {
         return this.entities;
     }
+
 
     @Override
     public void addMessage(String message) {

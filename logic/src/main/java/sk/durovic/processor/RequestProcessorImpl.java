@@ -4,12 +4,16 @@ import sk.durovic.actions.DefaultAction;
 import sk.durovic.actions.RequestAction;
 import sk.durovic.events.Event;
 import sk.durovic.events.EventAction;
+import sk.durovic.helper.EntityMapperHelper;
+import sk.durovic.mapper.EntityConverter;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.result.EntityResult;
 import sk.durovic.result.Result;
 import sk.durovic.service.EntityService;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 public abstract class RequestProcessorImpl<T extends BaseEntityAbstractClass<ID>,ID> implements RequestProcessor{
 
@@ -23,27 +27,36 @@ public abstract class RequestProcessorImpl<T extends BaseEntityAbstractClass<ID>
     }
 
     @Override
-        public Result<T> process(Event event) {
-            EventAction action = event.getAction();
-            Result<T> result = new EntityResult<>();
-            Collection<T> entities = event.getEntities();
+    public Result process(Event event) {
+        EventAction action = event.getAction();
+        Result result = new EntityResult();
+        Collection<T> entities = event.getEntities();
 
-            switch (action){
+        switch (action){
                 case GET:
-                    result.setEntities(getAction(entities));
+                    result.setEntities(convertToDtos(getAction(entities)));
                     break;
                 case POST:
-                    result.setEntities(postAction(entities));
+                    result.setEntities(convertToDtos(postAction(entities)));
                     break;
                 case PUT:
-                    result.setEntities(putAction(entities));
+                    result.setEntities(convertToDtos(putAction(entities)));
                     break;
                 case DELETE:
                     deleteAction(entities);
                     break;
-            }
-            return result;
         }
+        return result;
+    }
+    protected Collection<?> convertToDtos(Collection<T> entities) {
+        if(!entities.iterator().hasNext())
+            return Collections.EMPTY_LIST;
+
+        T obj = entities.iterator().next();
+        EntityConverter<?, T> converter = EntityMapperHelper.getConverter(obj.getClass());
+        return entities.stream().map(converter::convert2Dto).collect(Collectors.toList());
+
+    }
 
     protected Collection<T> getAction(Collection<T> entities){
         return requestAction.get(entities);

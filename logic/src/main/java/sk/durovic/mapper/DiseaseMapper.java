@@ -8,9 +8,17 @@ import sk.durovic.dto.DiseaseDto;
 import sk.durovic.model.Disease;
 
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface DiseaseMapper extends EntityMapper<DiseaseDto, Disease>, EntityConverter2Dto<DiseaseDto, Disease>{
+public interface DiseaseMapper extends EntityMapper<DiseaseDto, Disease>, EntityConverter<DiseaseDto, Disease> {
 
     @Mapping(target = "patient", ignore = true)
     @Override
     Disease updateEntity(DiseaseDto src, @MappingTarget Disease dest);
+
+    @Mapping(target = "patientId", source = "entity.patient.id")
+    @Override
+    DiseaseDto convert2Dto(Disease entity);
+
+    @Mapping(target = "patient", expression = "java(sk.durovic.helper.EntityReferenceCreator.convertIdToEntity(dto.getPatientId(), Patient.class))")
+    @Override
+    Disease convert2Entity(DiseaseDto dto);
 }

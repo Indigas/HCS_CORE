@@ -12,7 +12,7 @@ import javax.jms.Message;
 
 @Service
 @Slf4j
-public class DiseaseListener extends EntityListener<Disease> {
+public class DiseaseListener extends EntityListener {
 
     public static final String DISEASE_QUEUE="DISEASE_QUEUE";
     public DiseaseListener(JmsTemplate jmsTemplate, DiseaseEntityService service) {
@@ -24,7 +24,7 @@ public class DiseaseListener extends EntityListener<Disease> {
     public void receiveMessage(Message msg) {
         log.info("Received JMS message for DISEASE_QUEUE");
 
-//        processMessage(msg, DiseaseEvent.class);
+        processMessage(msg, Disease.class);
     }
 
 }
