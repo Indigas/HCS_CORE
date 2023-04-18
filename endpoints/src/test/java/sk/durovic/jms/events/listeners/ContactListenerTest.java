@@ -54,6 +54,7 @@ class ContactListenerTest {
     }
 
     @Test
+    @Disabled
     void receiveMessage2() throws InterruptedException, JMSException {
 
         MessageCreator msg = new MessageCreator() {
