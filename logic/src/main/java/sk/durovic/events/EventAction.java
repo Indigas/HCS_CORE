@@ -5,4 +5,5 @@ public enum EventAction {
     POST,
     PUT,
     DELETE;
+
 }

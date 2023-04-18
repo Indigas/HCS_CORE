@@ -1,5 +1,7 @@
 package sk.durovic.service;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
@@ -10,7 +12,7 @@ import java.util.Optional;
  * @param <ID> id of given entity
  * @param <R> repository of given entity
  */
-public abstract class EntityService<T, ID, R extends CrudRepository<T, ID>> {
+public abstract class EntityService<T, ID, R extends JpaRepository<T, ID>> {
 
     protected R repo;
 
@@ -44,6 +46,14 @@ public abstract class EntityService<T, ID, R extends CrudRepository<T, ID>> {
 
     public void deleteAllById(Iterable<ID> ids){
         repo.deleteAllById(ids);
+    }
+
+    public Iterable<T> findAllByExample(Example<T> example){
+        return repo.findAll(example);
+    }
+
+    public Optional<T> findOneByExample(Example<T> example){
+        return repo.findOne(example);
     }
 
 }

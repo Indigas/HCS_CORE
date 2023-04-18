@@ -1,5 +1,6 @@
 package sk.durovic.service;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import sk.durovic.exception.OperationNotSupported;
 import sk.durovic.model.Patient_Diagnose;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class PatientDiagnoseService
-        extends EntityService<Patient_Diagnose, String, CrudRepository<Patient_Diagnose, String>> {
+        extends EntityService<Patient_Diagnose, String, JpaRepository<Patient_Diagnose, String>> {
 
     protected PatientDiagnoseRepository repo;
 

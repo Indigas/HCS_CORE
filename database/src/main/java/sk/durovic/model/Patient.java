@@ -35,17 +35,17 @@ public class Patient extends BaseEntityAbstractClass<String> {
     private BloodGroup bloodGroup;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE)
     @Setter(AccessLevel.NONE)
     private final List<Contact> contacts = new LinkedList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE)
     @Setter(AccessLevel.NONE)
     private final List<Disease> diseases = new LinkedList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.REMOVE)
     @Setter(AccessLevel.NONE)
     private final List<MedicalRecord> medicalRecords = new LinkedList<>();
 

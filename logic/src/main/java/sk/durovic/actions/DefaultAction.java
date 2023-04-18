@@ -14,7 +14,7 @@ import java.util.stream.StreamSupport;
 
 public class DefaultAction<T extends BaseEntityAbstractClass<ID>, ID> implements RequestAction<T,ID>{
 
-    private final EntityService<T,ID,?> service;
+    protected final EntityService<T,ID,?> service;
 
     public DefaultAction(EntityService<T, ID, ?> service) {
         this.service = service;
