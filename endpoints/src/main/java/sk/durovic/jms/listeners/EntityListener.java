@@ -3,7 +3,7 @@ package sk.durovic.jms.listeners;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.core.JmsTemplate;
-import sk.durovic.converter.EventConverter;
+import sk.durovic.converter.EventConverterAndCreator;
 import sk.durovic.events.Event;
 import sk.durovic.processor.RequestProcessor;
 import sk.durovic.result.Result;
@@ -35,7 +35,7 @@ public abstract class EntityListener {
     protected void processMessage(Message msg, Class<?> clazz){
 
         try {
-            Event event = EventConverter.convertJms2Event(msg, clazz);
+            Event event = EventConverterAndCreator.convertJms2Event(msg, clazz);
 
             Result result = messageProcessor.process(event);
 

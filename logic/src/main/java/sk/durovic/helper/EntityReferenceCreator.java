@@ -1,8 +1,5 @@
 package sk.durovic.helper;
 
-import sk.durovic.model.Diagnose;
-import sk.durovic.model.Patient;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 

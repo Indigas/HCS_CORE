@@ -2,7 +2,6 @@ package sk.durovic.service;
 
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 

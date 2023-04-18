@@ -1,6 +1,9 @@
 package sk.durovic.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import sk.durovic.dto.ContactDto;
 import sk.durovic.model.Contact;
 

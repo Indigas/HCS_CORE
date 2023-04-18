@@ -5,7 +5,7 @@ import sk.durovic.model.Patient_Diagnose;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Patient_DiagnoseDTO {
+public class Patient_DiagnoseDTO implements EntityDto<Object> {
 
     private final List<Patient_Diagnose> diagnoses;
 
@@ -23,5 +23,10 @@ public class Patient_DiagnoseDTO {
 
     public void add(Patient_Diagnose diagnose){
         this.diagnoses.add(diagnose);
+    }
+
+    @Override
+    public void setId(Object o) {
+
     }
 }

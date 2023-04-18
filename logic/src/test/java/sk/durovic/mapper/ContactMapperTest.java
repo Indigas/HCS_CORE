@@ -6,8 +6,6 @@ import org.mapstruct.factory.Mappers;
 import sk.durovic.dto.ContactDto;
 import sk.durovic.model.Contact;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ContactMapperTest {
 
     private Contact contact;

@@ -1,7 +1,6 @@
 package sk.durovic.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import sk.durovic.exception.OperationNotSupported;
 import sk.durovic.model.Patient_Diagnose;
 import sk.durovic.repository.PatientDiagnoseRepository;

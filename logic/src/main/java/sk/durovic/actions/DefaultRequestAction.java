@@ -53,27 +53,30 @@ public class DefaultRequestAction<T extends BaseEntityAbstractClass<ID>, ID> imp
     }
 
     private Iterable<ID> extractIds(Collection<T> entities) {
-        return entities.stream().map(BaseEntityAbstractClass::getId).collect(Collectors.toList());
+        return entities.stream().map(BaseEntityAbstractClass::getId).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     private void addContactsByPatient(Collection<T> entities, Collection<T> loadedEntities){
         Set<String> parentIds = new HashSet<>();
 
-        List<T> filteredContacts = loadedEntities.stream()
-                .filter(entity -> hasToBeFiltered(entity, parentIds)).collect(Collectors.toList());
+        List<T> filteredContacts = entities.stream()
+                .filter(entity -> !hasToBeFiltered(entity, parentIds)).collect(Collectors.toList());
 
         filteredContacts.forEach(contact -> loadContactsToList(contact, loadedEntities));
     }
 
     private boolean hasToBeFiltered(T entity, Collection<String> parentIds){
+        if(entity.getParentId() == null)
+            return true;
+
         String id = entity.getParentId();
 
         if(parentIds.contains(id)){
-            return false;
+            return true;
         }
 
         parentIds.add(id);
-        return true;
+        return false;
 
     }
 

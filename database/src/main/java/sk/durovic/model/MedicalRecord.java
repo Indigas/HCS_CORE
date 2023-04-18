@@ -1,6 +1,5 @@
 package sk.durovic.model;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -52,6 +51,14 @@ public class MedicalRecord extends BaseEntity {
 
     @Override
     public String getParentId() {
-        return patient.getParentId() + ":" + diagnose.getId();
+        String patientId = patient.getId();
+        String diagnoseId = String.valueOf(diagnose.getId());
+
+        if(patientId==null)
+            return diagnoseId;
+        else if(diagnoseId==null)
+            return patientId;
+
+        return patientId +":"+ diagnoseId;
     }
 }

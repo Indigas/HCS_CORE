@@ -9,8 +9,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DiagnoseDto implements Serializable {
-    private long id;
+public class DiagnoseDto implements Serializable, EntityDto<Long> {
+    private Long id;
     private String tag;
     private String description;
 }

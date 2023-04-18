@@ -52,4 +52,9 @@ public class Patient_Diagnose extends BaseEntityAbstractClass<String> {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String getParentId() {
+        return patientId + diagnoseId;
+    }
 }

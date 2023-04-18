@@ -1,9 +1,7 @@
 package sk.durovic.util;
 
-import org.mapstruct.factory.Mappers;
 import sk.durovic.helper.EntityMapperHelper;
-import sk.durovic.mapper.*;
-import sk.durovic.model.*;
+import sk.durovic.mapper.EntityMapper;
 
 public class EntityMergerImpl implements EntityMerger{
 

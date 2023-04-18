@@ -9,10 +9,10 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MedicalRecordDto implements Serializable {
-    private long id;
+public class MedicalRecordDto implements Serializable, EntityDto<Long> {
+    private Long id;
     private String date;
     private String text;
-    private long diagnoseId;
+    private Long diagnoseId;
     private String patientId;
 }

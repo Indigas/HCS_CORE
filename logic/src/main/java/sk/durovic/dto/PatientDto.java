@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PatientDto implements Serializable {
+public class PatientDto implements Serializable, EntityDto<String> {
     private String id;
     private String firstName;
     private String lastName;

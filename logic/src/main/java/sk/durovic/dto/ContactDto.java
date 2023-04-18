@@ -9,10 +9,12 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ContactDto implements Serializable {
-    private long id;
+public class ContactDto implements Serializable, EntityDto<Long> {
+
+    private Long id;
     private String fullName;
     private String telephone;
     private String notes;
     private String patientId;
+
 }
