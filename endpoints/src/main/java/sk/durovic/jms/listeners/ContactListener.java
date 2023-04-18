@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import sk.durovic.dto.ContactDto;
 import sk.durovic.model.Contact;
 import sk.durovic.processor.JmsRequestProcessor;
 import sk.durovic.service.ContactEntityService;
@@ -22,7 +23,8 @@ public class ContactListener extends EntityListener {
     @JmsListener(destination = CONTACT_QUEUE, concurrency = "3-10")
     @Override
     public void receiveMessage(Message msg) {
+        log.info("Processing JMS message for "+ CONTACT_QUEUE);
 
-        processMessage(msg, Contact.class);
+        processMessage(msg, ContactDto.class);
     }
 }

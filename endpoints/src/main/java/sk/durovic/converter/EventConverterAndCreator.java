@@ -2,7 +2,11 @@ package sk.durovic.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import sk.durovic.dto.EntityDto;
+import sk.durovic.dto.PatientDto;
 import sk.durovic.events.EntityEvent;
 import sk.durovic.events.Event;
 import sk.durovic.events.EventAction;
@@ -11,7 +15,10 @@ import sk.durovic.mapper.EntityConverter;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class EventConverterAndCreator {
@@ -19,17 +26,21 @@ public class EventConverterAndCreator {
     private EventConverterAndCreator() {
     }
 
-    public static <T> Event convertJms2Event(Message msg, Class<?> clazz) throws JMSException, JsonProcessingException {
+    public static <T> Event convertJms2Event(Message msg, Class<T> clazz) throws JMSException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        Event eventMsg = objectMapper.readValue(msg.getBody(String.class), new TypeReference<>() {
-            });
+
+        JsonNode jsonMsg = objectMapper.readTree(msg.getBody(String.class));
+        CollectionType type = objectMapper.getTypeFactory().constructCollectionType(List.class, clazz);
+
+        List<T> entities = objectMapper.readValue(jsonMsg.get("entities").toString(), type);
+        EventAction action = objectMapper.readValue(jsonMsg.get("action").toString(), EventAction.class);
+
 
         Event event = new EntityEvent();
-        Collection<T> entities = eventMsg.getEntities();
 
         EntityConverter<T, ?> converter = EntityMapperHelper.getConverter(clazz);
         event.setEntities(entities.stream().map(converter::convert2Entity).collect(Collectors.toList()));
-        event.setAction(eventMsg.getAction());
+        event.setAction(action);
 
         return event;
     }

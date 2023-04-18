@@ -9,6 +9,7 @@ import sk.durovic.mapper.EntityConverter;
 import sk.durovic.model.BaseEntityAbstractClass;
 import sk.durovic.result.EntityResult;
 import sk.durovic.result.Result;
+import sk.durovic.result.ResultState;
 import sk.durovic.service.EntityService;
 
 import java.util.Collection;
@@ -35,15 +36,19 @@ public abstract class RequestProcessorImpl<T extends BaseEntityAbstractClass<ID>
         switch (action){
                 case GET:
                     result.setEntities(convertToDtos(getAction(entities)));
+                    result.setState(ResultState.OK);
                     break;
                 case POST:
                     result.setEntities(convertToDtos(postAction(entities)));
+                    result.setState(ResultState.OK);
                     break;
                 case PUT:
                     result.setEntities(convertToDtos(putAction(entities)));
+                    result.setState(ResultState.OK);
                     break;
                 case DELETE:
                     deleteAction(entities);
+                    result.setState(ResultState.OK);
                     break;
         }
         return result;

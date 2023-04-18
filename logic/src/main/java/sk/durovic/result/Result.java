@@ -9,4 +9,5 @@ public interface Result {
     Collection<?> getEntities();
     void addMessage(String message);
     List<String> getMessages();
+    void setState(ResultState state);
 }

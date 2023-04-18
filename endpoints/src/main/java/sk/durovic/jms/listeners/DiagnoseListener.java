@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import sk.durovic.dto.DiagnoseDto;
 import sk.durovic.model.Diagnose;
 import sk.durovic.processor.JmsRequestProcessor;
 import sk.durovic.service.DiagnoseEntityService;
@@ -22,9 +23,9 @@ public class DiagnoseListener extends EntityListener {
     @JmsListener(destination = DIAGNOSE_QUEUE, concurrency = "3-10")
     @Override
     public void receiveMessage(Message msg) {
-        log.info("Received JMS message for DIAGNOSE_QUEUE");
+        log.info("Received JMS message for "+DIAGNOSE_QUEUE);
 
-        processMessage(msg, Diagnose.class);
+        processMessage(msg, DiagnoseDto.class);
     }
 
 }

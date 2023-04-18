@@ -1,10 +1,14 @@
 package sk.durovic.events;
 
 import lombok.Builder;
+import sk.durovic.dto.PatientDto;
 
 import java.util.Collection;
 
 public class EntityEvent implements Event{
+
+    public EntityEvent() {
+    }
 
     private Collection<?> entities;
     private EventAction action;
@@ -22,12 +26,13 @@ public class EntityEvent implements Event{
     @SuppressWarnings("unchecked")
     @Override
     public <T> Collection<T> getEntities() {
-        return (Collection<T>) this.entities;
+        return (Collection<T>) entities;
     }
-
 
     @Override
     public <T> void setEntities(Collection<T> entities) {
         this.entities = entities;
     }
+
+
 }

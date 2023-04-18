@@ -11,15 +11,15 @@ public class EntityMapperHelper {
     public static <R, T> EntityMapper<T,R> getMapper(Class<?> aClass) {
         Class<?> mapperClass = ContactMapper.class;
 
-        if (aClass.isInstance(Patient.class) || aClass.isInstance(PatientDto.class))
+        if (aClass == Patient.class || aClass == PatientDto.class)
             mapperClass = PatientMapper.class;
-        else if(aClass.isInstance(Diagnose.class) || aClass.isInstance(DiagnoseDto.class))
+        else if(aClass == Diagnose.class || aClass == DiagnoseDto.class)
             mapperClass = DiagnoseMapper.class;
-        else if(aClass.isInstance(Disease.class) || aClass.isInstance(DiseaseDto.class))
+        else if(aClass == Disease.class || aClass == DiseaseDto.class)
             mapperClass = DiagnoseMapper.class;
-        else if(aClass.isInstance(MedicalRecord.class) || aClass.isInstance(MedicalRecordDto.class))
+        else if(aClass == MedicalRecord.class || aClass == MedicalRecordDto.class)
             mapperClass = MedicalRecordMapper.class;
-        else if(aClass.isInstance(Patient_Diagnose.class) || aClass.isInstance(Patient_DiagnoseDTO.class))
+        else if(aClass == Patient_Diagnose.class || aClass == Patient_DiagnoseDTO.class)
             mapperClass = PatientDiagnoseMapper.class;
 
         return (EntityMapper<T, R>) Mappers.getMapper(mapperClass);

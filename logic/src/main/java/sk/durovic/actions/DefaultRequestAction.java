@@ -27,8 +27,9 @@ public class DefaultRequestAction<T extends BaseEntityAbstractClass<ID>, ID> imp
         List<T> withId = new ArrayList<>();
         List<T> withoutId = new ArrayList<>();
 
-        while(entities.iterator().hasNext()){
-            T entity = entities.iterator().next();
+        Iterator<T> it = entities.iterator();
+        while(it.hasNext()){
+            T entity = it.next();
 
             if(entity.getId() == null)
                 withoutId.add(entity);

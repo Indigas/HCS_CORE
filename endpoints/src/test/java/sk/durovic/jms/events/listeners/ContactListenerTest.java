@@ -28,11 +28,10 @@ class ContactListenerTest {
     @SpyBean
     private ContactListener listener;
 
-    private static final String json = "{\"contact\":{\"id\":\"13568\",\"fullName\":\"Marek\",\"telephone\":\"0908\",\"notes\":\"dad\"}}";
+    private static final String json = "{\"entities\":[{\"id\":\"13568\",\"fullName\":\"Marek\",\"telephone\":\"0908\",\"notes\":\"dad\"}],\"action\":\"GET\"}";
 
     @Test
-    @Disabled
-    void receiveMessage() throws InterruptedException {
+    void receiveMessage() throws InterruptedException, JMSException {
 
         MessageCreator msg = new MessageCreator() {
             @Override
@@ -48,12 +47,14 @@ class ContactListenerTest {
         Mockito.verify(listener, Mockito.timeout(1000)).receiveMessage(argumentCaptor.capture());
 
         Message receivedMsg = argumentCaptor.getValue();
+        String body = receivedMsg.getBody(String.class);
+
         MatcherAssert.assertThat(receivedMsg, Matchers.notNullValue());
+        MatcherAssert.assertThat(body, Matchers.is(json));
     }
 
     @Test
-    @Disabled
-    void receiveMessage2() throws InterruptedException {
+    void receiveMessage2() throws InterruptedException, JMSException {
 
         MessageCreator msg = new MessageCreator() {
             @Override
@@ -69,6 +70,9 @@ class ContactListenerTest {
         Mockito.verify(listener, Mockito.timeout(1000)).receiveMessage(argumentCaptor.capture());
 
         Message receivedMsg = argumentCaptor.getValue();
+        String body = receivedMsg.getBody(String.class);
+
         MatcherAssert.assertThat(receivedMsg, Matchers.notNullValue());
+        MatcherAssert.assertThat(body, Matchers.is(json));
     }
 }

@@ -8,10 +8,11 @@ public class EntityResult implements Result{
 
     private Collection<?> entities;
     private final List<String> messages = new ArrayList<>();
+    private ResultState state;
 
     @Override
     public boolean isOk() {
-        return false;
+        return state == ResultState.OK;
     }
 
     @Override
@@ -33,6 +34,11 @@ public class EntityResult implements Result{
     @Override
     public List<String> getMessages() {
         return messages;
+    }
+
+    @Override
+    public void setState(ResultState state) {
+        this.state = state;
     }
 
 

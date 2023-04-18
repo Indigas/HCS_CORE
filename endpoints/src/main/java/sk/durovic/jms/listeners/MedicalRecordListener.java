@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import sk.durovic.dto.MedicalRecordDto;
 import sk.durovic.model.MedicalRecord;
 import sk.durovic.processor.JmsRequestProcessor;
 import sk.durovic.service.MedicalRecordEntityService;
@@ -22,9 +23,9 @@ public class MedicalRecordListener extends EntityListener {
     @JmsListener(destination = MEDIACAL_RECORD_QUEUE, concurrency = "3-10")
     @Override
     public void receiveMessage(Message msg) {
-        log.info("Received JMS message for MEDIACAL_RECORD_QUEUE");
+        log.info("Received JMS message for "+MEDIACAL_RECORD_QUEUE);
 
-        processMessage(msg, MedicalRecord.class);
+        processMessage(msg, MedicalRecordDto.class);
     }
 
 }
