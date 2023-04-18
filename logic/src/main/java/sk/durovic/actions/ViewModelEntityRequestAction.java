@@ -5,9 +5,9 @@ import sk.durovic.service.EntityService;
 
 import java.util.Collection;
 
-public class ViewModelEntityAction<T extends BaseEntityAbstractClass<ID>,ID> extends DefaultAction<T,ID>{
+public class ViewModelEntityRequestAction<T extends BaseEntityAbstractClass<ID>,ID> extends DefaultRequestAction<T,ID> {
 
-    public ViewModelEntityAction(EntityService<T, ID, ?> service) {
+    public ViewModelEntityRequestAction(EntityService<T, ID, ?> service) {
         super(service);
     }
 

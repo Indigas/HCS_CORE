@@ -44,4 +44,9 @@ public class Contact extends BaseEntity {
         result = 31 * result + (getId() != null ? getId().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String getParentId() {
+        return patient.getParentId();
+    }
 }

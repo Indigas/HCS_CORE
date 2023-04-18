@@ -1,7 +1,9 @@
 package sk.durovic.model;
 
 
-public abstract class BaseEntityAbstractClass<ID> {
+import sk.durovic.model.parent.Parent;
+
+public abstract class BaseEntityAbstractClass<ID> implements Parent {
 
     abstract public ID getId();
 

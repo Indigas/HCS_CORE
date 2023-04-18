@@ -1,6 +1,6 @@
 package sk.durovic.processor;
 
-import sk.durovic.actions.DefaultAction;
+import sk.durovic.actions.DefaultRequestAction;
 import sk.durovic.actions.RequestAction;
 import sk.durovic.events.Event;
 import sk.durovic.events.EventAction;
@@ -20,7 +20,7 @@ public abstract class RequestProcessorImpl<T extends BaseEntityAbstractClass<ID>
     private final RequestAction<T,ID> requestAction;
 
     protected RequestProcessorImpl(EntityService<T,ID,?> service){
-        this.requestAction = new DefaultAction<>(service);
+        this.requestAction = new DefaultRequestAction<>(service);
     }
     protected RequestProcessorImpl(RequestAction<T, ID> requestAction) {
         this.requestAction = requestAction;

@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
-import sk.durovic.dto.ContactDto;
 import sk.durovic.model.Contact;
 import sk.durovic.processor.JmsRequestProcessor;
 import sk.durovic.service.ContactEntityService;

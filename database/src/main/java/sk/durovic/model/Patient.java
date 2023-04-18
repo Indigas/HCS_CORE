@@ -63,4 +63,9 @@ public class Patient extends BaseEntityAbstractClass<String> {
         result = 31 * result + (bloodGroup != null ? bloodGroup.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String getParentId() {
+        return null;
+    }
 }

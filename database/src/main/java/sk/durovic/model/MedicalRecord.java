@@ -49,4 +49,9 @@ public class MedicalRecord extends BaseEntity {
         result = 31 * result + getId().hashCode();
         return result;
     }
+
+    @Override
+    public String getParentId() {
+        return patient.getParentId() + ":" + diagnose.getId();
+    }
 }
