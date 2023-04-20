@@ -43,8 +43,6 @@ class ContactListenerTest {
     @Test
     void receiveMessage() throws InterruptedException, JMSException {
 
-
-
         MessageCreator msg = new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
@@ -56,7 +54,7 @@ class ContactListenerTest {
 
         ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(Message.class);
 
-        Mockito.verify(listener, Mockito.timeout(2000)).receiveMessage(argumentCaptor.capture());
+        Mockito.verify(listener).receiveMessage(argumentCaptor.capture());
 
         Message receivedMsg = argumentCaptor.getValue();
         String body = receivedMsg.getBody(String.class);
