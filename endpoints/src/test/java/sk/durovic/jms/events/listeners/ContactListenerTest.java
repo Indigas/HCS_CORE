@@ -2,6 +2,7 @@ package sk.durovic.jms.events.listeners;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -13,6 +14,8 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import sk.durovic.jms.listeners.ContactListener;
+import sk.durovic.repository.ContactRepository;
+import sk.durovic.service.ContactEntityService;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -28,10 +31,19 @@ class ContactListenerTest {
     @SpyBean
     private ContactListener listener;
 
+    @Autowired
+    private ContactRepository repo;
+
     private static final String json = "{\"entities\":[{\"id\":\"13568\",\"fullName\":\"Marek\",\"telephone\":\"0908\",\"notes\":\"dad\"}],\"action\":\"GET\"}";
 
+    @AfterEach
+    public void removeEntities(){
+        repo.deleteAll();
+    }
     @Test
     void receiveMessage() throws InterruptedException, JMSException {
+
+
 
         MessageCreator msg = new MessageCreator() {
             @Override
@@ -40,12 +52,11 @@ class ContactListenerTest {
             }
         };
 
+        jmsTemplate.send(ContactListener.CONTACT_QUEUE, msg);
+
         ArgumentCaptor<Message> argumentCaptor = ArgumentCaptor.forClass(Message.class);
 
         Mockito.verify(listener, Mockito.timeout(2000)).receiveMessage(argumentCaptor.capture());
-
-        jmsTemplate.send(ContactListener.CONTACT_QUEUE, msg);
-
 
         Message receivedMsg = argumentCaptor.getValue();
         String body = receivedMsg.getBody(String.class);

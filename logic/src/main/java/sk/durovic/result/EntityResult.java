@@ -1,14 +1,12 @@
 package sk.durovic.result;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class EntityResult implements Result{
 
     private Collection<?> entities;
-    private final List<String> messages = new ArrayList<>();
-    private ResultState state;
+    private final Map<String, String> messages = new HashMap<>();
+    private ResultState state = ResultState.ERROR;
 
     @Override
     public boolean isOk() {
@@ -27,13 +25,18 @@ public class EntityResult implements Result{
 
 
     @Override
-    public void addMessage(String message) {
-        this.messages.add(message);
+    public void addMessage(String entityId, String message) {
+        this.messages.put(entityId, message);
     }
 
     @Override
-    public List<String> getMessages() {
-        return messages;
+    public Map<String, String> getMessages() {
+        return this.messages;
+    }
+
+    @Override
+    public String getMessage(String entityId) {
+        return messages.get(entityId);
     }
 
     @Override

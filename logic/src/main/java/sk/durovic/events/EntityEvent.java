@@ -4,6 +4,8 @@ import lombok.Builder;
 import sk.durovic.dto.PatientDto;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EntityEvent implements Event{
 
@@ -23,14 +25,13 @@ public class EntityEvent implements Event{
         this.action = action;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> Collection<T> getEntities() {
-        return (Collection<T>) entities;
+    public Collection<?> getEntities() {
+        return this.entities;
     }
 
     @Override
-    public <T> void setEntities(Collection<T> entities) {
+    public void setEntities(Collection<?> entities) {
         this.entities = entities;
     }
 

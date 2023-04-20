@@ -44,6 +44,6 @@ public class Disease extends BaseEntity {
 
     @Override
     public String getParentId() {
-        return patient.getParentId();
+        return patient.getId();
     }
 }

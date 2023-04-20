@@ -18,20 +18,21 @@ import java.util.stream.Collectors;
 
 public abstract class RequestProcessorImpl<T extends BaseEntityAbstractClass<ID>,ID> implements RequestProcessor{
 
-    private final RequestAction<T,ID> requestAction;
+    private final RequestAction<T> requestAction;
 
     protected RequestProcessorImpl(EntityService<T,ID,?> service){
         this.requestAction = new DefaultRequestAction<>(service);
     }
-    protected RequestProcessorImpl(RequestAction<T, ID> requestAction) {
+    protected RequestProcessorImpl(RequestAction<T> requestAction) {
         this.requestAction = requestAction;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Result process(Event event) {
         EventAction action = event.getAction();
         Result result = new EntityResult();
-        Collection<T> entities = event.getEntities();
+        Collection<T> entities = (Collection<T>) event.getEntities();
 
         switch (action){
                 case GET:

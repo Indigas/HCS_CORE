@@ -1,6 +1,6 @@
 package sk.durovic.mapper;
 
-public interface EntityMapper<T, R> {
+public interface EntityMapper<T> {
 
-    R updateEntity(T src, R dest);
+    T updateEntity(T src, T dest);
 }

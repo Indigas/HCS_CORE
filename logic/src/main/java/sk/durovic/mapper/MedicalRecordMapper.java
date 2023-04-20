@@ -8,12 +8,13 @@ import sk.durovic.dto.MedicalRecordDto;
 import sk.durovic.model.MedicalRecord;
 
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface MedicalRecordMapper extends EntityMapper<MedicalRecordDto, MedicalRecord>, EntityConverter<MedicalRecordDto, MedicalRecord> {
+public interface MedicalRecordMapper extends EntityMapper<MedicalRecord>, EntityConverter<MedicalRecordDto, MedicalRecord> {
 
     @Mapping(target = "patient", ignore = true)
     @Mapping(target = "diagnose", ignore = true)
+    @Mapping(target = "id", ignore = true)
     @Override
-    MedicalRecord updateEntity(MedicalRecordDto src, @MappingTarget MedicalRecord dest);
+    MedicalRecord updateEntity(MedicalRecord src, @MappingTarget MedicalRecord dest);
 
     @Mapping(target = "patientId", source = "entity.patient.id")
     @Mapping(target = "diagnoseId", source = "entity.diagnose.id")

@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class DefaultRequestAction<T extends BaseEntityAbstractClass<ID>, ID> implements RequestAction<T,ID>{
+public class DefaultRequestAction<T extends BaseEntityAbstractClass<ID>, ID> implements RequestAction<T>{
 
     protected final EntityService<T,ID,?> service;
 
@@ -24,7 +24,7 @@ public class DefaultRequestAction<T extends BaseEntityAbstractClass<ID>, ID> imp
         if(!entities.iterator().hasNext())
             return Collections.emptyList();
 
-        List<T> withId = new ArrayList<>();
+        Set<T> withId = new HashSet<>();
         List<T> withoutId = new ArrayList<>();
 
         Iterator<T> it = entities.iterator();
@@ -37,15 +37,15 @@ public class DefaultRequestAction<T extends BaseEntityAbstractClass<ID>, ID> imp
                 withId.add(entity);
         }
 
-        Set<T> loadedContacts = new HashSet<>();
+        Set<T> loadedEntities = new HashSet<>();
 
         if(!withId.isEmpty())
-            loadedContacts.addAll(loadEntities(withId));
+            loadedEntities.addAll(loadEntities(withId));
 
         if(!withoutId.isEmpty())
-            addContactsByPatient(withoutId, loadedContacts);
+            addContactsByPatient(withoutId, loadedEntities);
 
-        return loadedContacts;
+        return loadedEntities;
     }
 
     private Collection<T> loadEntities(Collection<T> entities){

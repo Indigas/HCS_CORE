@@ -26,21 +26,21 @@ public abstract class EntityController<T extends EntityDto<ID>, ID> {
     }
 
     @GetMapping(value={ "","/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<?>> getEntities(@PathVariable(required = false) ID id, @RequestBody(required = false) Collection<T> entities){
+    public ResponseEntity<?> getEntities(@PathVariable(required = false) ID id, @RequestBody(required = false) Collection<T> entities){
         Event event = createEvent(id, entities, EventAction.GET);
 
         Result result = processor.process(event);
 
-        return new ResponseEntity<>(result.getEntities(), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<?>> createEntities(@RequestBody Collection<T> entities){
+    public ResponseEntity<?> createEntities(@RequestBody Collection<T> entities){
         Event event = createEvent(null, entities, EventAction.POST);
 
         Result result = processor.process(event);
 
-        return new ResponseEntity<>(result.getEntities(), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -69,8 +69,8 @@ public abstract class EntityController<T extends EntityDto<ID>, ID> {
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteEntities(@RequestBody Collection<ID> entitiesId){
-        Event event = createEvent(null, Collections.emptyList(), EventAction.PUT);
+    public void deleteEntities(@RequestBody Collection<T> entities){
+        Event event = createEvent(null, entities, EventAction.DELETE);
 
         Result result = processor.process(event);
     }

@@ -11,7 +11,7 @@ public class JmsRequestProcessor<T extends BaseEntityAbstractClass<ID>,ID> exten
         super(service);
     }
 
-    public JmsRequestProcessor(RequestAction<T,ID> requestAction) {
+    public JmsRequestProcessor(RequestAction<T> requestAction) {
         super(requestAction);
     }
 

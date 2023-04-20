@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -45,10 +46,15 @@ public class receiveJmsPatientMessageTest {
     @SpyBean
     private PatientListener listener;
 
+
     private ObjectMapper objectMapper = new ObjectMapper();
 
     private static final String json = "{\"entities\":[{\"id\":\"D\",\"firstName\":\"Marek\",\"lastName\":\"Durovic\",\"email\":\"marek@gmail\"}],\"action\":\"GET\"}";
 
+    @AfterEach
+    private void removeEntities(){
+        repository.deleteAll();
+    }
     @Test
     @Disabled
     void receivePatientEvent() throws JMSException {

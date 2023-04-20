@@ -1,10 +1,11 @@
 package sk.durovic.events;
 
 import java.util.Collection;
+import java.util.Map;
 
 public interface Event {
     EventAction getAction();
     void setAction(EventAction action);
-    <T> Collection<T> getEntities();
-    <T> void setEntities(Collection<T> entities);
+    Collection<?> getEntities();
+    void setEntities(Collection<?> entities);
 }

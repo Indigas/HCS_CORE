@@ -8,7 +8,7 @@ import sk.durovic.model.*;
 public class EntityMapperHelper {
 
     @SuppressWarnings("unchecked")
-    public static <R, T> EntityMapper<T,R> getMapper(Class<?> aClass) {
+    public static <R, T> EntityMapper<T> getMapper(Class<?> aClass) {
         Class<?> mapperClass = ContactMapper.class;
 
         if (aClass == Patient.class || aClass == PatientDto.class)
@@ -22,7 +22,7 @@ public class EntityMapperHelper {
         else if(aClass == Patient_Diagnose.class || aClass == Patient_DiagnoseDTO.class)
             mapperClass = PatientDiagnoseMapper.class;
 
-        return (EntityMapper<T, R>) Mappers.getMapper(mapperClass);
+        return (EntityMapper<T>) Mappers.getMapper(mapperClass);
     }
 
     @SuppressWarnings("unchecked")

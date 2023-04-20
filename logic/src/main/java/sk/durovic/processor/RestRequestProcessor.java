@@ -11,7 +11,7 @@ public class RestRequestProcessor<T extends BaseEntityAbstractClass<ID>,ID> exte
         super(service);
     }
 
-    public RestRequestProcessor(RequestAction<T, ID> requestAction) {
+    public RestRequestProcessor(RequestAction<T> requestAction) {
         super(requestAction);
     }
 }

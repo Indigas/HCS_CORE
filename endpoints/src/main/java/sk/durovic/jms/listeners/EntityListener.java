@@ -39,7 +39,11 @@ public abstract class EntityListener {
 
             Result result = messageProcessor.process(event);
 
-            if (result.isOk() && msg.getJMSReplyTo() != null) {
+            if(!result.isOk()){
+                log.error("Error was returned by message processor");
+            }
+
+            if (msg.getJMSReplyTo() != null) {
                 jmsTemplate.convertAndSend(msg.getJMSReplyTo(), result);
             }
         } catch (JMSException e){

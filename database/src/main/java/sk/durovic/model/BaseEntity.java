@@ -11,7 +11,7 @@ public abstract class BaseEntity extends BaseEntityAbstractClass<Long> implement
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id = -1L;
+    private Long id;
 
     @Override
     public Long getId() {

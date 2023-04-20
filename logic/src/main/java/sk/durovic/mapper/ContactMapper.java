@@ -8,11 +8,12 @@ import sk.durovic.dto.ContactDto;
 import sk.durovic.model.Contact;
 
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface ContactMapper extends EntityMapper<ContactDto, Contact>, EntityConverter<ContactDto, Contact> {
+public interface ContactMapper extends EntityMapper<Contact>, EntityConverter<ContactDto, Contact> {
 
     @Override
     @Mapping(target = "patient", ignore = true)
-    Contact updateEntity(ContactDto dto, @MappingTarget Contact contact);
+    @Mapping(target = "id", ignore = true)
+    Contact updateEntity(Contact dto, @MappingTarget Contact contact);
 
     @Mapping(target = "patientId", source = "entity.patient.id")
     @Override
