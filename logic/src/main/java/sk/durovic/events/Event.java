@@ -1,7 +1,6 @@
 package sk.durovic.events;
 
 import java.util.Collection;
-import java.util.Map;
 
 public interface Event {
     EventAction getAction();

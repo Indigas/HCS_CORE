@@ -1,12 +1,9 @@
 package sk.durovic.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
-import sk.durovic.dto.EntityDto;
-import sk.durovic.dto.PatientDto;
 import sk.durovic.events.EntityEvent;
 import sk.durovic.events.Event;
 import sk.durovic.events.EventAction;
@@ -15,8 +12,6 @@ import sk.durovic.mapper.EntityConverter;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;

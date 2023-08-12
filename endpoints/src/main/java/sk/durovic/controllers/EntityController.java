@@ -1,11 +1,18 @@
 package sk.durovic.controllers;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import sk.durovic.converter.EventConverterAndCreator;
+import sk.durovic.dto.ContactDto;
 import sk.durovic.dto.EntityDto;
 import sk.durovic.events.Event;
 import sk.durovic.events.EventAction;
@@ -25,22 +32,22 @@ public abstract class EntityController<T extends EntityDto<ID>, ID> {
         this.processor = processor;
     }
 
-    @GetMapping(value={ "","/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getEntities(@PathVariable(required = false) ID id, @RequestBody(required = false) Collection<T> entities){
+    @GetMapping(value={ "/","/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<T>> getEntities(@PathVariable(required = false) ID id, @RequestBody(required = false) Collection<T> entities){
         Event event = createEvent(id, entities, EventAction.GET);
 
         Result result = processor.process(event);
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result.getEntities(), HttpStatus.OK);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createEntities(@RequestBody Collection<T> entities){
+    public ResponseEntity<Collection<T>> createEntities(@RequestBody Collection<T> entities){
         Event event = createEvent(null, entities, EventAction.POST);
 
         Result result = processor.process(event);
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(result.getEntities(), HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)

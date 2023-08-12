@@ -1,6 +1,10 @@
 package sk.durovic.result;
 
-import java.util.*;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EntityResult implements Result{
 
@@ -18,9 +22,10 @@ public class EntityResult implements Result{
         this.entities = entities;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Collection<?> getEntities() {
-        return this.entities;
+    public <T> Collection<T> getEntities() {
+        return (Collection<T>) this.entities;
     }
 
 

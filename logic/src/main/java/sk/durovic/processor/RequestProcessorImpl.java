@@ -20,7 +20,7 @@ public abstract class RequestProcessorImpl<T extends BaseEntityAbstractClass<ID>
 
     private final RequestAction<T> requestAction;
 
-    protected RequestProcessorImpl(EntityService<T,ID,?> service){
+    protected RequestProcessorImpl(EntityService<T, ID,?> service){
         this.requestAction = new DefaultRequestAction<>(service);
     }
     protected RequestProcessorImpl(RequestAction<T> requestAction) {

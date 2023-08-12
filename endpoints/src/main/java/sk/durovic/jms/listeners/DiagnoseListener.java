@@ -5,7 +5,6 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import sk.durovic.dto.DiagnoseDto;
-import sk.durovic.model.Diagnose;
 import sk.durovic.processor.JmsRequestProcessor;
 import sk.durovic.service.DiagnoseEntityService;
 

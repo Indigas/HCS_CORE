@@ -6,7 +6,6 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import sk.durovic.actions.ViewModelEntityRequestAction;
 import sk.durovic.dto.Patient_DiagnoseDTO;
-import sk.durovic.model.Patient_Diagnose;
 import sk.durovic.processor.JmsRequestProcessor;
 import sk.durovic.service.PatientDiagnoseService;
 

@@ -1,11 +1,6 @@
 package sk.durovic.events;
 
-import lombok.Builder;
-import sk.durovic.dto.PatientDto;
-
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 public class EntityEvent implements Event{
 

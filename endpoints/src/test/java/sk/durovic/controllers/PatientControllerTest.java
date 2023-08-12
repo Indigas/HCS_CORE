@@ -6,13 +6,8 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -20,22 +15,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.client.RestTemplate;
 import sk.durovic.dto.PatientDto;
 import sk.durovic.helper.EntityMapperHelper;
 import sk.durovic.mapper.EntityConverter;
-import sk.durovic.mapper.EntityMapper;
 import sk.durovic.model.BloodGroup;
 import sk.durovic.model.Patient;
-import sk.durovic.repository.PatientDiagnoseRepository;
-import sk.durovic.result.EntityResult;
-import sk.durovic.result.Result;
 import sk.durovic.service.PatientEntityService;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @WebMvcTest(PatientController.class)
 class PatientControllerTest {
@@ -142,8 +130,8 @@ class PatientControllerTest {
 
     @SuppressWarnings("unchecked")
     private Collection<Map<String, String>> getMapCollection(MvcResult result) throws UnsupportedEncodingException, JsonProcessingException {
-        Result entityResult = objectMapper.readValue(result.getResponse().getContentAsString(), EntityResult.class);
-        return (Collection<Map<String, String>>) entityResult.getEntities();
+        return objectMapper.readValue(result.getResponse().getContentAsString(), List.class);
+        //return (Collection<Map<String, String>>) entityResult.getEntities();
     }
 
     private PatientDto convertToDto(Patient patient){
